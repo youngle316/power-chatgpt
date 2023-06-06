@@ -1,0 +1,3 @@
+const LOCAL_STORAGE_PREFIX = "PC-";
+
+export { LOCAL_STORAGE_PREFIX };
