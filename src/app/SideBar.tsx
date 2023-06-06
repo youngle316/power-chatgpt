@@ -13,7 +13,7 @@ function SideBar() {
 	};
 
 	return (
-		<div>
+		<>
 			{/* mobile sidebar */}
 			{/* isOpen's value is opposite */}
 			<div className="lg:hidden">
@@ -48,7 +48,7 @@ function SideBar() {
 					<SideBarContent />
 				</motion.div>
 			</AnimatePresence>
-		</div>
+		</>
 	);
 }
 
