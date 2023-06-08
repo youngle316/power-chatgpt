@@ -2,12 +2,15 @@
 
 import { useSideBarState } from "~/store/sidebarStore";
 import { AlignJustify } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 function TopBar() {
 	const { setIsOpen } = useSideBarState();
 
+	const t = useTranslations("NavPage");
+
 	return (
-		<div className="sticky top-0 h-16 z-30 bg-white dark:bg-slate-700 border-b-2 border-slate-200 dark:border-slate-700 drop-shadow-md">
+		<div className="sticky top-0 h-16 bg-white dark:bg-slate-700 border-b-2 border-slate-200 dark:border-slate-700 drop-shadow-md">
 			<div className="flex absolute left-1 top-0 bottom-0 items-center justify-center">
 				<button
 					type="button"
@@ -20,9 +23,9 @@ function TopBar() {
 			</div>
 			<div className="flex items-center justify-center w-full h-full flex-col min-w-0 ">
 				<div className="font-semibold truncate w-full text-center px-12 text-black dark:text-white">
-					New Chat
+					{t("newChat")}
 				</div>
-				<div className="text-xs text-gray-400">Start a new chat</div>
+				<div className="text-xs text-gray-400">{t("newChatContent")}</div>
 			</div>
 		</div>
 	);
