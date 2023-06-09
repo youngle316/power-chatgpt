@@ -2,5 +2,11 @@
 	"NavPage": {
 		"newChat": "新建会话",
 		"newChatContent": "开始新建一个会话"
+	},
+	"APP": {
+		"noLogin": "无需登录",
+		"useYourOwnAPIKey": "使用你自己的 API Key",
+		"freeModel": "GPT-3.5 model 免费",
+		"more": "敬请期待更多功能。。。"
 	}
 }

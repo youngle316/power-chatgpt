@@ -1,3 +1,5 @@
 const LOCAL_STORAGE_PREFIX = "PC-";
 
-export { LOCAL_STORAGE_PREFIX };
+const APP_FEATURES = ["noLogin", "useYourOwnAPIKey", "freeModel", "more"];
+
+export { LOCAL_STORAGE_PREFIX, APP_FEATURES };

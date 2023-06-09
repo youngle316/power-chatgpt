@@ -2,5 +2,11 @@
 	"NavPage": {
 		"newChat": "New Chat",
 		"newChatContent": "Start a new chat"
+	},
+	"APP": {
+		"noLogin": "No login",
+		"useYourOwnAPIKey": "Use your own API key",
+		"freeModel": "Free for GPT-3.5 model",
+		"more": "...and more soon"
 	}
 }
