@@ -8,5 +8,8 @@
 		"useYourOwnAPIKey": "Use your own API key",
 		"freeModel": "Free for GPT-3.5 model",
 		"more": "...and more soon"
+	},
+	"Chat": {
+		"promptInputPlaceholder": "Typing your message here..."
 	}
 }

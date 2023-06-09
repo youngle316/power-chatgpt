@@ -8,7 +8,21 @@ html {
 
 @layer components {
   .sidebar_btn {
-    @apply flex justify-center items-center gap-2 w-full bg-gray-600 text-white border-slate-600 hover:bg-gray-500 hover:border-slate-600 focus:ring-slate-700 
+    @apply flex justify-center items-center gap-2 w-full bg-gray-600 text-white border-slate-600 hover:bg-zinc-500 hover:border-slate-600 focus:ring-slate-700 
       border focus:outline-none focus:ring-4 font-medium rounded-lg text-sm p-2
+  }
+
+  .chat-textarea-container {
+    @apply relative flex w-full flex-grow flex-col rounded-md border border-black/10 bg-white py-1 shadow-[0_0_10px_rgba(0,0,0,0.10)] 
+    dark:border-zinc-900/50 dark:bg-zinc-700 dark:text-white dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] md:py-2 md:pl-2;
+  }
+
+  .chat-textarea {
+    @apply m-0 w-full flex items-center resize-none border-0 bg-transparent p-0 pr-10 focus:outline-none focus:ring-0 focus-visible:ring-0 dark:bg-transparent;
+  }
+
+  .chat-textarea-send-button {
+    @apply absolute bottom-0 right-1 rounded-md p-1 text-zinc-500 hover:bg-zinc-100 disabled:hover:bg-transparent 
+    dark:hover:bg-zinc-900 dark:hover:text-zinc-400 dark:disabled:hover:bg-transparent md:bottom-1 md:right-3;
   }
 }

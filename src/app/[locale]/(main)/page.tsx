@@ -1,5 +1,6 @@
 import MainContainer from "../MainContainer";
 import AppDes from "~/components/AppIntroduce";
+import PromptInput from "~/components/PromptInput";
 
 export default function Home() {
 	return (
@@ -11,6 +12,7 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
+			<PromptInput />
 		</MainContainer>
 	);
 }
