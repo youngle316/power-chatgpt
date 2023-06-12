@@ -1,36 +1,69 @@
+"use client";
+
 import { MessagesSquare, Edit3, Trash, Check, X } from "lucide-react";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { LOCAL_STORAGE_PREFIX } from "~/const";
 import { useProcessChatId } from "~/store/sidebarStore";
+import Link from "next-intl/link";
+import { usePathname, useRouter } from "next-intl/client";
 
 function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 	const { processChatId, setProcessChatId } = useProcessChatId();
 	const [textAreaVal, setTextAreaVal] = useState("");
 	const [processType, setProcessType] = useState("");
+	const [isActive, setIsActive] = useState(false);
+
+	const pathname = usePathname();
+	const route = useRouter();
+
+	useEffect(() => {
+		if (pathname.includes(data.id)) {
+			setIsActive(true);
+		} else {
+			setIsActive(false);
+		}
+	}, [pathname]);
 
 	const [chatData, setChatData] = useLocalStorage<SideBarChatProps[]>(
 		`${LOCAL_STORAGE_PREFIX}sidebar-chat`,
 		[],
 	);
 
-	const editChatItem = (data: SideBarChatProps) => {
+	const editChatItem = (
+		e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+		data: SideBarChatProps,
+	) => {
+		e.preventDefault();
+		e.stopPropagation();
 		setProcessType("edit");
 		setTextAreaVal(data.title);
 		setProcessChatId(data.id);
 	};
 
-	const deleteChatItem = (data: SideBarChatProps) => {
+	const deleteChatItem = (
+		e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+		data: SideBarChatProps,
+	) => {
+		e.preventDefault();
+		e.stopPropagation();
 		setProcessType("delete");
 		setProcessChatId(data.id);
 	};
 
-	const cancelProcess = () => {
+	const cancelProcess = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+		e.preventDefault();
+		e.stopPropagation();
 		setProcessChatId("");
 		setProcessType("");
 	};
 
-	const confirmEditChatItem = (data: SideBarChatProps) => {
+	const confirmEditChatItem = (
+		e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+		data: SideBarChatProps,
+	) => {
+		e.preventDefault();
+		e.stopPropagation();
 		if (processType === "edit") {
 			const newChatData = chatData.map((item) => {
 				if (item.id === data.id) {
@@ -48,14 +81,19 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 			const newChatData = chatData.filter((item) => item.id !== data.id);
 			setChatData(newChatData);
 			setProcessChatId("");
+			if (isActive) {
+				route.push("/");
+			}
 		}
 	};
 
 	return (
-		<div className="min-h-[56px]">
+		<Link href={`/chat/${data.id}`} className="min-h-[56px]">
 			<div
 				className={`flex items-center text-gray-300 hover:bg-gray-700 hover:text-white
-				text-sm font-medium w-full space-x-2 justify-between overflow-hidden cursor-pointer`}
+				text-sm font-medium w-full space-x-2 justify-between overflow-hidden cursor-pointer ${
+					isActive && "bg-gray-700"
+				}`}
 			>
 				<div className="flex flex-1 items-center justify-start gap-x-2 min-w-0 w-full px-2 py-2 text-sm group">
 					<MessagesSquare size={28} />
@@ -74,7 +112,7 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 					{processChatId === data.id ? (
 						<>
 							<Check
-								onClick={() => confirmEditChatItem(data)}
+								onClick={(e) => confirmEditChatItem(e, data)}
 								size={16}
 								className="hover:text-white"
 							/>
@@ -87,12 +125,12 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 					) : (
 						<>
 							<Edit3
-								onClick={() => editChatItem(data)}
+								onClick={(e) => editChatItem(e, data)}
 								size={16}
 								className="hover:text-white"
 							/>
 							<Trash
-								onClick={() => deleteChatItem(data)}
+								onClick={(e) => deleteChatItem(e, data)}
 								size={16}
 								className="hover:text-white"
 							/>
@@ -100,7 +138,7 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 					)}
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 }
 
@@ -117,6 +155,7 @@ function TitleTextArea({
 			placeholder="请输入标题"
 			value={value}
 			onChange={(e) => setValue(e.target.value)}
+			onClick={(e) => e.stopPropagation()}
 		/>
 	);
 }

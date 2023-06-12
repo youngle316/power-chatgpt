@@ -10,7 +10,7 @@ function TopBar() {
 	const t = useTranslations("NavPage");
 
 	return (
-		<div className="sticky top-0 h-16 bg-white dark:bg-slate-700 border-b-2 border-slate-200 dark:border-slate-700 drop-shadow-md">
+		<div className="sticky top-0 h-16 bg-white dark:bg-gray-700 border-b-2 border-gray-200 dark:border-gray-700 drop-shadow-md">
 			<div className="flex absolute left-1 top-0 bottom-0 items-center justify-center">
 				<button
 					type="button"

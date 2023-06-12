@@ -8,7 +8,7 @@ html {
 
 @layer components {
   .sidebar_btn {
-    @apply flex justify-center items-center gap-2 w-full bg-gray-600 text-white border-slate-600 hover:bg-zinc-500 hover:border-slate-600 focus:ring-slate-700 
+    @apply flex justify-center items-center gap-2 w-full bg-gray-600 text-white border-gray-600 hover:bg-gray-800 hover:border-gray-600 focus:ring-gray-700 
       border focus:outline-none focus:ring-4 font-medium rounded-lg text-sm p-2
   }
 

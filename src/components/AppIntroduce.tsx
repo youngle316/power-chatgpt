@@ -10,7 +10,7 @@ function AppIntroduce() {
 	const t = useTranslations("APP");
 
 	return (
-		<div>
+		<div className="pt-8 pb-12 relative">
 			<div className="flex gap-1 items-center justify-center space-x-2">
 				<Logo />
 				<div className="font-semibold text-4xl sm:text-5xl text-black dark:text-white ">
