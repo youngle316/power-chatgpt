@@ -6,6 +6,7 @@ const isDev = process.env.NODE_ENV === "development";
 
 const api = new ChatGPTAPI({
 	apiKey: (process.env.NEXT_PUBLIC_OPENAI_API_KEY as string) || "",
+	apiBaseUrl: "https://openaiproxy-4bc.pages.dev/v1",
 	// @ts-ignore
 	fetch: isDev
 		? (url, options = {}) => {
