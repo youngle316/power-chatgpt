@@ -37,5 +37,4 @@ type FetchAskQuestionProps = {
 	setChatMessageStorage?: any;
 	sidebarDataStorage?: any;
 	setSidebarDataStorage?: any;
-	setIsTyping?: any;
 };

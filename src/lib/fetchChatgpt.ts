@@ -7,7 +7,6 @@ const fetchAskQuestion = async ({
 	setChatMessageStorage,
 	sidebarDataStorage,
 	setSidebarDataStorage,
-	setIsTyping,
 }: FetchAskQuestionProps) => {
 	await fetch("/api/askQuestion", {
 		method: "POST",

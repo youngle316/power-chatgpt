@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { textAreaAutoHeight } from "~/tools";
 import fetchAskQuestion from "~/lib/fetchChatgpt";
 import { useInputPromptState, useIsTypingState } from "~/store/chat";
-import { useSelectedChatId } from "~/store/sidebarStore";
 import { useLocalStorage } from "usehooks-ts";
 import { CHAT_MESSAGES_STORAGE_KEY, SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
 import { nanoid } from "nanoid";
@@ -17,9 +16,9 @@ function PromptInput() {
 
 	const { inputPrompt, setInputPrompt } = useInputPromptState();
 
-	const { selectedChatId } = useSelectedChatId();
-
 	const pathname = usePathname();
+
+	const curChatId = pathname.split("/").pop();
 
 	const [chatMessage, setChatMessage] = useLocalStorage<ChatMessages[]>(
 		CHAT_MESSAGES_STORAGE_KEY,
@@ -66,12 +65,11 @@ function PromptInput() {
 		setIsTyping(true);
 		await fetchAskQuestion({
 			prompt: inputPrompt,
-			chatId: selectedChatId,
+			chatId: curChatId as string,
 			chatMessageStorage: chatMessage,
 			setChatMessageStorage: setChatMessage,
 			sidebarDataStorage: sidebarData,
 			setSidebarDataStorage: setSidebarData,
-			setIsTyping: setIsTyping,
 		});
 		setIsTyping(false);
 	};
