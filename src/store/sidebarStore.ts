@@ -11,6 +11,11 @@ type ProcessChatIdStore = {
 	setProcessChatId: (id: string) => void;
 };
 
+type SelectedChatIdStore = {
+	selectedChatId: string;
+	setSelectedChatId: (id: string) => void;
+};
+
 const useSideBarState = create<Store>()((set) => ({
 	isOpen: true,
 	setIsOpen: () => set((state) => ({ isOpen: !state.isOpen })),
@@ -21,4 +26,9 @@ const useProcessChatId = create<ProcessChatIdStore>()((set) => ({
 	setProcessChatId: (id) => set(() => ({ processChatId: id })),
 }));
 
-export { useSideBarState, useProcessChatId };
+const useSelectedChatId = create<SelectedChatIdStore>()((set) => ({
+	selectedChatId: "",
+	setSelectedChatId: (id) => set(() => ({ selectedChatId: id })),
+}));
+
+export { useSideBarState, useProcessChatId, useSelectedChatId };

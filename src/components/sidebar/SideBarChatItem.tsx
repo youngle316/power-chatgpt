@@ -1,10 +1,10 @@
 "use client";
 
 import { MessagesSquare, Edit3, Trash, Check, X } from "lucide-react";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { LOCAL_STORAGE_PREFIX } from "~/const";
-import { useProcessChatId } from "~/store/sidebarStore";
+import { SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
+import { useProcessChatId, useSelectedChatId } from "~/store/sidebarStore";
 import Link from "next-intl/link";
 import { usePathname, useRouter } from "next-intl/client";
 
@@ -13,6 +13,7 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 	const [textAreaVal, setTextAreaVal] = useState("");
 	const [processType, setProcessType] = useState("");
 	const [isActive, setIsActive] = useState(false);
+	const { setSelectedChatId } = useSelectedChatId();
 
 	const pathname = usePathname();
 	const route = useRouter();
@@ -26,7 +27,7 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 	}, [pathname]);
 
 	const [chatData, setChatData] = useLocalStorage<SideBarChatProps[]>(
-		`${LOCAL_STORAGE_PREFIX}sidebar-chat`,
+		SIDEBAR_CHAT_STORAGE_KEY,
 		[],
 	);
 
@@ -70,6 +71,7 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 					return {
 						...item,
 						title: textAreaVal,
+						updateAt: Date.now(),
 					};
 				}
 				return item;
@@ -87,8 +89,16 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 		}
 	};
 
+	const selectChatId = () => {
+		setSelectedChatId(data.id);
+	};
+
 	return (
-		<Link href={`/chat/${data.id}`} className="min-h-[56px]">
+		<Link
+			href={`/chat/${data.id}`}
+			className="min-h-[56px]"
+			onClick={selectChatId}
+		>
 			<div
 				className={`flex items-center text-gray-300 hover:bg-gray-700 hover:text-white
 				text-sm font-medium w-full space-x-2 justify-between overflow-hidden cursor-pointer ${
@@ -146,6 +156,13 @@ function TitleTextArea({
 	value,
 	setValue,
 }: { value: string; setValue: (val: string) => void }) {
+	const clickTextArea = (
+		e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>,
+	) => {
+		e.stopPropagation();
+		e.preventDefault();
+	};
+
 	return (
 		<textarea
 			id="message"
@@ -155,7 +172,7 @@ function TitleTextArea({
 			placeholder="请输入标题"
 			value={value}
 			onChange={(e) => setValue(e.target.value)}
-			onClick={(e) => e.stopPropagation()}
+			onClick={(e) => clickTextArea(e)}
 		/>
 	);
 }

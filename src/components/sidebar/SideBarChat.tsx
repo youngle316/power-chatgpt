@@ -1,10 +1,10 @@
 import { useLocalStorage } from "usehooks-ts";
-import { LOCAL_STORAGE_PREFIX } from "~/const";
+import { SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
 import SideBarChatItem from "./SideBarChatItem";
 
 function SideBarChat() {
 	const [chatData] = useLocalStorage<SideBarChatProps[]>(
-		`${LOCAL_STORAGE_PREFIX}sidebar-chat`,
+		SIDEBAR_CHAT_STORAGE_KEY,
 		[],
 	);
 
