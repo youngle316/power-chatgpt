@@ -1,6 +1,7 @@
 import SideBar from "./SideBar";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
 	title: "Power ChatGPT",
@@ -26,6 +27,7 @@ export default async function RootLayout({
 	return (
 		<html lang={locale}>
 			<body className="h-full bg-white text-black dark:bg-zinc-800 dark:text-white transition-colors">
+				<Analytics />
 				<NextIntlClientProvider locale={locale} messages={messages}>
 					<main className="h-full">
 						<SideBar />
