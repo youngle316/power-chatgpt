@@ -1,21 +1,17 @@
 import { MessageCircle } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useLocalStorage } from "usehooks-ts";
-import {
-	SYSTEM_MESSAGE_DEFAULT,
-	CHAT_MODEL_DEFAULT,
-	SIDEBAR_CHAT_STORAGE_KEY,
-	CHAT_MESSAGES_STORAGE_KEY,
-} from "~/const";
+import { SIDEBAR_CHAT_STORAGE_KEY, CHAT_MESSAGES_STORAGE_KEY } from "~/const";
 import { useTranslations } from "next-intl";
+import { createNewChat } from "~/tools";
 
 function SideBarNewChat() {
-	const [chatData, setChatData] = useLocalStorage<SideBarChatProps[]>(
+	const [sidebarData, setSidebarData] = useLocalStorage<SideBarChatProps[]>(
 		SIDEBAR_CHAT_STORAGE_KEY,
 		[],
 	);
 
-	const [chatMessages, setChatMessages] = useLocalStorage<ChatMessages[]>(
+	const [chatMessage, setChatMessage] = useLocalStorage<ChatMessages[]>(
 		CHAT_MESSAGES_STORAGE_KEY,
 		[],
 	);
@@ -24,25 +20,13 @@ function SideBarNewChat() {
 
 	const newChat = () => {
 		const uuid = nanoid();
-		const newChat: SideBarChatProps = {
-			id: uuid,
-			title: "New Chat",
-			des: "New Chat Content",
-			createAt: Date.now(),
-			systemMessage: SYSTEM_MESSAGE_DEFAULT,
-			chatModel: CHAT_MODEL_DEFAULT,
-		};
-		const newChatData = [...chatData, newChat];
-		setChatData(newChatData);
-		setChatMessages([
-			...chatMessages,
-			{
-				chatId: uuid,
-				messages: [
-					{ role: "system", id: nanoid(), text: SYSTEM_MESSAGE_DEFAULT },
-				],
-			},
-		]);
+		createNewChat({
+			sidebarData,
+			setSidebarData,
+			chatMessage,
+			setChatMessage,
+			uuid,
+		});
 	};
 
 	return (

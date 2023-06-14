@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use } from "react";
+import React from "react";
 import { Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { textAreaAutoHeight } from "~/tools";
@@ -9,7 +9,8 @@ import { useInputPromptState, useIsTypingState } from "~/store/chat";
 import { useLocalStorage } from "usehooks-ts";
 import { CHAT_MESSAGES_STORAGE_KEY, SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
 import { nanoid } from "nanoid";
-import { usePathname } from "next-intl/client";
+import { usePathname, useRouter } from "next-intl/client";
+import { createNewChat } from "~/tools";
 
 function PromptInput() {
 	const t = useTranslations("Chat");
@@ -17,6 +18,8 @@ function PromptInput() {
 	const { inputPrompt, setInputPrompt } = useInputPromptState();
 
 	const pathname = usePathname();
+
+	const router = useRouter();
 
 	const curChatId = pathname.split("/").pop();
 
@@ -39,36 +42,86 @@ function PromptInput() {
 
 	const sendPrompt = async () => {
 		if (!inputPrompt) return;
+
+		const isHome = pathname === "/";
+
+		let chatId = "";
+
+		let chatMessageStorage;
+		let sidebarDataStorage;
+
+		setInputPrompt("");
+		setIsTyping(true);
+
 		const content: MessagesItem = {
 			role: "user",
 			text: inputPrompt,
 			id: nanoid(),
 		};
-		const newMessages = chatMessage.map((item) => {
-			if (pathname.includes(item.chatId)) {
-				item.messages.push(content);
+
+		if (isHome) {
+			const uuid = nanoid();
+			const { newChatMessage, newChatData } = createNewChat({
+				sidebarData,
+				setSidebarData,
+				chatMessage,
+				setChatMessage,
+				uuid,
+			});
+			router.push(`/chat/${uuid}`);
+
+			chatId = uuid;
+			chatMessageStorage = newChatMessage;
+			sidebarDataStorage = newChatData;
+
+			const newMessages = newChatMessage.map((item) => {
+				if (item.chatId === uuid) {
+					item.messages.push(content);
+					return item;
+				} else {
+					return item;
+				}
+			});
+			setChatMessage(newMessages);
+
+			const newSidebarData = newChatData.map((item) => {
+				if (item.id === uuid) {
+					item.title = inputPrompt;
+					return item;
+				}
 				return item;
-			} else {
+			});
+			setSidebarData(newSidebarData);
+		} else {
+			chatId = curChatId as string;
+			chatMessageStorage = chatMessage;
+			sidebarDataStorage = sidebarData;
+
+			const newMessages = chatMessage.map((item) => {
+				if (pathname.includes(item.chatId)) {
+					item.messages.push(content);
+					return item;
+				} else {
+					return item;
+				}
+			});
+			setChatMessage(newMessages);
+			const newSidebarData = sidebarData.map((item) => {
+				if (pathname.includes(item.id)) {
+					item.title = inputPrompt;
+					return item;
+				}
 				return item;
-			}
-		});
-		setChatMessage(newMessages);
-		const newSidebarData = sidebarData.map((item) => {
-			if (pathname.includes(item.id)) {
-				item.title = inputPrompt;
-				return item;
-			}
-			return item;
-		});
-		setSidebarData(newSidebarData);
-		setInputPrompt("");
-		setIsTyping(true);
+			});
+			setSidebarData(newSidebarData);
+		}
+
 		await fetchAskQuestion({
 			prompt: inputPrompt,
-			chatId: curChatId as string,
-			chatMessageStorage: chatMessage,
+			chatId,
+			chatMessageStorage,
 			setChatMessageStorage: setChatMessage,
-			sidebarDataStorage: sidebarData,
+			sidebarDataStorage,
 			setSidebarDataStorage: setSidebarData,
 		});
 		setIsTyping(false);
