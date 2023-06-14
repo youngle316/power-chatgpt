@@ -33,8 +33,9 @@ type ChatMessages = {
 type FetchAskQuestionProps = {
 	prompt: string;
 	chatId: string;
-	chatMessageStorage?: any;
+	chatMessageStorage?: ChatMessages[];
 	setChatMessageStorage?: any;
-	sidebarDataStorage?: any;
+	sidebarDataStorage?: SideBarChatProps[];
 	setSidebarDataStorage?: any;
+	parentMessageId?: "";
 };

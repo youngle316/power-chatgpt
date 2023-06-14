@@ -8,6 +8,14 @@ const fetchAskQuestion = async ({
 	sidebarDataStorage,
 	setSidebarDataStorage,
 }: FetchAskQuestionProps) => {
+	let parentMessageId = "";
+	chatMessageStorage
+		?.find((item) => item.chatId === chatId)
+		?.messages?.forEach((item) => {
+			if (item.role === "assistant") {
+				parentMessageId = item.id;
+			}
+		});
 	await fetch("/api/askQuestion", {
 		method: "POST",
 		headers: {
@@ -16,6 +24,7 @@ const fetchAskQuestion = async ({
 		body: JSON.stringify({
 			prompt,
 			chatId,
+			parentMessageId,
 		}),
 	})
 		.then(async (res) => {

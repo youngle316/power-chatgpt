@@ -11,9 +11,9 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<Data>,
 ) {
-	const { prompt, chatId }: FetchAskQuestionProps = req.body;
+	const { prompt, chatId, parentMessageId }: FetchAskQuestionProps = req.body;
 
-	const result = await chatgptQuery({ prompt, chatId });
+	const result = await chatgptQuery({ prompt, chatId, parentMessageId });
 
 	res.status(200).json({ result });
 }
