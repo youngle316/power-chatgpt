@@ -127,6 +127,13 @@ function PromptInput() {
 		setIsTyping(false);
 	};
 
+	const promptInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		if (e.key === "Enter" && !e.shiftKey) {
+			e.preventDefault();
+			sendPrompt();
+		}
+	};
+
 	return (
 		<div className="fixed pb-4 px-4 z-30 bottom-0 left-0 right-0 transition-all duration-300 lg:pl-80 ">
 			<div className="mx-auto w-full transition-all max-w-5xl px-4 md:px-8 lg:px-12">
@@ -140,6 +147,7 @@ function PromptInput() {
 						onChange={chatTextAreaChange}
 						placeholder={t("promptInputPlaceholder")}
 						value={inputPrompt}
+						onKeyDown={promptInputKeyDown}
 					/>
 					<button
 						type="button"
