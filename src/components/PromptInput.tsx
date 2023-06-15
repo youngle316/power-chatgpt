@@ -40,6 +40,10 @@ function PromptInput() {
 		textAreaAutoHeight("promptInput");
 	};
 
+	const getChatMessagesLength = (chatMessages: ChatMessages[], id: string) => {
+		return chatMessages.find((item) => item.chatId === id)?.messages.length;
+	};
+
 	const sendPrompt = async () => {
 		if (!inputPrompt) return;
 
@@ -84,8 +88,10 @@ function PromptInput() {
 			});
 			setChatMessage(newMessages);
 
+			const length = getChatMessagesLength(newChatMessage, uuid);
+
 			const newSidebarData = newChatData.map((item) => {
-				if (item.id === uuid) {
+				if (item.id === uuid && length && length === 2) {
 					item.title = inputPrompt;
 					return item;
 				}
@@ -98,7 +104,7 @@ function PromptInput() {
 			sidebarDataStorage = sidebarData;
 
 			const newMessages = chatMessage.map((item) => {
-				if (pathname.includes(item.chatId)) {
+				if (curChatId === item.chatId) {
 					item.messages.push(content);
 					return item;
 				} else {
@@ -106,8 +112,11 @@ function PromptInput() {
 				}
 			});
 			setChatMessage(newMessages);
+
+			const length = getChatMessagesLength(chatMessage, curChatId as string);
+
 			const newSidebarData = sidebarData.map((item) => {
-				if (pathname.includes(item.id)) {
+				if (curChatId === item.id && length && length === 2) {
 					item.title = inputPrompt;
 					return item;
 				}
