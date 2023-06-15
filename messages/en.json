@@ -10,6 +10,7 @@
 		"more": "...and more soon"
 	},
 	"Chat": {
-		"promptInputPlaceholder": "Typing your message here..."
+		"promptInputPlaceholder": "Typing your message here...",
+		"notFound": "Sorry, the chat you have selected does not exist. Please choose again."
 	}
 }

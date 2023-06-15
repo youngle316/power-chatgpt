@@ -69,7 +69,7 @@ function TopBar() {
 					{chatId ? getValues() : t("newChat")}
 				</div>
 				<div className="text-xs text-gray-400">
-					{chatId ? (
+					{chatId && sidebarVal ? (
 						<div className="flex gap-1">
 							<div>{sidebarVal?.chatModel}</div>
 							<>·</>

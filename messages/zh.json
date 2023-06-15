@@ -10,6 +10,7 @@
 		"more": "敬请期待更多功能。。。"
 	},
 	"Chat": {
-		"promptInputPlaceholder": "输入你的 Prompt"
+		"promptInputPlaceholder": "输入你的 Prompt",
+		"notFound": "很抱歉，您选择的会话不存在，请重新选择。"
 	}
 }
