@@ -17,7 +17,8 @@
 		"appSetting": "App 设置",
 		"openaiAPIKey": "OpenAI API 密钥",
 		"openaiAPIEndPoint": "OpenAI API Endpoint",
-		"save": "保存"
+		"save": "保存",
+		"language": "语言"
 	},
 	"response": {
 		"ApiKeyIsRequired": "请输入 OpenAI API 密钥"

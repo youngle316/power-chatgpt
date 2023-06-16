@@ -8,6 +8,7 @@ import {
 	OPENAI_API_KEY_STORAGE_KEY,
 } from "~/const";
 import { useSettingModalState } from "~/store/sidebarStore";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 function SettingContent() {
 	const [openaiApiKey, setOpenaiApiKey] = useLocalStorage(
@@ -34,6 +35,10 @@ function SettingContent() {
 
 	return (
 		<div>
+			<div className="mb-4">
+				<span className="form-label">{t("language")}</span>
+				<LanguageSwitcher />
+			</div>
 			<form id="settingForm">
 				<div className="mb-4">
 					<label htmlFor="apiKey" className="form-label">

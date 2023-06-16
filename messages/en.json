@@ -17,7 +17,8 @@
 		"appSetting": "App Setting",
 		"openaiAPIKey": "OpenAI API Key",
 		"openaiAPIEndPoint": "OpenAI API Endpoint",
-		"save": "Save"
+		"save": "Save",
+		"language": "Language"
 	},
 	"response": {
 		"ApiKeyIsRequired": "Please enter your OpenAI API key."
