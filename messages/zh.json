@@ -12,5 +12,14 @@
 	"Chat": {
 		"promptInputPlaceholder": "输入你的 Prompt",
 		"notFound": "很抱歉，您选择的会话不存在，请重新选择。"
+	},
+	"Setting": {
+		"appSetting": "App 设置",
+		"openaiAPIKey": "OpenAI API 密钥",
+		"openaiAPIEndPoint": "OpenAI API Endpoint",
+		"save": "保存"
+	},
+	"response": {
+		"ApiKeyIsRequired": "请输入 OpenAI API 密钥"
 	}
 }

@@ -16,6 +16,11 @@ type SelectedChatIdStore = {
 	setSelectedChatId: (id: string) => void;
 };
 
+type SettingModalStore = {
+	isModalOpen: boolean;
+	setIsModalOpen: (value: boolean) => void;
+};
+
 const useSideBarState = create<Store>()((set) => ({
 	isOpen: true,
 	setIsOpen: () => set((state) => ({ isOpen: !state.isOpen })),
@@ -31,4 +36,14 @@ const useSelectedChatId = create<SelectedChatIdStore>()((set) => ({
 	setSelectedChatId: (id) => set(() => ({ selectedChatId: id })),
 }));
 
-export { useSideBarState, useProcessChatId, useSelectedChatId };
+const useSettingModalState = create<SettingModalStore>()((set) => ({
+	isModalOpen: false,
+	setIsModalOpen: (value: boolean) => set(() => ({ isModalOpen: value })),
+}));
+
+export {
+	useSideBarState,
+	useProcessChatId,
+	useSelectedChatId,
+	useSettingModalState,
+};

@@ -7,15 +7,25 @@ import { textAreaAutoHeight } from "~/tools";
 import fetchAskQuestion from "~/lib/fetchChatgpt";
 import { useInputPromptState, useIsTypingState } from "~/store/chat";
 import { useLocalStorage } from "usehooks-ts";
-import { CHAT_MESSAGES_STORAGE_KEY, SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
+import {
+	CHAT_MESSAGES_STORAGE_KEY,
+	SIDEBAR_CHAT_STORAGE_KEY,
+	OPENAI_API_KEY_STORAGE_KEY,
+	OPENAI_API_ENDPOINT_STORAGE_KEY,
+} from "~/const";
 import { nanoid } from "nanoid";
 import { usePathname, useRouter } from "next-intl/client";
 import { createNewChat } from "~/tools";
+import { useSettingModalState } from "~/store/sidebarStore";
 
 function PromptInput() {
 	const t = useTranslations("Chat");
 
+	const responseT = useTranslations("response");
+
 	const { inputPrompt, setInputPrompt } = useInputPromptState();
+
+	const { setIsModalOpen } = useSettingModalState();
 
 	const pathname = usePathname();
 
@@ -31,6 +41,13 @@ function PromptInput() {
 	const [sidebarData, setSidebarData] = useLocalStorage<SideBarChatProps[]>(
 		SIDEBAR_CHAT_STORAGE_KEY,
 		[],
+	);
+
+	const [apiKeyValue] = useLocalStorage<string>(OPENAI_API_KEY_STORAGE_KEY, "");
+
+	const [apiEndPointValue] = useLocalStorage<string>(
+		OPENAI_API_ENDPOINT_STORAGE_KEY,
+		"",
 	);
 
 	const { setIsTyping } = useIsTypingState();
@@ -132,6 +149,10 @@ function PromptInput() {
 			setChatMessageStorage: setChatMessage,
 			sidebarDataStorage,
 			setSidebarDataStorage: setSidebarData,
+			apiKey: apiKeyValue,
+			apiBaseUrl: apiEndPointValue,
+			responseT: responseT,
+			setIsModalOpen: setIsModalOpen,
 		});
 		setIsTyping(false);
 	};

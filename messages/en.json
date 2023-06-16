@@ -12,5 +12,14 @@
 	"Chat": {
 		"promptInputPlaceholder": "Typing your message here...",
 		"notFound": "Sorry, the chat you have selected does not exist. Please choose again."
+	},
+	"Setting": {
+		"appSetting": "App Setting",
+		"openaiAPIKey": "OpenAI API Key",
+		"openaiAPIEndPoint": "OpenAI API Endpoint",
+		"save": "Save"
+	},
+	"response": {
+		"ApiKeyIsRequired": "Please enter your OpenAI API key."
 	}
 }
