@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { textAreaAutoHeight } from "~/tools";
@@ -54,8 +54,11 @@ function PromptInput() {
 
 	const chatTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setInputPrompt(e.target.value);
-		textAreaAutoHeight("promptInput");
 	};
+
+	useEffect(() => {
+		textAreaAutoHeight("promptInput");
+	}, [inputPrompt]);
 
 	const getChatMessagesLength = (chatMessages: ChatMessages[], id: string) => {
 		return chatMessages.find((item) => item.chatId === id)?.messages.length;
@@ -157,8 +160,8 @@ function PromptInput() {
 		setIsTyping(false);
 	};
 
-	const promptInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-		if (e.key === "Enter" && !e.shiftKey) {
+	const promptInputKeyDown = (e: any) => {
+		if (e.keyCode === 13 && !e.shiftKey) {
 			e.preventDefault();
 			sendPrompt();
 		}
