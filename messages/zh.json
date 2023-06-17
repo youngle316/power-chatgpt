@@ -18,7 +18,11 @@
 		"openaiAPIKey": "OpenAI API 密钥",
 		"openaiAPIEndPoint": "OpenAI API Endpoint",
 		"save": "保存",
-		"language": "语言"
+		"language": "语言",
+		"theme": "主题",
+		"dark": "深色主题",
+		"light": "浅色主题",
+		"system": "跟随系统"
 	},
 	"response": {
 		"ApiKeyIsRequired": "请输入 OpenAI API 密钥"

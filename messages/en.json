@@ -18,7 +18,11 @@
 		"openaiAPIKey": "OpenAI API Key",
 		"openaiAPIEndPoint": "OpenAI API Endpoint",
 		"save": "Save",
-		"language": "Language"
+		"language": "Language",
+		"theme": "Theme",
+		"dark": "Dark",
+		"light": "Light",
+		"system": "System"
 	},
 	"response": {
 		"ApiKeyIsRequired": "Please enter your OpenAI API key."

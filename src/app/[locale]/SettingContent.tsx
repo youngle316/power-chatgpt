@@ -9,6 +9,7 @@ import {
 } from "~/const";
 import { useSettingModalState } from "~/store/sidebarStore";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 function SettingContent() {
 	const [openaiApiKey, setOpenaiApiKey] = useLocalStorage(
@@ -38,6 +39,10 @@ function SettingContent() {
 			<div className="mb-4">
 				<span className="form-label">{t("language")}</span>
 				<LanguageSwitcher />
+			</div>
+			<div className="mb-4">
+				<span className="form-label">{t("theme")}</span>
+				<ThemeSwitcher />
 			</div>
 			<form id="settingForm">
 				<div className="mb-4">

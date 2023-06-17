@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/react";
 import Toast from "~/provider/Toast";
+import ThemesProviders from "~/provider/ThemeProvider";
 
 export const metadata = {
 	title: "Power ChatGPT",
@@ -28,14 +29,16 @@ export default async function RootLayout({
 	return (
 		<html lang={locale}>
 			<body className="h-full bg-white text-black dark:bg-zinc-800 dark:text-white transition-colors">
-				<Analytics />
-				<Toast />
-				<NextIntlClientProvider locale={locale} messages={messages}>
-					<main className="h-full">
-						<SideBar />
-						{children}
-					</main>
-				</NextIntlClientProvider>
+				<ThemesProviders>
+					<Analytics />
+					<Toast />
+					<NextIntlClientProvider locale={locale} messages={messages}>
+						<main className="h-full">
+							<SideBar />
+							{children}
+						</main>
+					</NextIntlClientProvider>
+				</ThemesProviders>
 			</body>
 		</html>
 	);
