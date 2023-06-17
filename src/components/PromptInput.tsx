@@ -1,21 +1,31 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { textAreaAutoHeight } from "~/tools";
 import fetchAskQuestion from "~/lib/fetchChatgpt";
 import { useInputPromptState, useIsTypingState } from "~/store/chat";
 import { useLocalStorage } from "usehooks-ts";
-import { CHAT_MESSAGES_STORAGE_KEY, SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
+import {
+	CHAT_MESSAGES_STORAGE_KEY,
+	SIDEBAR_CHAT_STORAGE_KEY,
+	OPENAI_API_KEY_STORAGE_KEY,
+	OPENAI_API_ENDPOINT_STORAGE_KEY,
+} from "~/const";
 import { nanoid } from "nanoid";
 import { usePathname, useRouter } from "next-intl/client";
 import { createNewChat } from "~/tools";
+import { useSettingModalState } from "~/store/sidebarStore";
 
 function PromptInput() {
 	const t = useTranslations("Chat");
 
+	const responseT = useTranslations("response");
+
 	const { inputPrompt, setInputPrompt } = useInputPromptState();
+
+	const { setIsModalOpen } = useSettingModalState();
 
 	const pathname = usePathname();
 
@@ -33,11 +43,25 @@ function PromptInput() {
 		[],
 	);
 
+	const [apiKeyValue] = useLocalStorage<string>(OPENAI_API_KEY_STORAGE_KEY, "");
+
+	const [apiEndPointValue] = useLocalStorage<string>(
+		OPENAI_API_ENDPOINT_STORAGE_KEY,
+		"",
+	);
+
 	const { setIsTyping } = useIsTypingState();
 
 	const chatTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setInputPrompt(e.target.value);
+	};
+
+	useEffect(() => {
 		textAreaAutoHeight("promptInput");
+	}, [inputPrompt]);
+
+	const getChatMessagesLength = (chatMessages: ChatMessages[], id: string) => {
+		return chatMessages.find((item) => item.chatId === id)?.messages.length;
 	};
 
 	const sendPrompt = async () => {
@@ -84,8 +108,10 @@ function PromptInput() {
 			});
 			setChatMessage(newMessages);
 
+			const length = getChatMessagesLength(newChatMessage, uuid);
+
 			const newSidebarData = newChatData.map((item) => {
-				if (item.id === uuid) {
+				if (item.id === uuid && length && length === 2) {
 					item.title = inputPrompt;
 					return item;
 				}
@@ -98,7 +124,7 @@ function PromptInput() {
 			sidebarDataStorage = sidebarData;
 
 			const newMessages = chatMessage.map((item) => {
-				if (pathname.includes(item.chatId)) {
+				if (curChatId === item.chatId) {
 					item.messages.push(content);
 					return item;
 				} else {
@@ -106,8 +132,11 @@ function PromptInput() {
 				}
 			});
 			setChatMessage(newMessages);
+
+			const length = getChatMessagesLength(chatMessage, curChatId as string);
+
 			const newSidebarData = sidebarData.map((item) => {
-				if (pathname.includes(item.id)) {
+				if (curChatId === item.id && length && length === 2) {
 					item.title = inputPrompt;
 					return item;
 				}
@@ -123,8 +152,19 @@ function PromptInput() {
 			setChatMessageStorage: setChatMessage,
 			sidebarDataStorage,
 			setSidebarDataStorage: setSidebarData,
+			apiKey: apiKeyValue,
+			apiBaseUrl: apiEndPointValue,
+			responseT: responseT,
+			setIsModalOpen: setIsModalOpen,
 		});
 		setIsTyping(false);
+	};
+
+	const promptInputKeyDown = (e: any) => {
+		if (e.keyCode === 13 && !e.shiftKey) {
+			e.preventDefault();
+			sendPrompt();
+		}
 	};
 
 	return (
@@ -140,6 +180,7 @@ function PromptInput() {
 						onChange={chatTextAreaChange}
 						placeholder={t("promptInputPlaceholder")}
 						value={inputPrompt}
+						onKeyDown={promptInputKeyDown}
 					/>
 					<button
 						type="button"

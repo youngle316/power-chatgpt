@@ -10,6 +10,21 @@
 		"more": "...and more soon"
 	},
 	"Chat": {
-		"promptInputPlaceholder": "Typing your message here..."
+		"promptInputPlaceholder": "Typing your message here...",
+		"notFound": "Sorry, the chat you have selected does not exist. Please choose again."
+	},
+	"Setting": {
+		"appSetting": "App Setting",
+		"openaiAPIKey": "OpenAI API Key",
+		"openaiAPIEndPoint": "OpenAI API Endpoint",
+		"save": "Save",
+		"language": "Language",
+		"theme": "Theme",
+		"dark": "Dark",
+		"light": "Light",
+		"system": "System"
+	},
+	"response": {
+		"ApiKeyIsRequired": "Please enter your OpenAI API key."
 	}
 }

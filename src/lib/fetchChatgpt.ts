@@ -1,4 +1,5 @@
 import { ChatMessage } from "chatgpt";
+import toast from "react-hot-toast";
 
 const fetchAskQuestion = async ({
 	prompt,
@@ -7,6 +8,10 @@ const fetchAskQuestion = async ({
 	setChatMessageStorage,
 	sidebarDataStorage,
 	setSidebarDataStorage,
+	apiKey,
+	apiBaseUrl,
+	responseT,
+	setIsModalOpen,
 }: FetchAskQuestionProps) => {
 	let parentMessageId = "";
 	chatMessageStorage
@@ -25,9 +30,21 @@ const fetchAskQuestion = async ({
 			prompt,
 			chatId,
 			parentMessageId,
+			apiKey,
+			apiBaseUrl,
 		}),
 	})
 		.then(async (res) => {
+			if (res.status === 400) {
+				const { err } = await res.json();
+				toast(responseT(err), {
+					icon: "🔑",
+				});
+				if (setIsModalOpen) {
+					setIsModalOpen(true);
+				}
+				return;
+			}
 			const {
 				result: { id, parentMessageId, role, text, detail },
 			}: { result: ChatMessage } = await res.json();
@@ -65,7 +82,9 @@ const fetchAskQuestion = async ({
 			setSidebarDataStorage(newSidebarData);
 			setChatMessageStorage(newData);
 		})
-		.catch(() => {});
+		.catch((error) => {
+			console.log("error", error);
+		});
 };
 
 export default fetchAskQuestion;

@@ -9,6 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@headlessui/react": "^1.7.15",
 		"@types/node": "20.2.5",
 		"@types/react": "18.2.7",
 		"@types/react-dom": "18.2.4",
@@ -20,9 +21,11 @@
 		"nanoid": "^4.0.2",
 		"next": "13.4.4",
 		"next-intl": "^2.14.6",
+		"next-themes": "^0.2.1",
 		"postcss": "8.4.24",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
+		"react-hot-toast": "^2.4.1",
 		"react-markdown": "^8.0.7",
 		"react-syntax-highlighter": "^15.5.0",
 		"rehype-katex": "^6.0.3",

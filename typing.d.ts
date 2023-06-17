@@ -38,4 +38,8 @@ type FetchAskQuestionProps = {
 	sidebarDataStorage?: SideBarChatProps[];
 	setSidebarDataStorage?: any;
 	parentMessageId?: "";
+	apiKey: string;
+	apiBaseUrl?: string;
+	responseT?: any;
+	setIsModalOpen?: (value: boolean) => void;
 };

@@ -1,16 +1,21 @@
 "use client";
 
-import { useSideBarState } from "~/store/sidebarStore";
-import { AlignJustify } from "lucide-react";
+import { useSideBarState, useSettingModalState } from "~/store/sidebarStore";
+import { AlignJustify, SlidersHorizontal } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next-intl/client";
 import { useLocalStorage } from "usehooks-ts";
 import { SIDEBAR_CHAT_STORAGE_KEY, CHAT_MESSAGES_STORAGE_KEY } from "~/const";
+import Dialog from "~/components/Dialog";
+import SettingContent from "./SettingContent";
 
 function TopBar() {
 	const { setIsOpen } = useSideBarState();
+	const { isModalOpen, setIsModalOpen } = useSettingModalState();
 
 	const t = useTranslations("NavPage");
+
+	const settingT = useTranslations("Setting");
 
 	const pathname = usePathname();
 
@@ -69,7 +74,7 @@ function TopBar() {
 					{chatId ? getValues() : t("newChat")}
 				</div>
 				<div className="text-xs text-gray-400">
-					{chatId ? (
+					{chatId && sidebarVal ? (
 						<div className="flex gap-1">
 							<div>{sidebarVal?.chatModel}</div>
 							<>·</>
@@ -81,6 +86,20 @@ function TopBar() {
 						t("newChatContent")
 					)}
 				</div>
+			</div>
+			<div className="flex absolute right-4 top-0 bottom-0 items-center justify-center">
+				<button type="button" onClick={() => setIsModalOpen(true)}>
+					<SlidersHorizontal className="h-5 w-5" />
+				</button>
+				{isModalOpen && (
+					<Dialog
+						isOpen={isModalOpen}
+						setIsOpen={setIsModalOpen}
+						title={settingT("appSetting")}
+					>
+						<SettingContent />
+					</Dialog>
+				)}
 			</div>
 		</div>
 	);

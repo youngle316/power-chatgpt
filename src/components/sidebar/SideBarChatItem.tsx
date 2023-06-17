@@ -3,7 +3,7 @@
 import { MessagesSquare, Edit3, Trash, Check, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
+import { CHAT_MESSAGES_STORAGE_KEY, SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
 import { useProcessChatId, useSelectedChatId } from "~/store/sidebarStore";
 import Link from "next-intl/link";
 import { usePathname, useRouter } from "next-intl/client";
@@ -28,6 +28,11 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 
 	const [chatData, setChatData] = useLocalStorage<SideBarChatProps[]>(
 		SIDEBAR_CHAT_STORAGE_KEY,
+		[],
+	);
+
+	const [chatMessages, setChatMessages] = useLocalStorage<ChatMessages[]>(
+		CHAT_MESSAGES_STORAGE_KEY,
 		[],
 	);
 
@@ -81,7 +86,11 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 		}
 		if (processType === "delete") {
 			const newChatData = chatData.filter((item) => item.id !== data.id);
+			const newChatMessages = chatMessages.filter(
+				(item) => item.chatId !== data.id,
+			);
 			setChatData(newChatData);
+			setChatMessages(newChatMessages);
 			setProcessChatId("");
 			if (isActive) {
 				route.push("/");

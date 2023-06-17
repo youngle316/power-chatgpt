@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 html {
-  height: 100%
+  height: 100%;
 }
 
 @layer components {
   .sidebar_btn {
     @apply flex justify-center items-center gap-2 w-full bg-gray-600 text-white border-gray-600 hover:bg-gray-800 hover:border-gray-600 focus:ring-gray-700 
-      border focus:outline-none focus:ring-4 font-medium rounded-lg text-sm p-2
+      border focus:outline-none focus:ring-4 font-medium rounded-lg text-sm p-2;
   }
 
   .chat-textarea-container {
@@ -24,5 +24,20 @@ html {
   .chat-textarea-send-button {
     @apply absolute bottom-0 right-1 rounded-md p-1 text-zinc-500 hover:bg-zinc-100 disabled:hover:bg-transparent 
     dark:hover:bg-zinc-900 dark:hover:text-zinc-400 dark:disabled:hover:bg-transparent md:bottom-1 md:right-3;
+  }
+
+  .form-label {
+    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+  }
+
+  .form-content {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
+    block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  }
+
+  .primary-button {
+    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
+    w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
   }
 }

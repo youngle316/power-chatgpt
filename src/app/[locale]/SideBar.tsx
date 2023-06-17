@@ -12,28 +12,34 @@ function SideBar() {
 		closed: { x: "-100%" },
 	};
 
+	const mobileBlankClick = () => {
+		console.log("111");
+	};
+
 	return (
 		<>
 			{/* mobile sidebar */}
 			{/* isOpen's value is opposite */}
 			<div className="lg:hidden">
-				<AnimatePresence>
-					<motion.div
-						initial={{ x: "-100%" }}
-						animate={isOpen ? "closed" : "open"}
-						variants={variants}
-						transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-						className="fixed flex w-80 text-white top-0 left-0 shadow-lg h-full z-50"
-					>
-						<SideBarContent />
-					</motion.div>
-					{!isOpen && (
+				{!isOpen && (
+					<AnimatePresence>
 						<motion.div
-							onClick={setIsOpen}
-							className="bg-transparent px-5 z-40 fixed h-full w-full flex items-center justify-center top-0 left-0"
-						/>
-					)}
-				</AnimatePresence>
+							initial={{ x: "-100%" }}
+							animate={isOpen ? "closed" : "open"}
+							variants={variants}
+							transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+							className="fixed flex w-80 text-white top-0 left-0 shadow-lg h-full z-50"
+						>
+							<SideBarContent />
+						</motion.div>
+						{!isOpen && (
+							<motion.div
+								onClick={setIsOpen}
+								className="bg-transparent px-100 z-40 fixed h-full w-full flex items-center justify-center top-0 left-0"
+							/>
+						)}
+					</AnimatePresence>
+				)}
 			</div>
 
 			{/* desktop sidebar */}

@@ -7,7 +7,7 @@ const SideBarChat = dynamic(() => import("./SideBarChat"), {
 
 function SideBarContent() {
 	return (
-		<div className="flex-1 bg-gray-800">
+		<div className="w-full flex-1 bg-gray-800">
 			<SideBarNewChat />
 			<SideBarChat />
 		</div>

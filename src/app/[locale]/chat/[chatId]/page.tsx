@@ -4,10 +4,11 @@ import { useLocalStorage } from "usehooks-ts";
 import MainContainer from "../../MainContainer";
 import { CHAT_MESSAGES_STORAGE_KEY, SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
 import { usePathname } from "next-intl/client";
-import { Settings, User, Loader2 } from "lucide-react";
+import { Settings, User, Loader2, AlertOctagon } from "lucide-react";
 import Image from "next/image";
 import ConvertToMarkdown from "~/components/ConvertToMarkdown";
 import { useIsTypingState } from "~/store/chat";
+import { useTranslations } from "next-intl";
 
 function ChatPage() {
 	const [chatMessage] = useLocalStorage<ChatMessages[]>(
@@ -19,13 +20,17 @@ function ChatPage() {
 
 	const { isTyping } = useIsTypingState();
 
+	const messages = chatMessage.find((item) => pathname.includes(item.chatId));
+
 	return (
 		<MainContainer>
-			{chatMessage
-				.find((item) => pathname.includes(item.chatId))
-				?.messages.map((item) => {
+			{messages ? (
+				messages?.messages.map((item) => {
 					return <RenderChatMessages key={item.id} messages={item} />;
-				})}
+				})
+			) : (
+				<RenderNoChat />
+			)}
 			{/* assistant is typing */}
 			{isTyping && (
 				<div className="px-6 rounded-lg">
@@ -40,6 +45,16 @@ function ChatPage() {
 }
 
 export default ChatPage;
+
+const RenderNoChat = () => {
+	const t = useTranslations("Chat");
+	return (
+		<div className="flex justify-center items-center gap-1">
+			<AlertOctagon className="w-5 h-5 text-orange-500" />
+			{t("notFound")}
+		</div>
+	);
+};
 
 const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
 	const [sidebarData] = useLocalStorage<SideBarChatProps[]>(
