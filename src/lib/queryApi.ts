@@ -1,24 +1,5 @@
-import { ChatGPTAPI } from "chatgpt";
 import { SYSTEM_MESSAGE_DEFAULT } from "~/const";
-
-type CreateApiProps = {
-	apiKey: string;
-	apiBaseUrl?: string;
-};
-
-type ChatGPTQuery = {
-	apiKey: string;
-	prompt: string;
-	parentMessageId?: string;
-	apiBaseUrl?: string;
-};
-
-const createApi = ({ apiKey, apiBaseUrl }: CreateApiProps) => {
-	return new ChatGPTAPI({
-		apiKey: apiKey,
-		apiBaseUrl: apiBaseUrl || "https://openaiproxy-4bc.pages.dev/v1",
-	});
-};
+import CreateAPI from "./createApi";
 
 const chatgptQuery = async ({
 	apiKey,
@@ -26,7 +7,8 @@ const chatgptQuery = async ({
 	prompt,
 	parentMessageId,
 }: FetchAskQuestionProps) => {
-	const res = await createApi({ apiKey, apiBaseUrl })
+	const api = CreateAPI.getInstance(apiKey, apiBaseUrl);
+	const res = await api
 		.sendMessage(prompt, {
 			systemMessage: SYSTEM_MESSAGE_DEFAULT,
 			parentMessageId: parentMessageId || undefined,
