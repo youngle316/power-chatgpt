@@ -12,10 +12,6 @@ function SideBar() {
 		closed: { x: "-100%" },
 	};
 
-	const mobileBlankClick = () => {
-		console.log("111");
-	};
-
 	return (
 		<>
 			{/* mobile sidebar */}
