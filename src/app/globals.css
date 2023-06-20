@@ -8,13 +8,12 @@ html {
 
 @layer components {
   .sidebar_btn {
-    @apply flex justify-center items-center gap-2 w-full bg-gray-600 text-white border-gray-600 hover:bg-gray-800 hover:border-gray-600 focus:ring-gray-700 
-      border focus:outline-none focus:ring-4 font-medium rounded-lg text-sm p-2;
+    @apply flex justify-center items-center gap-2 w-full bg-neutral-950 dark:bg-neutral-100 text-neutral-100 dark:text-neutral-900 hover:bg-neutral-700/50 font-medium rounded-lg text-sm p-2;
   }
 
   .chat-textarea-container {
-    @apply relative flex w-full flex-grow flex-col rounded-md border border-black/10 bg-white py-1 shadow-[0_0_10px_rgba(0,0,0,0.10)] 
-    dark:border-zinc-900/50 dark:bg-zinc-700 dark:text-white dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] md:py-2 md:pl-2;
+    @apply relative flex w-full flex-grow flex-col rounded-md border border-neutral-950 bg-white py-1 shadow-[0_0_10px_rgba(0,0,0,0.10)] 
+    dark:border-neutral-900/50 dark:bg-neutral-700 dark:text-neutral-50 dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] md:py-2 md:pl-2;
   }
 
   .chat-textarea {
@@ -22,22 +21,26 @@ html {
   }
 
   .chat-textarea-send-button {
-    @apply absolute bottom-0 right-1 rounded-md p-1 text-zinc-500 hover:bg-zinc-100 disabled:hover:bg-transparent 
-    dark:hover:bg-zinc-900 dark:hover:text-zinc-400 dark:disabled:hover:bg-transparent md:bottom-1 md:right-3;
+    @apply absolute bottom-0 right-1 rounded-md p-1 text-neutral-500 hover:bg-neutral-100 disabled:hover:bg-transparent 
+    dark:hover:bg-neutral-900 dark:hover:text-neutral-400 dark:disabled:hover:bg-transparent md:bottom-1 md:right-3;
   }
 
   .form-label {
-    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+    @apply block mb-2 text-sm font-medium text-neutral-900 dark:text-neutral-100;
   }
 
   .form-content {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-    block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
-    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    @apply bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
+    block w-full p-2.5 dark:border-neutral-600 dark:placeholder-neutral-400 
+    dark:text-neutral-50 dark:focus:ring-blue-500 dark:focus:border-blue-500;
   }
 
   .primary-button {
     @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
     w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+  }
+
+  .svg_icon_hover {
+    @apply hover:text-neutral-400;
   }
 }

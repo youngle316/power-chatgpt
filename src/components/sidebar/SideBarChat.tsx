@@ -10,7 +10,7 @@ function SideBarChat() {
 
 	return (
 		<div className="flex-1 mt-2">
-			<div>
+			<div className="flex flex-col gap-1">
 				{chatData.map((item) => {
 					return <SideBarChatItem key={item.id} data={item} />;
 				})}

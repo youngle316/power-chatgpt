@@ -34,7 +34,7 @@ function ChatPage() {
 			{/* assistant is typing */}
 			{isTyping && (
 				<div className="px-6 rounded-lg">
-					<div className="text-sm text-gray-500 flex items-center space-x-2">
+					<div className="text-sm text-neutral-500 flex items-center space-x-2">
 						<Loader2 className="w-5 h-5 animate-spin" />
 						<span className="animate-pulse">Assistant is typing...</span>
 					</div>
@@ -68,11 +68,11 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
 
 	return (
 		<div className="px-4 rounded-lg mb-2">
-			<div className="pl-14 relative scroll-mt-32 rounded-md hover:bg-gray-50 dark:hover:bg-zinc-900 pb-2 pt-2 pr-2 min-h-[52px]">
+			<div className="pl-14 relative scroll-mt-32 rounded-md hover:bg-neutral-50 dark:hover:bg-neutral-950 pb-2 pt-2 pr-2 min-h-[52px]">
 				<div className="absolute top-2 left-2">
 					<div
-						className="w-9 h-9 bg-gray-200 rounded-md flex-none flex items-center justify-center text-gray-500 
-					hover:bg-gray-300 transition-all group active:bg-gray-200 overflow-hidden"
+						className="w-9 h-9 bg-neutral-200 rounded-md flex-none flex items-center justify-center text-neutral-500 
+					hover:bg-neutral-300 transition-all group active:bg-neutral-200 overflow-hidden"
 					>
 						{messages.role === "user" && <User className="w-5 h-5" />}
 						{messages.role === "system" && <Settings className="w-5 h-5" />}
@@ -93,17 +93,17 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
 					<div>
 						{messages.role === "system" && (
 							<>
-								<div className="text-gray-500 text-xs mb-1 whitespace-pre-line">
+								<div className="text-neutral-500 text-xs mb-1 whitespace-pre-line">
 									model: {getChatModel()}
 								</div>
-								<div className="text-gray-500 text-xs mb-1 whitespace-pre-line">
+								<div className="text-neutral-500 text-xs mb-1 whitespace-pre-line">
 									{messages.text}
 								</div>
 							</>
 						)}
 						{messages.role === "user" && (
 							<div
-								className="break-words text-sm whitespace-pre-wrap space-y-2 w-fit text-white px-4 py-2 rounded-lg 
+								className="break-words text-sm whitespace-pre-wrap space-y-2 w-fit text-neutral-50 px-4 py-2 rounded-lg 
 							max-w-full overflow-auto highlight-darkblue focus:outline bg-blue-500"
 							>
 								{messages.text}

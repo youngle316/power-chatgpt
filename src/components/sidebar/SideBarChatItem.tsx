@@ -109,9 +109,10 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 			onClick={selectChatId}
 		>
 			<div
-				className={`flex items-center text-gray-300 hover:bg-gray-700 hover:text-white
-				text-sm font-medium w-full space-x-2 justify-between overflow-hidden cursor-pointer ${
-					isActive && "bg-gray-700"
+				className={`flex items-center hover:bg-blue-300/50 dark:hover:bg-blue-800/50
+				text-sm font-medium w-full space-x-2 justify-between overflow-hidden cursor-pointer rounded-2xl ${
+					isActive &&
+					"bg-blue-200 hover:bg-blue-200 dark:bg-blue-800 dark:hover:bg-blue-800"
 				}`}
 			>
 				<div className="flex flex-1 items-center justify-start gap-x-2 min-w-0 w-full px-2 py-2 text-sm group">
@@ -120,38 +121,36 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
 						{processChatId === data.id && processType === "edit" ? (
 							<TitleTextArea value={textAreaVal} setValue={setTextAreaVal} />
 						) : (
-							<div className="text-gray-100 truncate w-full">{data.title}</div>
+							<div className="text-neutral-900 dark:text-neutral-100 truncate w-full">
+								{data.title}
+							</div>
 						)}
-						<div className="text-xs text-gray-400 font-normal truncate w-full">
+						<div className="text-xs text-neutral-800/60 dark:text-neutral-200/60 font-normal truncate w-full">
 							{data.des}
 						</div>
 					</div>
 				</div>
-				<div className="flex gap-2 text-gray-400 pr-2">
+				<div className="flex gap-2 pr-2">
 					{processChatId === data.id ? (
 						<>
 							<Check
 								onClick={(e) => confirmEditChatItem(e, data)}
 								size={16}
-								className="hover:text-white"
+								className="svg_icon_hover"
 							/>
-							<X
-								size={16}
-								onClick={cancelProcess}
-								className="hover:text-white"
-							/>
+							<X size={16} onClick={cancelProcess} className="svg_icon_hover" />
 						</>
 					) : (
 						<>
 							<Edit3
 								onClick={(e) => editChatItem(e, data)}
 								size={16}
-								className="hover:text-white"
+								className="svg_icon_hover"
 							/>
 							<Trash
 								onClick={(e) => deleteChatItem(e, data)}
 								size={16}
-								className="hover:text-white"
+								className="svg_icon_hover"
 							/>
 						</>
 					)}
@@ -176,8 +175,7 @@ function TitleTextArea({
 		<textarea
 			id="message"
 			rows={1}
-			className="block px-1 w-full text-sm text-white bg-gray-900 rounded-lg border 
-			border-gray-300 focus:ring-gray-900 focus:border-gray-900"
+			className="block px-1 w-full text-sm rounded-lg border bg-white dark:bg-black"
 			placeholder="请输入标题"
 			value={value}
 			onChange={(e) => setValue(e.target.value)}

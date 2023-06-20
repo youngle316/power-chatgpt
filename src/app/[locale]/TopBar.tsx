@@ -8,6 +8,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { SIDEBAR_CHAT_STORAGE_KEY, CHAT_MESSAGES_STORAGE_KEY } from "~/const";
 import Dialog from "~/components/Dialog";
 import SettingContent from "./SettingContent";
+import RadixDialog from "~/components/RadixDialog";
 
 function TopBar() {
 	const { setIsOpen } = useSideBarState();
@@ -58,13 +59,13 @@ function TopBar() {
 	};
 
 	return (
-		<div className="sticky z-30 top-0 h-16 bg-white dark:bg-gray-700 border-b-2 border-gray-200 dark:border-gray-700 drop-shadow-md">
+		<div className="sticky z-30 top-0 h-16 bg-neutral-50 dark:bg-neutral-950 border-b-2 border-neutral-200 dark:border-neutral-800 drop-shadow-md">
 			<div className="flex absolute left-1 top-0 bottom-0 items-center justify-center">
 				<button
 					type="button"
 					onClick={setIsOpen}
-					className="inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 
-          dark:hover:text-gray-100"
+					className="inline-flex h-12 w-12 items-center justify-center rounded-md text-neutral-900 dark:text-neutral-100 hover:text-neutral-900/50 
+          dark:hover:text-neutral-100/50"
 				>
 					<AlignJustify />
 				</button>
