@@ -24,7 +24,7 @@ function SideBar() {
 							animate={isOpen ? "closed" : "open"}
 							variants={variants}
 							transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-							className="fixed flex w-80 text-white top-0 left-0 shadow-lg h-full z-50"
+							className="fixed flex w-80 top-0 left-0 shadow-lg h-full z-50"
 						>
 							<SideBarContent />
 						</motion.div>
@@ -45,7 +45,7 @@ function SideBar() {
 					animate={isOpen ? "open" : "closed"}
 					variants={variants}
 					transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-					className="hidden text-white top-0 left-0 shadow-lg h-full w-full lg:flex lg:flex-col lg:fixed lg:w-80"
+					className="hidden top-0 left-0 shadow-lg h-full w-full lg:flex lg:flex-col lg:fixed lg:w-80"
 				>
 					<SideBarContent />
 				</motion.div>

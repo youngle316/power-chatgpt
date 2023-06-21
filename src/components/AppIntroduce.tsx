@@ -13,12 +13,12 @@ function AppIntroduce() {
 		<div className="pt-8 pb-12 relative">
 			<div className="flex gap-1 items-center justify-center space-x-2">
 				<Logo />
-				<div className="font-semibold text-4xl sm:text-5xl text-black dark:text-white ">
+				<div className="font-semibold text-4xl sm:text-5xl text-neutral-950 dark:text-neutral-50">
 					Power
 					<span className="text-blue-500">Chat</span>
 				</div>
 			</div>
-			<div className="text-center my-4 font-light text-base sm:text-xl sm:my-6 text-black dark:text-white">
+			<div className="text-center my-4 font-light text-base sm:text-xl sm:my-6 text-neutral-950 dark:text-neutral-50">
 				A Power Tool for ChatGPT
 			</div>
 			<div className="flex items-center justify-center">
