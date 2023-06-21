@@ -8,7 +8,6 @@ import { useLocalStorage } from "usehooks-ts";
 import { SIDEBAR_CHAT_STORAGE_KEY, CHAT_MESSAGES_STORAGE_KEY } from "~/const";
 import Dialog from "~/components/Dialog";
 import SettingContent from "./SettingContent";
-import RadixDialog from "~/components/RadixDialog";
 
 function TopBar() {
 	const { setIsOpen } = useSideBarState();
