@@ -58,19 +58,19 @@ function TopBar() {
   };
 
   return (
-    <div className="sticky z-30 top-0 h-16 bg-neutral-50 dark:bg-neutral-950 border-b-2 border-neutral-200 dark:border-neutral-800 drop-shadow-md">
-      <div className="flex absolute left-1 top-0 bottom-0 items-center justify-center">
+    <div className="sticky top-0 z-30 h-16 border-b-2 border-neutral-200 bg-neutral-50 drop-shadow-md dark:border-neutral-800 dark:bg-neutral-950">
+      <div className="absolute bottom-0 left-1 top-0 flex items-center justify-center">
         <button
           type="button"
           onClick={setIsOpen}
-          className="inline-flex h-12 w-12 items-center justify-center rounded-md text-neutral-900 dark:text-neutral-100 hover:text-neutral-900/50 
+          className="inline-flex h-12 w-12 items-center justify-center rounded-md text-neutral-900 hover:text-neutral-900/50 dark:text-neutral-100 
           dark:hover:text-neutral-100/50"
         >
           <AlignJustify />
         </button>
       </div>
-      <div className="flex items-center justify-center w-full h-full flex-col min-w-0 ">
-        <div className="font-semibold truncate w-full text-center px-12 text-black dark:text-white">
+      <div className="flex h-full w-full min-w-0 flex-col items-center justify-center ">
+        <div className="w-full truncate px-12 text-center font-semibold text-black dark:text-white">
           {chatId ? getValues() : t("newChat")}
         </div>
         <div className="text-xs text-gray-400">
@@ -87,7 +87,7 @@ function TopBar() {
           )}
         </div>
       </div>
-      <div className="flex absolute right-4 top-0 bottom-0 items-center justify-center">
+      <div className="absolute bottom-0 right-4 top-0 flex items-center justify-center">
         <button type="button" onClick={() => setIsModalOpen(true)}>
           <SlidersHorizontal className="h-5 w-5" />
         </button>

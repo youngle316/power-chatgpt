@@ -45,7 +45,7 @@ function RadixDialog({ isOpen, setIsOpen, children, title }: RadixDialogProps) {
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg text-center font-medium leading-6 text-gray-900 dark:text-white"
+                  className="text-center text-lg font-medium leading-6 text-gray-900 dark:text-white"
                 >
                   {title}
                 </Dialog.Title>

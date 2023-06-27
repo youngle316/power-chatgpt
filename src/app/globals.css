@@ -8,16 +8,16 @@ html {
 
 @layer components {
   .sidebar_btn {
-    @apply flex justify-center items-center gap-2 w-full bg-neutral-950 dark:bg-neutral-100 text-neutral-100 dark:text-neutral-900 hover:bg-neutral-700/50 font-medium rounded-lg text-sm p-2;
+    @apply flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-950 p-2 text-sm font-medium text-neutral-100 hover:bg-neutral-700/50 dark:bg-neutral-100 dark:text-neutral-900;
   }
 
   .chat-textarea-container {
-    @apply relative flex w-full flex-grow flex-col rounded-md border border-neutral-950 bg-white py-1 shadow-[0_0_10px_rgba(0,0,0,0.10)]
-    dark:border-neutral-900/50 dark:bg-neutral-700 dark:text-neutral-50 dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] md:py-2 md:pl-2;
+    @apply relative flex w-full flex-grow flex-col rounded-md border border-neutral-950 bg-white py-1 pl-2
+    shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:border-neutral-900/50 dark:bg-neutral-950 dark:text-neutral-50 dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] md:py-2;
   }
 
   .chat-textarea {
-    @apply m-0 w-full flex items-center resize-none border-0 bg-transparent p-0 pr-10 focus:outline-none focus:ring-0 focus-visible:ring-0 dark:bg-transparent;
+    @apply m-0 flex w-full resize-none items-center border-0 bg-transparent p-0 pr-10 focus:outline-none focus:ring-0 focus-visible:ring-0 dark:bg-transparent;
   }
 
   .chat-textarea-send-button {
@@ -26,18 +26,18 @@ html {
   }
 
   .form-label {
-    @apply block mb-2 text-sm font-medium text-neutral-900 dark:text-neutral-100;
+    @apply mb-2 block text-sm font-medium text-neutral-900 dark:text-neutral-100;
   }
 
   .form-content {
-    @apply bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
-    block w-full p-2.5 dark:border-neutral-600 dark:placeholder-neutral-400
-    dark:text-neutral-50 dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    @apply block w-full rounded-lg border border-neutral-300 bg-neutral-50 p-2.5 text-sm text-neutral-900
+    focus:border-blue-500 focus:ring-blue-500 dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-50
+    dark:placeholder-neutral-400 dark:focus:border-blue-500 dark:focus:ring-blue-500;
   }
 
   .primary-button {
-    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm
-    w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+    @apply w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white
+    hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto;
   }
 
   .svg_icon_hover {

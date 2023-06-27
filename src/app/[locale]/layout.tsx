@@ -28,7 +28,7 @@ export default async function RootLayout({
   const messages = await getMessages(locale);
   return (
     <html lang={locale}>
-      <body className="h-full bg-neutral-100 text-neutral-950 dark:bg-neutral-900 dark:text-neutral-50 transition-colors">
+      <body className="h-full bg-neutral-100 text-neutral-950 transition-colors dark:bg-neutral-900 dark:text-neutral-50">
         <ThemesProviders>
           <Analytics />
           <Toast />

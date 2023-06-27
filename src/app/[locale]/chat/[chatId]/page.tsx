@@ -33,9 +33,9 @@ function ChatPage() {
       )}
       {/* assistant is typing */}
       {isTyping && (
-        <div className="px-6 rounded-lg">
-          <div className="text-sm text-neutral-500 flex items-center space-x-2">
-            <Loader2 className="w-5 h-5 animate-spin" />
+        <div className="rounded-lg px-6">
+          <div className="flex items-center space-x-2 text-sm text-neutral-500">
+            <Loader2 className="h-5 w-5 animate-spin" />
             <span className="animate-pulse">Assistant is typing...</span>
           </div>
         </div>
@@ -49,8 +49,8 @@ export default ChatPage;
 const RenderNoChat = () => {
   const t = useTranslations("Chat");
   return (
-    <div className="flex justify-center items-center gap-1">
-      <AlertOctagon className="w-5 h-5 text-orange-500" />
+    <div className="flex items-center justify-center gap-1">
+      <AlertOctagon className="h-5 w-5 text-orange-500" />
       {t("notFound")}
     </div>
   );
@@ -67,18 +67,18 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
     sidebarData.find((item) => pathname.includes(item.id))?.chatModel || "";
 
   return (
-    <div className="px-4 rounded-lg mb-2">
-      <div className="pl-14 relative scroll-mt-32 rounded-md hover:bg-neutral-50 dark:hover:bg-neutral-950 pb-2 pt-2 pr-2 min-h-[52px]">
-        <div className="absolute top-2 left-2">
+    <div className="mb-2 rounded-lg px-4">
+      <div className="relative min-h-[52px] scroll-mt-32 rounded-md pb-2 pl-14 pr-2 pt-2 hover:bg-neutral-50 dark:hover:bg-neutral-950">
+        <div className="absolute left-2 top-2">
           <div
-            className="w-9 h-9 bg-neutral-200 rounded-md flex-none flex items-center justify-center text-neutral-500 
-					hover:bg-neutral-300 transition-all group active:bg-neutral-200 overflow-hidden"
+            className="group flex h-9 w-9 flex-none items-center justify-center overflow-hidden rounded-md 
+					bg-neutral-200 text-neutral-500 transition-all hover:bg-neutral-300 active:bg-neutral-200"
           >
-            {messages.role === "user" && <User className="w-5 h-5" />}
-            {messages.role === "system" && <Settings className="w-5 h-5" />}
+            {messages.role === "user" && <User className="h-5 w-5" />}
+            {messages.role === "system" && <Settings className="h-5 w-5" />}
             {messages.role === "assistant" && (
               <Image
-                className="w-5 h-5"
+                className="h-5 w-5"
                 alt="logo"
                 src="/assets/logo.svg"
                 width={20}
@@ -93,24 +93,24 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
           <div>
             {messages.role === "system" && (
               <>
-                <div className="text-neutral-500 text-xs mb-1 whitespace-pre-line">
+                <div className="mb-1 whitespace-pre-line text-xs text-neutral-500">
                   model: {getChatModel()}
                 </div>
-                <div className="text-neutral-500 text-xs mb-1 whitespace-pre-line">
+                <div className="mb-1 whitespace-pre-line text-xs text-neutral-500">
                   {messages.text}
                 </div>
               </>
             )}
             {messages.role === "user" && (
               <div
-                className="break-words text-sm whitespace-pre-wrap space-y-2 w-fit text-neutral-50 px-4 py-2 rounded-lg 
-							max-w-full overflow-auto highlight-darkblue focus:outline bg-blue-500"
+                className="highlight-darkblue w-fit max-w-full space-y-2 overflow-auto whitespace-pre-wrap break-words rounded-lg bg-blue-500 
+							px-4 py-2 text-sm text-neutral-50 focus:outline"
               >
                 {messages.text}
               </div>
             )}
             {messages.role === "assistant" && (
-              <div className="prose prose-sm max-w-full dark:prose-invert break-words">
+              <div className="prose prose-sm max-w-full break-words dark:prose-invert">
                 <ConvertToMarkdown value={messages.text} />
               </div>
             )}

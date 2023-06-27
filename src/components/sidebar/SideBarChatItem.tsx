@@ -109,23 +109,23 @@ function SideBarChatItem({ data }: { data: SideBarChatProps }) {
       onClick={selectChatId}
     >
       <div
-        className={`flex items-center hover:bg-blue-300/50 dark:hover:bg-blue-800/50
-				text-sm font-medium w-full space-x-2 justify-between overflow-hidden cursor-pointer rounded-2xl ${
+        className={`flex w-full cursor-pointer items-center
+				justify-between space-x-2 overflow-hidden rounded-2xl text-sm font-medium hover:bg-blue-300/50 dark:hover:bg-blue-800/50 ${
           isActive &&
           "bg-blue-200 hover:bg-blue-200 dark:bg-blue-800 dark:hover:bg-blue-800"
         }`}
       >
-        <div className="flex flex-1 items-center justify-start gap-x-2 min-w-0 w-full px-2 py-2 text-sm group">
+        <div className="group flex w-full min-w-0 flex-1 items-center justify-start gap-x-2 px-2 py-2 text-sm">
           <MessagesSquare size={28} />
-          <div className="space-y-1 text-left w-full min-w-0">
+          <div className="w-full min-w-0 space-y-1 text-left">
             {processChatId === data.id && processType === "edit" ? (
               <TitleTextArea value={textAreaVal} setValue={setTextAreaVal} />
             ) : (
-              <div className="text-neutral-900 dark:text-neutral-100 truncate w-full">
+              <div className="w-full truncate text-neutral-900 dark:text-neutral-100">
                 {data.title}
               </div>
             )}
-            <div className="text-xs text-neutral-800/60 dark:text-neutral-200/60 font-normal truncate w-full">
+            <div className="w-full truncate text-xs font-normal text-neutral-800/60 dark:text-neutral-200/60">
               {data.des}
             </div>
           </div>
@@ -178,7 +178,7 @@ function TitleTextArea({
     <textarea
       id="message"
       rows={1}
-      className="block px-1 w-full text-sm rounded-lg border bg-white dark:bg-black"
+      className="block w-full rounded-lg border bg-white px-1 text-sm dark:bg-black"
       placeholder="请输入标题"
       value={value}
       onChange={(e) => setValue(e.target.value)}

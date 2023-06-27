@@ -24,14 +24,14 @@ function SideBar() {
               animate={isOpen ? "closed" : "open"}
               variants={variants}
               transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-              className="fixed flex w-80 top-0 left-0 shadow-lg h-full z-50"
+              className="fixed left-0 top-0 z-50 flex h-full w-80 shadow-lg"
             >
               <SideBarContent />
             </motion.div>
             {!isOpen && (
               <motion.div
                 onClick={setIsOpen}
-                className="bg-transparent px-100 z-40 fixed h-full w-full flex items-center justify-center top-0 left-0"
+                className="px-100 fixed left-0 top-0 z-40 flex h-full w-full items-center justify-center bg-transparent"
               />
             )}
           </AnimatePresence>
@@ -45,7 +45,7 @@ function SideBar() {
           animate={isOpen ? "open" : "closed"}
           variants={variants}
           transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-          className="hidden top-0 left-0 shadow-lg h-full w-full lg:flex lg:flex-col lg:fixed lg:w-80"
+          className="left-0 top-0 hidden h-full w-full shadow-lg lg:fixed lg:flex lg:w-80 lg:flex-col"
         >
           <SideBarContent />
         </motion.div>

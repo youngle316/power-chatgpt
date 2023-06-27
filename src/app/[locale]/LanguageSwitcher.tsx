@@ -37,8 +37,8 @@ function LanguageSwitcher() {
       <Listbox value={selected} onChange={switcherChange}>
         <div className="relative mt-1">
           <Listbox.Button
-            className="relative bg-neutral-50 border-neutral-600 border w-full cursor-default
-					rounded-lg py-2 pl-3 pr-10 text-left dark:bg-neutral-950"
+            className="relative w-full cursor-default rounded-lg border border-neutral-600
+					bg-neutral-50 py-2 pl-3 pr-10 text-left dark:bg-neutral-950"
           >
             <span className="block truncate">{selected?.name}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -54,7 +54,7 @@ function LanguageSwitcher() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-neutral-950 py-1 text-base shadow-lg dark:bg-neutral-50">
+            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-neutral-950 py-1 text-base shadow-lg dark:bg-neutral-50">
               {Language.map((language) => (
                 <Listbox.Option
                   key={language.value}
