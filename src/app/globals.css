@@ -12,7 +12,7 @@ html {
   }
 
   .chat-textarea-container {
-    @apply relative flex w-full flex-grow flex-col rounded-md border border-neutral-950 bg-white py-1 shadow-[0_0_10px_rgba(0,0,0,0.10)] 
+    @apply relative flex w-full flex-grow flex-col rounded-md border border-neutral-950 bg-white py-1 shadow-[0_0_10px_rgba(0,0,0,0.10)]
     dark:border-neutral-900/50 dark:bg-neutral-700 dark:text-neutral-50 dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] md:py-2 md:pl-2;
   }
 
@@ -21,7 +21,7 @@ html {
   }
 
   .chat-textarea-send-button {
-    @apply absolute bottom-0 right-1 rounded-md p-1 text-neutral-500 hover:bg-neutral-100 disabled:hover:bg-transparent 
+    @apply absolute bottom-0 right-1 rounded-md p-1 text-neutral-500 hover:bg-neutral-100 disabled:hover:bg-transparent
     dark:hover:bg-neutral-900 dark:hover:text-neutral-400 dark:disabled:hover:bg-transparent md:bottom-1 md:right-3;
   }
 
@@ -30,13 +30,13 @@ html {
   }
 
   .form-content {
-    @apply bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-    block w-full p-2.5 dark:border-neutral-600 dark:placeholder-neutral-400 
+    @apply bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
+    block w-full p-2.5 dark:border-neutral-600 dark:placeholder-neutral-400
     dark:text-neutral-50 dark:focus:ring-blue-500 dark:focus:border-blue-500;
   }
 
   .primary-button {
-    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
+    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm
     w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
   }
 

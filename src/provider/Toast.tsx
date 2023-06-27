@@ -1,7 +1,7 @@
 import { Toaster } from "react-hot-toast";
 
 function Toast() {
-	return <Toaster />;
+  return <Toaster />;
 }
 
 export default Toast;
