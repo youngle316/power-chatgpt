@@ -1,30 +1,30 @@
 {
-	"NavPage": {
-		"newChat": "New Chat",
-		"newChatContent": "Start a new chat"
-	},
-	"APP": {
-		"noLogin": "No login",
-		"useYourOwnAPIKey": "Use your own API key",
-		"freeModel": "Free for GPT-3.5 model",
-		"more": "...and more soon"
-	},
-	"Chat": {
-		"promptInputPlaceholder": "Typing your message here...",
-		"notFound": "Sorry, the chat you have selected does not exist. Please choose again."
-	},
-	"Setting": {
-		"appSetting": "App Setting",
-		"openaiAPIKey": "OpenAI API Key",
-		"openaiAPIEndPoint": "OpenAI API Endpoint",
-		"save": "Save",
-		"language": "Language",
-		"theme": "Theme",
-		"dark": "Dark",
-		"light": "Light",
-		"system": "System"
-	},
-	"response": {
-		"ApiKeyIsRequired": "Please enter your OpenAI API key."
-	}
+  "NavPage": {
+    "newChat": "New Chat",
+    "newChatContent": "Start a new chat"
+  },
+  "APP": {
+    "noLogin": "No login",
+    "useYourOwnAPIKey": "Use your own API key",
+    "freeModel": "Free for GPT-3.5 model",
+    "more": "...and more soon"
+  },
+  "Chat": {
+    "promptInputPlaceholder": "Typing your message here...",
+    "notFound": "Sorry, the chat you have selected does not exist. Please choose again."
+  },
+  "Setting": {
+    "appSetting": "App Setting",
+    "openaiAPIKey": "OpenAI API Key",
+    "openaiAPIEndPoint": "OpenAI API Endpoint",
+    "save": "Save",
+    "language": "Language",
+    "theme": "Theme",
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System"
+  },
+  "response": {
+    "ApiKeyIsRequired": "Please enter your OpenAI API key."
+  }
 }

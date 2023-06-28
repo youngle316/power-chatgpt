@@ -1,5 +1,5 @@
 import MainContainer from "../MainContainer";
 
 export default function Home() {
-	return <MainContainer>{}</MainContainer>;
+  return <MainContainer>{}</MainContainer>;
 }

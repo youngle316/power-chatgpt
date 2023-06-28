@@ -1,30 +1,30 @@
 {
-	"NavPage": {
-		"newChat": "新建会话",
-		"newChatContent": "开始新建一个会话"
-	},
-	"APP": {
-		"noLogin": "无需登录",
-		"useYourOwnAPIKey": "使用你自己的 API Key",
-		"freeModel": "GPT-3.5 model 免费",
-		"more": "敬请期待更多功能。。。"
-	},
-	"Chat": {
-		"promptInputPlaceholder": "输入你的 Prompt",
-		"notFound": "很抱歉，您选择的会话不存在，请重新选择。"
-	},
-	"Setting": {
-		"appSetting": "App 设置",
-		"openaiAPIKey": "OpenAI API 密钥",
-		"openaiAPIEndPoint": "OpenAI API Endpoint",
-		"save": "保存",
-		"language": "语言",
-		"theme": "主题",
-		"dark": "深色主题",
-		"light": "浅色主题",
-		"system": "跟随系统"
-	},
-	"response": {
-		"ApiKeyIsRequired": "请输入 OpenAI API 密钥"
-	}
+  "NavPage": {
+    "newChat": "新建会话",
+    "newChatContent": "开始新建一个会话"
+  },
+  "APP": {
+    "noLogin": "无需登录",
+    "useYourOwnAPIKey": "使用你自己的 API Key",
+    "freeModel": "GPT-3.5 model 免费",
+    "more": "敬请期待更多功能。。。"
+  },
+  "Chat": {
+    "promptInputPlaceholder": "输入你的 Prompt",
+    "notFound": "很抱歉，您选择的会话不存在，请重新选择。"
+  },
+  "Setting": {
+    "appSetting": "App 设置",
+    "openaiAPIKey": "OpenAI API 密钥",
+    "openaiAPIEndPoint": "OpenAI API Endpoint",
+    "save": "保存",
+    "language": "语言",
+    "theme": "主题",
+    "dark": "深色主题",
+    "light": "浅色主题",
+    "system": "跟随系统"
+  },
+  "response": {
+    "ApiKeyIsRequired": "请输入 OpenAI API 密钥"
+  }
 }
