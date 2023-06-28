@@ -160,7 +160,7 @@ function PromptInput() {
     setIsTyping(false);
   };
 
-  const promptInputKeyDown = (e: any) => {
+  const promptInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault();
       sendPrompt();

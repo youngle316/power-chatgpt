@@ -1,13 +1,20 @@
 "use client";
 
-import { useLocalStorage } from "usehooks-ts";
+import { useCopyToClipboard, useLocalStorage } from "usehooks-ts";
 import MainContainer from "../../MainContainer";
 import { CHAT_MESSAGES_STORAGE_KEY, SIDEBAR_CHAT_STORAGE_KEY } from "~/const";
 import { usePathname } from "next-intl/client";
-import { Settings, User, Loader2, AlertOctagon } from "lucide-react";
+import {
+  Settings,
+  User,
+  Loader2,
+  AlertOctagon,
+  Clipboard,
+  ClipboardCheck,
+} from "lucide-react";
 import Image from "next/image";
 import ConvertToMarkdown from "~/components/ConvertToMarkdown";
-import { useIsTypingState } from "~/store/chat";
+import { useEnteredMessage, useIsCopied, useIsTypingState } from "~/store/chat";
 import { useTranslations } from "next-intl";
 
 function ChatPage() {
@@ -66,8 +73,40 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
   const getChatModel = () =>
     sidebarData.find((item) => pathname.includes(item.id))?.chatModel || "";
 
+  const { enterMessage, setEnterMessage } = useEnteredMessage();
+
+  const { isCopied, setIsCopied } = useIsCopied();
+
+  const [, copy] = useCopyToClipboard();
+
+  const enterChatMessage = (messages: MessagesItem) => {
+    setEnterMessage({
+      id: messages.id,
+      text: messages.text,
+    });
+  };
+
+  const copyText = () => {
+    copy(enterMessage.text)
+      .then(() => {
+        setIsCopied(true);
+      })
+      .catch(() => {
+        setIsCopied(false);
+      });
+  };
+
+  const mouseLeave = () => {
+    setEnterMessage({ id: "", text: "" });
+    setIsCopied(false);
+  };
+
   return (
-    <div className="mb-2 rounded-lg px-4">
+    <div
+      className="mb-2 rounded-lg px-4"
+      onMouseEnter={() => enterChatMessage(messages)}
+      onMouseLeave={() => mouseLeave()}
+    >
       <div className="relative min-h-[52px] scroll-mt-32 rounded-md pb-2 pl-14 pr-2 pt-2 hover:bg-neutral-50 dark:hover:bg-neutral-950">
         <div className="absolute left-2 top-2">
           <div
@@ -87,8 +126,18 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
             )}
           </div>
         </div>
-        {/* TODO: Hover Button */}
-        {/* <div>HoverButton</div> */}
+        {messages.role !== "system" && enterMessage?.id === messages.id && (
+          <div className="absolute bottom-[-8px] right-4 cursor-pointer">
+            {isCopied ? (
+              <ClipboardCheck className="h-6 w-6 text-lime-600" />
+            ) : (
+              <Clipboard
+                onClick={copyText}
+                className="h-6 w-6 hover:text-blue-600"
+              />
+            )}
+          </div>
+        )}
         <div className="w-full">
           <div>
             {messages.role === "system" && (
