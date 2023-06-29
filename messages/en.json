@@ -8,7 +8,9 @@
     "useYourOwnAPIKey": "Use your own API key",
     "freeModel": "Free for GPT-3.5 model",
     "more": "...and more soon",
-    "localSave": "Stored locally"
+    "localSave": "Stored locally",
+    "enterKey": "Please enter your own OpenAI API Key first",
+    "enter": "Enter"
   },
   "Chat": {
     "promptInputPlaceholder": "Typing your message here...",
