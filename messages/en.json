@@ -7,7 +7,8 @@
     "noLogin": "No login",
     "useYourOwnAPIKey": "Use your own API key",
     "freeModel": "Free for GPT-3.5 model",
-    "more": "...and more soon"
+    "more": "...and more soon",
+    "localSave": "Stored locally"
   },
   "Chat": {
     "promptInputPlaceholder": "Typing your message here...",

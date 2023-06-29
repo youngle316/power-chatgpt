@@ -8,7 +8,7 @@ const OPENAI_API_ENDPOINT_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}OPENAI_API_ENDPO
 
 const CHAT_MESSAGES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}CHAT-MESSAGES`;
 
-const APP_FEATURES = ["noLogin", "useYourOwnAPIKey", "freeModel", "more"];
+const APP_FEATURES = ["noLogin", "useYourOwnAPIKey", "localSave", "more"];
 
 const SYSTEM_MESSAGE_DEFAULT =
   "You are ChatGPT, a large language model trained by OpenAI.";
