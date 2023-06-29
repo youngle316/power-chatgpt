@@ -16,6 +16,7 @@ import Image from "next/image";
 import ConvertToMarkdown from "~/components/ConvertToMarkdown";
 import { useEnteredMessage, useIsCopied, useIsTypingState } from "~/store/chat";
 import { useTranslations } from "next-intl";
+import dayjs from "dayjs";
 
 function ChatPage() {
   const [chatMessage] = useLocalStorage<ChatMessages[]>(
@@ -159,9 +160,14 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
               </div>
             )}
             {messages.role === "assistant" && (
-              <div className="prose prose-sm max-w-full break-words dark:prose-invert">
-                <ConvertToMarkdown value={messages.text} />
-              </div>
+              <>
+                <div className="text-xs text-neutral-600/50 dark:text-neutral-400/50">
+                  {dayjs.unix(messages.createAt).format("YYYY-MM-DD HH:mm:ss")}
+                </div>
+                <div className="prose prose-sm max-w-full break-words dark:prose-invert">
+                  <ConvertToMarkdown value={messages.text} />
+                </div>
+              </>
             )}
           </div>
         </div>
