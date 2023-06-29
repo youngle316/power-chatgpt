@@ -5,7 +5,11 @@ import { Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { textAreaAutoHeight } from "~/tools";
 import fetchAskQuestion from "~/lib/fetchChatgpt";
-import { useInputPromptState, useIsTypingState } from "~/store/chat";
+import {
+  useInputPromptState,
+  useIsTypingState,
+  useMoveDownRef,
+} from "~/store/chat";
 import { useLocalStorage } from "usehooks-ts";
 import {
   CHAT_MESSAGES_STORAGE_KEY,
@@ -17,6 +21,7 @@ import { nanoid } from "nanoid";
 import { usePathname, useRouter } from "next-intl/client";
 import { createNewChat } from "~/tools";
 import { useSettingModalState } from "~/store/sidebarStore";
+import { useScrollToView } from "~/hooks/useScrollToView";
 
 function PromptInput() {
   const t = useTranslations("Chat");
@@ -52,6 +57,10 @@ function PromptInput() {
 
   const { setIsTyping } = useIsTypingState();
 
+  const { moveDownRef } = useMoveDownRef();
+
+  const scrollIntoView = useScrollToView(moveDownRef);
+
   const chatTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputPrompt(e.target.value);
   };
@@ -76,6 +85,7 @@ function PromptInput() {
 
     setInputPrompt("");
     setIsTyping(true);
+    scrollIntoView();
 
     const content: MessagesItem = {
       role: "user",

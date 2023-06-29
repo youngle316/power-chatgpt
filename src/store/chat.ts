@@ -20,6 +20,11 @@ type IsCopied = {
   setIsCopied: (val: boolean) => void;
 };
 
+type MoveDown = {
+  moveDownRef: React.RefObject<HTMLDivElement> | null;
+  setMoveDownRef: (ref: React.RefObject<HTMLDivElement>) => void;
+};
+
 const useInputPromptState = create<InputPrompt>()((set) => ({
   inputPrompt: "",
   setInputPrompt: (prompt) => set(() => ({ inputPrompt: prompt })),
@@ -40,9 +45,15 @@ const useIsCopied = create<IsCopied>()((set) => ({
   setIsCopied: (val) => set(() => ({ isCopied: val })),
 }));
 
+const useMoveDownRef = create<MoveDown>()((set) => ({
+  moveDownRef: null,
+  setMoveDownRef: (val) => set(() => ({ moveDownRef: val })),
+}));
+
 export {
   useInputPromptState,
   useIsTypingState,
   useEnteredMessage,
   useIsCopied,
+  useMoveDownRef,
 };
