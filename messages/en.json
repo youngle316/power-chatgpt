@@ -29,5 +29,8 @@
   },
   "response": {
     "ApiKeyIsRequired": "Please enter your OpenAI API key."
+  },
+  "button": {
+    "stop": "stop"
   }
 }

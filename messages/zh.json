@@ -29,5 +29,8 @@
   },
   "response": {
     "ApiKeyIsRequired": "请输入 OpenAI API 密钥"
+  },
+  "button": {
+    "stop": "停止"
   }
 }

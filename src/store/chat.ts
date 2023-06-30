@@ -25,6 +25,11 @@ type MoveDown = {
   setMoveDownRef: (ref: React.RefObject<HTMLDivElement>) => void;
 };
 
+type AbortControllerType = {
+  abortController: AbortController | undefined;
+  setAbortController: (val: AbortController) => void;
+};
+
 const useInputPromptState = create<InputPrompt>()((set) => ({
   inputPrompt: "",
   setInputPrompt: (prompt) => set(() => ({ inputPrompt: prompt })),
@@ -50,10 +55,16 @@ const useMoveDownRef = create<MoveDown>()((set) => ({
   setMoveDownRef: (val) => set(() => ({ moveDownRef: val })),
 }));
 
+const useAbortController = create<AbortControllerType>()((set) => ({
+  abortController: undefined,
+  setAbortController: (val) => set(() => ({ abortController: val })),
+}));
+
 export {
   useInputPromptState,
   useIsTypingState,
   useEnteredMessage,
   useIsCopied,
   useMoveDownRef,
+  useAbortController,
 };
