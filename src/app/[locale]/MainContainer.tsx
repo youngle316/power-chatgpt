@@ -1,6 +1,6 @@
 "use client";
 
-import { useSideBarState } from "~/store/sidebarStore";
+import { useSettingModalState, useSideBarState } from "~/store/sidebarStore";
 import TopBar from "./TopBar";
 import AppIntroduce from "~/components/AppIntroduce";
 import PromptInput from "~/components/PromptInput";
@@ -9,6 +9,9 @@ import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { useMoveDownRef } from "~/store/chat";
 import { useScrollToView } from "~/hooks/useScrollToView";
+import { useLocalStorage } from "usehooks-ts";
+import { OPENAI_API_KEY_STORAGE_KEY } from "~/const";
+import { useTranslations } from "next-intl";
 
 function MainContainer({ children }: { children: React.ReactNode }) {
   const { isOpen } = useSideBarState();
@@ -20,6 +23,12 @@ function MainContainer({ children }: { children: React.ReactNode }) {
   const { moveDownRef, setMoveDownRef } = useMoveDownRef();
 
   const scrollIntoView = useScrollToView(moveDownRef);
+
+  const [openaiApiKey] = useLocalStorage(OPENAI_API_KEY_STORAGE_KEY, "");
+
+  const t = useTranslations("APP");
+
+  const { setIsModalOpen } = useSettingModalState();
 
   useEffect(() => {
     setMoveDownRef(messageEndRef);
@@ -35,6 +44,18 @@ function MainContainer({ children }: { children: React.ReactNode }) {
         <TopBar />
         <div className="relative mx-auto max-w-5xl transition-all lg:px-12">
           <AppIntroduce />
+          {!openaiApiKey && (
+            <div className="flex justify-center gap-2">
+              {t("enterKey")}
+              <button
+                onClick={() => setIsModalOpen(true)}
+                type="button"
+                className="text-blue-500"
+              >
+                {t("enter")}
+              </button>
+            </div>
+          )}
           {children}
           <div
             ref={messageEndRef}

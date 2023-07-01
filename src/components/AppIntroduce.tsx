@@ -19,7 +19,7 @@ function AppIntroduce() {
         </div>
       </div>
       <div className="my-4 text-center text-base font-light text-neutral-950 dark:text-neutral-50 sm:my-6 sm:text-xl">
-        A Power Tool for ChatGPT
+        A Power Tool For ChatGPT
       </div>
       <div className="flex items-center justify-center">
         <div className="my-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">

@@ -7,7 +7,10 @@
     "noLogin": "无需登录",
     "useYourOwnAPIKey": "使用你自己的 API Key",
     "freeModel": "GPT-3.5 model 免费",
-    "more": "敬请期待更多功能。。。"
+    "more": "敬请期待更多功能。。。",
+    "localSave": "存储在本地",
+    "enterKey": "请先输入你自己的 OpenAI API Key",
+    "enter": "输入"
   },
   "Chat": {
     "promptInputPlaceholder": "输入你的 Prompt",
@@ -26,5 +29,8 @@
   },
   "response": {
     "ApiKeyIsRequired": "请输入 OpenAI API 密钥"
+  },
+  "button": {
+    "stop": "停止"
   }
 }

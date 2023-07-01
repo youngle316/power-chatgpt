@@ -12,6 +12,7 @@ const fetchAskQuestion = async ({
   apiBaseUrl,
   responseT,
   setIsModalOpen,
+  abortController,
 }: FetchAskQuestionProps) => {
   let parentMessageId = "";
   chatMessageStorage
@@ -22,6 +23,7 @@ const fetchAskQuestion = async ({
       }
     });
   await fetch("/api/askQuestion", {
+    signal: abortController?.signal,
     method: "POST",
     headers: {
       "Content-Type": "application/json",

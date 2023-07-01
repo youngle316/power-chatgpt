@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { textAreaAutoHeight } from "~/tools";
 import fetchAskQuestion from "~/lib/fetchChatgpt";
 import {
+  useAbortController,
   useInputPromptState,
   useIsTypingState,
   useMoveDownRef,
@@ -22,6 +23,7 @@ import { usePathname, useRouter } from "next-intl/client";
 import { createNewChat } from "~/tools";
 import { useSettingModalState } from "~/store/sidebarStore";
 import { useScrollToView } from "~/hooks/useScrollToView";
+import FunctionButton from "./FunctionButton";
 
 function PromptInput() {
   const t = useTranslations("Chat");
@@ -55,7 +57,7 @@ function PromptInput() {
     ""
   );
 
-  const { setIsTyping } = useIsTypingState();
+  const { isTyping, setIsTyping } = useIsTypingState();
 
   const { moveDownRef } = useMoveDownRef();
 
@@ -64,6 +66,8 @@ function PromptInput() {
   const chatTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputPrompt(e.target.value);
   };
+
+  const { setAbortController } = useAbortController();
 
   useEffect(() => {
     textAreaAutoHeight("promptInput");
@@ -155,6 +159,9 @@ function PromptInput() {
       setSidebarData(newSidebarData);
     }
 
+    const newAbortController = new AbortController();
+    setAbortController(newAbortController);
+
     await fetchAskQuestion({
       prompt: inputPrompt,
       chatId,
@@ -166,6 +173,7 @@ function PromptInput() {
       apiBaseUrl: apiEndPointValue,
       responseT: responseT,
       setIsModalOpen: setIsModalOpen,
+      abortController: newAbortController,
     });
     setIsTyping(false);
   };
@@ -179,26 +187,31 @@ function PromptInput() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-30 px-4 transition-all duration-300 lg:pl-80 ">
-      <div className="mx-auto w-full max-w-5xl bg-neutral-100 px-4 pb-4 transition-all dark:bg-neutral-900 md:px-8 lg:px-12">
-        {/* Function Button */}
-        <div />
-        <div className="chat-textarea-container">
-          <textarea
-            id="promptInput"
-            style={{ maxHeight: "200px", height: "24px" }}
-            className="chat-textarea"
-            onChange={chatTextAreaChange}
-            placeholder={t("promptInputPlaceholder")}
-            value={inputPrompt}
-            onKeyDown={promptInputKeyDown}
-          />
-          <button
-            type="button"
-            className="chat-textarea-send-button"
-            onClick={sendPrompt}
-          >
-            <Send className="m-1 h-4 w-4" />
-          </button>
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 transition-all md:px-8 lg:px-12">
+        <div className="opacity-100">
+          <FunctionButton isTyping={isTyping} />
+        </div>
+        <div className="bg-neutral-100 pb-4 pt-0 dark:bg-neutral-900">
+          <div className="chat-textarea-container">
+            <textarea
+              id="promptInput"
+              style={{ maxHeight: "200px", height: "24px" }}
+              className="chat-textarea"
+              onChange={chatTextAreaChange}
+              placeholder={t("promptInputPlaceholder")}
+              value={inputPrompt}
+              onKeyDown={promptInputKeyDown}
+              disabled={isTyping}
+            />
+            <button
+              disabled={isTyping}
+              type="button"
+              className="chat-textarea-send-button"
+              onClick={sendPrompt}
+            >
+              <Send className="m-1 h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

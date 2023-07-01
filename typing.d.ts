@@ -42,4 +42,5 @@ type FetchAskQuestionProps = {
   apiBaseUrl?: string;
   responseT?: any;
   setIsModalOpen?: (value: boolean) => void;
+  abortController?: AbortController | undefined;
 };
