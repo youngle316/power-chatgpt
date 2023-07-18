@@ -73,10 +73,6 @@ function PromptInput() {
     textAreaAutoHeight("promptInput");
   }, [inputPrompt]);
 
-  const getChatMessagesLength = (chatMessages: ChatMessages[], id: string) => {
-    return chatMessages.find((item) => item.chatId === id)?.messages.length;
-  };
-
   const sendPrompt = async () => {
     if (!inputPrompt) return;
 
@@ -121,17 +117,6 @@ function PromptInput() {
         }
       });
       setChatMessage(newMessages);
-
-      const length = getChatMessagesLength(newChatMessage, uuid);
-
-      const newSidebarData = newChatData.map((item) => {
-        if (item.id === uuid && length && length === 2) {
-          item.title = inputPrompt;
-          return item;
-        }
-        return item;
-      });
-      setSidebarData(newSidebarData);
     } else {
       chatId = curChatId as string;
       chatMessageStorage = chatMessage;
@@ -146,17 +131,6 @@ function PromptInput() {
         }
       });
       setChatMessage(newMessages);
-
-      const length = getChatMessagesLength(chatMessage, curChatId as string);
-
-      const newSidebarData = sidebarData.map((item) => {
-        if (curChatId === item.id && length && length === 2) {
-          item.title = inputPrompt;
-          return item;
-        }
-        return item;
-      });
-      setSidebarData(newSidebarData);
     }
 
     const newAbortController = new AbortController();
