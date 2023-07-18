@@ -30,6 +30,11 @@ type AbortControllerType = {
   setAbortController: (val: AbortController) => void;
 };
 
+type RegenerateInputType = {
+  regenerateInput: string;
+  setRegenerateInput: (prompt: string) => void;
+}
+
 const useInputPromptState = create<InputPrompt>()((set) => ({
   inputPrompt: "",
   setInputPrompt: (prompt) => set(() => ({ inputPrompt: prompt })),
@@ -60,6 +65,11 @@ const useAbortController = create<AbortControllerType>()((set) => ({
   setAbortController: (val) => set(() => ({ abortController: val })),
 }));
 
+const useRegenerateInputState = create<RegenerateInputType>()((set) => ({
+  regenerateInput: "",
+  setRegenerateInput: (prompt) => set(() => ({ regenerateInput: prompt })),
+}));
+
 export {
   useInputPromptState,
   useIsTypingState,
@@ -67,4 +77,5 @@ export {
   useIsCopied,
   useMoveDownRef,
   useAbortController,
+  useRegenerateInputState
 };

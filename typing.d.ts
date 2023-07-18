@@ -34,13 +34,8 @@ type FetchAskQuestionProps = {
   prompt: string;
   chatId: string;
   chatMessageStorage?: ChatMessages[];
-  setChatMessageStorage?: any;
   sidebarDataStorage?: SideBarChatProps[];
-  setSidebarDataStorage?: any;
   parentMessageId?: "";
-  apiKey: string;
+  apiKey?: string;
   apiBaseUrl?: string;
-  responseT?: any;
-  setIsModalOpen?: (value: boolean) => void;
-  abortController?: AbortController | undefined;
 };

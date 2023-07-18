@@ -4,12 +4,13 @@ import React, { useEffect } from "react";
 import { Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { textAreaAutoHeight } from "~/tools";
-import fetchAskQuestion from "~/lib/fetchChatgpt";
+// import fetchAskQuestion from "~/lib/fetchChatgpt";
 import {
   useAbortController,
   useInputPromptState,
   useIsTypingState,
   useMoveDownRef,
+  useRegenerateInputState,
 } from "~/store/chat";
 import { useLocalStorage } from "usehooks-ts";
 import {
@@ -24,6 +25,8 @@ import { createNewChat } from "~/tools";
 import { useSettingModalState } from "~/store/sidebarStore";
 import { useScrollToView } from "~/hooks/useScrollToView";
 import FunctionButton from "./FunctionButton";
+import toast from "react-hot-toast";
+import { ChatMessage } from "chatgpt";
 
 function PromptInput() {
   const t = useTranslations("Chat");
@@ -50,6 +53,8 @@ function PromptInput() {
     []
   );
 
+  const { regenerateInput, setRegenerateInput } = useRegenerateInputState();
+
   const [apiKeyValue] = useLocalStorage<string>(OPENAI_API_KEY_STORAGE_KEY, "");
 
   const [apiEndPointValue] = useLocalStorage<string>(
@@ -73,12 +78,93 @@ function PromptInput() {
     textAreaAutoHeight("promptInput");
   }, [inputPrompt]);
 
-  const getChatMessagesLength = (chatMessages: ChatMessages[], id: string) => {
-    return chatMessages.find((item) => item.chatId === id)?.messages.length;
+  const fetchAskQuestion = async ({
+    prompt,
+    chatId,
+    chatMessageStorage,
+    sidebarDataStorage,
+  }: FetchAskQuestionProps) => {
+    const abortController = new AbortController();
+    setAbortController(abortController);
+
+    let parentMessageId = "";
+
+    chatMessageStorage
+      ?.find((item) => item.chatId === chatId)
+      ?.messages?.forEach((item) => {
+        if (item.role === "assistant") {
+          parentMessageId = item.id;
+        }
+      });
+    await fetch("/api/askQuestion", {
+      signal: abortController?.signal,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt,
+        chatId,
+        parentMessageId,
+        apiKey: apiKeyValue,
+        apiBaseUrl: apiEndPointValue,
+      }),
+    })
+      .then(async (res) => {
+        if (res.status === 400) {
+          const { err } = await res.json();
+          toast(responseT(err), {
+            icon: "🔑",
+          });
+          if (setIsModalOpen) {
+            setIsModalOpen(true);
+          }
+          return;
+        }
+        const {
+          result: { id, parentMessageId, role, text, detail },
+        }: { result: ChatMessage } = await res.json();
+        const data = chatMessageStorage as ChatMessages[];
+        const messageItem: MessagesItem = {
+          id,
+          parentMessageId,
+          role,
+          text,
+          createAt: detail?.created,
+          usage: detail?.usage,
+          model: detail?.model,
+        };
+        const newData = data?.map((item) => {
+          if (item.chatId === chatId) {
+            return {
+              ...item,
+              messages: [...item.messages, messageItem],
+            };
+          } else {
+            return item;
+          }
+        });
+        const sidebarData = sidebarDataStorage as SideBarChatProps[];
+        const newSidebarData = sidebarData?.map((item) => {
+          if (item.id === chatId) {
+            return {
+              ...item,
+              des: text.slice(0, 50),
+            };
+          } else {
+            return item;
+          }
+        });
+        setSidebarData(newSidebarData);
+        setChatMessage(newData);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   const sendPrompt = async () => {
-    if (!inputPrompt) return;
+    if (!inputPrompt && !regenerateInput) return;
 
     const isHome = pathname === "/";
 
@@ -97,86 +183,69 @@ function PromptInput() {
       id: nanoid(),
     };
 
-    if (isHome) {
-      const uuid = nanoid();
-      const { newChatMessage, newChatData } = createNewChat({
-        sidebarData,
-        setSidebarData,
-        chatMessage,
-        setChatMessage,
-        uuid,
-      });
-      router.push(`/chat/${uuid}`);
-
-      chatId = uuid;
-      chatMessageStorage = newChatMessage;
-      sidebarDataStorage = newChatData;
-
-      const newMessages = newChatMessage.map((item) => {
-        if (item.chatId === uuid) {
-          item.messages.push(content);
-          return item;
-        } else {
-          return item;
-        }
-      });
-      setChatMessage(newMessages);
-
-      const length = getChatMessagesLength(newChatMessage, uuid);
-
-      const newSidebarData = newChatData.map((item) => {
-        if (item.id === uuid && length && length === 2) {
-          item.title = inputPrompt;
-          return item;
-        }
-        return item;
-      });
-      setSidebarData(newSidebarData);
-    } else {
-      chatId = curChatId as string;
+    if (regenerateInput) {
       chatMessageStorage = chatMessage;
       sidebarDataStorage = sidebarData;
+      chatId = curChatId as string;
+    } else {
+      if (isHome) {
+        const uuid = nanoid();
+        const { newChatMessage, newChatData } = createNewChat({
+          sidebarData,
+          setSidebarData,
+          chatMessage,
+          setChatMessage,
+          uuid,
+        });
+        router.push(`/chat/${uuid}`);
 
-      const newMessages = chatMessage.map((item) => {
-        if (curChatId === item.chatId) {
-          item.messages.push(content);
-          return item;
-        } else {
-          return item;
-        }
-      });
-      setChatMessage(newMessages);
+        chatId = uuid;
+        chatMessageStorage = newChatMessage;
+        sidebarDataStorage = newChatData;
 
-      const length = getChatMessagesLength(chatMessage, curChatId as string);
+        const newMessages = newChatMessage.map((item) => {
+          if (item.chatId === uuid) {
+            item.messages.push(content);
+            return item;
+          } else {
+            return item;
+          }
+        });
+        setChatMessage(newMessages);
+      } else {
+        chatId = curChatId as string;
+        chatMessageStorage = chatMessage;
+        sidebarDataStorage = sidebarData;
 
-      const newSidebarData = sidebarData.map((item) => {
-        if (curChatId === item.id && length && length === 2) {
-          item.title = inputPrompt;
-          return item;
-        }
-        return item;
-      });
-      setSidebarData(newSidebarData);
+        const newMessages = chatMessage.map((item) => {
+          if (curChatId === item.chatId) {
+            item.messages.push(content);
+            return item;
+          } else {
+            return item;
+          }
+        });
+        setChatMessage(newMessages);
+      }
     }
 
-    const newAbortController = new AbortController();
-    setAbortController(newAbortController);
-
     await fetchAskQuestion({
-      prompt: inputPrompt,
+      prompt: regenerateInput || inputPrompt,
       chatId,
       chatMessageStorage,
-      setChatMessageStorage: setChatMessage,
       sidebarDataStorage,
-      setSidebarDataStorage: setSidebarData,
-      apiKey: apiKeyValue,
-      apiBaseUrl: apiEndPointValue,
-      responseT: responseT,
-      setIsModalOpen: setIsModalOpen,
-      abortController: newAbortController,
     });
     setIsTyping(false);
+    if (regenerateInput) {
+      setRegenerateInput("");
+    }
   };
+
+  useEffect(() => {
+    if (regenerateInput) {
+      sendPrompt();
+    }
+  }, [regenerateInput]);
 
   const promptInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.keyCode === 13 && !e.shiftKey) {
