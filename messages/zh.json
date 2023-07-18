@@ -31,6 +31,7 @@
     "ApiKeyIsRequired": "请输入 OpenAI API 密钥"
   },
   "button": {
-    "stop": "停止"
+    "stop": "停止",
+    "regenerate": "重新生成"
   }
 }
