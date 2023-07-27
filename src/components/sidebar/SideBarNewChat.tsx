@@ -30,7 +30,7 @@ function SideBarNewChat() {
   };
 
   return (
-    <div className="p-2">
+    <div className="flex h-16 items-center px-2">
       <button type="button" className="sidebar_btn" onClick={newChat}>
         <MessageCircle size={20} />
         {t("newChat")}
