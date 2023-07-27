@@ -6,6 +6,7 @@ import { usePathname } from "next-intl/client";
 import { useLocalStorage } from "usehooks-ts";
 import { CHAT_MESSAGES_STORAGE_KEY } from "~/const";
 import { useAbortController, useRegenerateInputState } from "~/store/chat";
+import { useSelectedChatId } from "~/store/sidebarStore";
 
 type FunctionButtonType = {
   isTyping: boolean;
@@ -36,6 +37,8 @@ function FunctionButton({ isTyping }: FunctionButtonType) {
   const pathname = usePathname();
 
   const { setRegenerateInput } = useRegenerateInputState();
+
+  const { selectedChatId } = useSelectedChatId();
 
   const regenerate = () => {
     const messages = chatMessages.find((item) =>
@@ -72,7 +75,7 @@ function FunctionButton({ isTyping }: FunctionButtonType) {
           {t("stop")}
         </Button>
       )}
-      {!isTyping && (
+      {!isTyping && selectedChatId && (
         <>
           <Button
             color="bg-indigo-500"
