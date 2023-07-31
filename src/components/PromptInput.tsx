@@ -163,7 +163,7 @@ function PromptInput() {
       });
   };
 
-  const sendPrompt = async () => {
+  const sendPrompt = () => {
     if (!inputPrompt && !regenerateInput) return;
 
     const isHome = pathname === "/";
@@ -175,7 +175,6 @@ function PromptInput() {
 
     setInputPrompt("");
     setIsTyping(true);
-    scrollIntoView();
 
     const content: MessagesItem = {
       role: "user",
@@ -229,16 +228,18 @@ function PromptInput() {
       }
     }
 
-    await fetchAskQuestion({
+    fetchAskQuestion({
       prompt: regenerateInput || inputPrompt,
       chatId,
       chatMessageStorage,
       sidebarDataStorage,
+    }).then(() => {
+      setIsTyping(false);
+      scrollIntoView();
+      if (regenerateInput) {
+        setRegenerateInput("");
+      }
     });
-    setIsTyping(false);
-    if (regenerateInput) {
-      setRegenerateInput("");
-    }
   };
 
   useEffect(() => {
