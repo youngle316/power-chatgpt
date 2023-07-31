@@ -1,11 +1,14 @@
 "use client";
 
-import { Square, RefreshCcw } from "lucide-react";
+import { Square, RefreshCcw, Book } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next-intl/client";
 import { useLocalStorage } from "usehooks-ts";
 import { CHAT_MESSAGES_STORAGE_KEY } from "~/const";
 import { useAbortController, useRegenerateInputState } from "~/store/chat";
+import { useSelectedChatId } from "~/store/sidebarStore";
+import { useIsShowModal } from "~/store/promptLib";
+import PromptLibModal from "~/components/promptLibModal/PromptLibModal";
 
 type FunctionButtonType = {
   isTyping: boolean;
@@ -37,6 +40,10 @@ function FunctionButton({ isTyping }: FunctionButtonType) {
 
   const { setRegenerateInput } = useRegenerateInputState();
 
+  const { selectedChatId } = useSelectedChatId();
+
+  const { isShowModal, setIsShowModal } = useIsShowModal();
+
   const regenerate = () => {
     const messages = chatMessages.find((item) =>
       pathname.includes(item.chatId)
@@ -61,30 +68,41 @@ function FunctionButton({ isTyping }: FunctionButtonType) {
   };
 
   return (
-    <div className="my-4 flex w-full flex-wrap items-center justify-center gap-2 px-4 text-center">
-      {isTyping && (
-        <Button
-          color="bg-red-500"
-          hoverColor="hover:bg-red-400"
-          icon={<Square fill="white" className="h-4 w-4" />}
-          onClick={stopGenerate}
-        >
-          {t("stop")}
-        </Button>
-      )}
-      {!isTyping && (
-        <>
+    <>
+      <div className="my-4 flex w-full flex-wrap items-center justify-center gap-2 px-4 text-center">
+        {isTyping && (
           <Button
-            color="bg-indigo-500"
-            hoverColor="hover:bg-indigo-400"
-            icon={<RefreshCcw className="h-4 w-4" />}
-            onClick={regenerate}
+            color="bg-red-500"
+            hoverColor="hover:bg-red-400"
+            icon={<Square fill="white" className="h-4 w-4" />}
+            onClick={stopGenerate}
           >
-            {t("regenerate")}
+            {t("stop")}
           </Button>
-        </>
-      )}
-    </div>
+        )}
+        {!isTyping && selectedChatId && (
+          <>
+            <Button
+              color="bg-amber-500"
+              hoverColor="hover:bg-amber-400"
+              icon={<Book className="h-4 w-4" />}
+              onClick={() => setIsShowModal(true)}
+            >
+              {t("prompt")}
+            </Button>
+            <Button
+              color="bg-indigo-500"
+              hoverColor="hover:bg-indigo-400"
+              icon={<RefreshCcw className="h-4 w-4" />}
+              onClick={regenerate}
+            >
+              {t("regenerate")}
+            </Button>
+          </>
+        )}
+      </div>
+      {isShowModal && <PromptLibModal />}
+    </>
   );
 }
 
