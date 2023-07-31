@@ -39,3 +39,18 @@ type FetchAskQuestionProps = {
   apiKey?: string;
   apiBaseUrl?: string;
 };
+
+type Prompt = {
+  title: string;
+  des: string;
+  content: string;
+  source: string;
+  // type?: "custom" | "default";
+  // createAt?: admin.firestore.Timestamp;
+};
+
+type Prompts = {
+  type: "en" | "cn";
+  address: string;
+  prompts: Prompt[];
+};

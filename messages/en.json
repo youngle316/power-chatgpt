@@ -32,6 +32,26 @@
   },
   "button": {
     "stop": "stop",
-    "regenerate": "regenerate"
+    "regenerate": "regenerate",
+    "prompt": "Prompt Library"
+  },
+  "promptModal": {
+    "promptLib": "Prompt Library",
+    "closePromptLib": "Close",
+    "usePrompt": "Use",
+    "darkTheme": "Dark Theme",
+    "lightTheme": "Light Theme",
+    "yourPrompt": "Custom",
+    "searchPrompt": "Search Prompts",
+    "promptsSource": "Source",
+    "title": "Title",
+    "promptTitle": "Prompt Title",
+    "des": "Description(optional))",
+    "promptDes": "Prompt Des",
+    "prompt": "Prompt",
+    "promptContent": "Enter your prompt here",
+    "addPrompt": "Add Prompt",
+    "cancelAddPrompt": "Cancel",
+    "noCustomPrompt": "You don't have custom prompts, add one first"
   }
 }
