@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { textAreaAutoHeight } from "~/tools";
-// import fetchAskQuestion from "~/lib/fetchChatgpt";
 import {
   useAbortController,
   useInputPromptState,
@@ -26,7 +25,6 @@ import { useSettingModalState } from "~/store/sidebarStore";
 import { useScrollToView } from "~/hooks/useScrollToView";
 import FunctionButton from "./FunctionButton";
 import toast from "react-hot-toast";
-import { ChatMessage } from "chatgpt";
 
 function PromptInput() {
   const t = useTranslations("Chat");
@@ -79,7 +77,6 @@ function PromptInput() {
   }, [inputPrompt]);
 
   const fetchAskQuestion = async ({
-    prompt,
     chatId,
     chatMessageStorage,
     sidebarDataStorage,
@@ -87,15 +84,10 @@ function PromptInput() {
     const abortController = new AbortController();
     setAbortController(abortController);
 
-    let parentMessageId = "";
+    const conversation = chatMessageStorage?.find(
+      (item) => item.chatId === chatId
+    );
 
-    chatMessageStorage
-      ?.find((item) => item.chatId === chatId)
-      ?.messages?.forEach((item) => {
-        if (item.role === "assistant") {
-          parentMessageId = item.id;
-        }
-      });
     await fetch("/api/askQuestion", {
       signal: abortController?.signal,
       method: "POST",
@@ -103,11 +95,9 @@ function PromptInput() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt,
-        chatId,
-        parentMessageId,
         apiKey: apiKeyValue,
         apiBaseUrl: apiEndPointValue,
+        conversation,
       }),
     })
       .then(async (res) => {
@@ -121,18 +111,17 @@ function PromptInput() {
           }
           return;
         }
-        const {
-          result: { id, parentMessageId, role, text, detail },
-        }: { result: ChatMessage } = await res.json();
+        const { id, choices, created, model, usage }: ChatMessageRes =
+          await res.json();
         const data = chatMessageStorage as ChatMessages[];
+        const { message } = choices[0];
         const messageItem: MessagesItem = {
           id,
-          parentMessageId,
-          role,
-          text,
-          createAt: detail?.created,
-          usage: detail?.usage,
-          model: detail?.model,
+          role: message.role,
+          text: message.content,
+          createAt: created,
+          usage,
+          model,
         };
         const newData = data?.map((item) => {
           if (item.chatId === chatId) {
@@ -149,7 +138,7 @@ function PromptInput() {
           if (item.id === chatId) {
             return {
               ...item,
-              des: text.slice(0, 50),
+              des: message.content.slice(0, 50),
             };
           } else {
             return item;

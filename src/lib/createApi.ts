@@ -1,14 +1,15 @@
-import { ChatGPTAPI } from "chatgpt";
+import { Configuration, OpenAIApi } from "openai-edge";
 
 class CreateAPI {
-  private static instance: ChatGPTAPI;
+  private static instance: OpenAIApi;
 
-  public static getInstance(apiKey?: string, apiBaseUrl?: string): ChatGPTAPI {
+  public static getInstance(apiKey?: string, apiBaseUrl?: string): OpenAIApi {
     if (!CreateAPI.instance) {
-      CreateAPI.instance = new ChatGPTAPI({
+      const configuration = new Configuration({
         apiKey: apiKey || "",
-        apiBaseUrl: apiBaseUrl || "https://openaiproxy-4bc.pages.dev/v1",
+        basePath: apiBaseUrl || "https://openaiproxy-4bc.pages.dev/v1",
       });
+      CreateAPI.instance = new OpenAIApi(configuration);
     }
     return CreateAPI.instance;
   }

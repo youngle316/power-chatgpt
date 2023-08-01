@@ -11,7 +11,6 @@ type SideBarChatProps = {
 
 type MessagesItem = {
   id: string;
-  parentMessageId?: string;
   role: string;
   text: string;
   usage?: {
@@ -32,12 +31,13 @@ type ChatMessages = {
 
 type FetchAskQuestionProps = {
   prompt: string;
-  chatId: string;
+  chatId?: string;
   chatMessageStorage?: ChatMessages[];
   sidebarDataStorage?: SideBarChatProps[];
   parentMessageId?: "";
   apiKey?: string;
   apiBaseUrl?: string;
+  conversation?: any;
 };
 
 type Prompt = {
@@ -53,4 +53,21 @@ type Prompts = {
   type: "en" | "cn";
   address: string;
   prompts: Prompt[];
+};
+
+type ChatMessageRes = {
+  choices: {
+    finish_reason: string;
+    index: int;
+    message: { role: string; content: string };
+  }[];
+  created: int;
+  id: string;
+  model: string;
+  object: string;
+  usage: {
+    completion_tokens: int;
+    prompt_tokens: int;
+    total_tokens: int;
+  };
 };
