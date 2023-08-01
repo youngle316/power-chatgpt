@@ -5,8 +5,7 @@ import { enPrompts } from "~/const/prompts/enPrompts";
 import PromptContent from "./PromptContent";
 import { useTranslations } from "next-intl";
 import { useIsShowModal } from "~/store/promptLib";
-import { Tab } from "@headlessui/react";
-import { motion } from "framer-motion";
+import HeadLessTab from "~/components/HeadLessTab";
 
 const tabs = [
   { label: "中文", value: "cn" },
@@ -55,39 +54,19 @@ function PromptLibModal() {
                 >
                   {t("promptLib")}
                 </Dialog.Title>
-                <Tab.Group>
-                  <Tab.List className="my-4 flex gap-2">
-                    {tabs.map((item) => {
-                      return (
-                        <Tab key={item.label}>
-                          {({ selected }) => (
-                            <button
-                              className={`relative ${
-                                selected ? "text-blue-500" : ""
-                              }`}
-                            >
-                              {item.label}
-                              {selected ? (
-                                <motion.div
-                                  className="absolute bottom-[-1px] left-0 right-0 h-[1px] bg-blue-500"
-                                  layoutId="underline"
-                                />
-                              ) : null}
-                            </button>
-                          )}
-                        </Tab>
-                      );
-                    })}
-                  </Tab.List>
-                  <Tab.Panels>
-                    <Tab.Panel>
-                      <PromptContent content={cnPrompts} />
-                    </Tab.Panel>
-                    <Tab.Panel>
-                      <PromptContent content={enPrompts} />
-                    </Tab.Panel>
-                  </Tab.Panels>
-                </Tab.Group>
+                <HeadLessTab
+                  tabs={tabs}
+                  content={[
+                    {
+                      value: <PromptContent content={cnPrompts} />,
+                      key: "cn",
+                    },
+                    {
+                      value: <PromptContent content={enPrompts} />,
+                      key: "en",
+                    },
+                  ]}
+                />
                 <div className="flex justify-center">
                   <button
                     onClick={() => setIsShowModal(false)}
