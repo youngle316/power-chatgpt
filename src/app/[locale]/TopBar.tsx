@@ -40,7 +40,7 @@ function TopBar() {
     let values = "";
     sidebarData.forEach((item) => {
       if (item.id === chatId) {
-        values = item.title;
+        values = item.title.slice(0, 50);
       }
     });
     return values;
@@ -50,7 +50,7 @@ function TopBar() {
     let totalPrice = 0;
     chatMessagesData?.forEach((item) => {
       // $0.002 / 1K tokens
-      if (item.model === "gpt-3.5-turbo-0301") {
+      if (item.model && item.model.indexOf("gpt-3.5-turbo") > -1) {
         totalPrice += 0.002 * (item.usage?.total_tokens / 1000);
       }
     });
@@ -63,7 +63,7 @@ function TopBar() {
         <button
           type="button"
           onClick={setIsOpen}
-          className="inline-flex h-12 w-12 items-center justify-center rounded-md text-neutral-900 hover:text-neutral-900/50 dark:text-neutral-100 
+          className="inline-flex h-12 w-12 items-center justify-center rounded-md text-neutral-900 hover:text-neutral-900/50 dark:text-neutral-100
           dark:hover:text-neutral-100/50"
         >
           <AlignJustify />
