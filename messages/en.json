@@ -17,7 +17,9 @@
     "notFound": "Sorry, the chat you have selected does not exist. Please choose again."
   },
   "Setting": {
-    "appSetting": "App Setting",
+    "setting": "Setting",
+    "appSetting": "App",
+    "modelSetting": "Model",
     "openaiAPIKey": "OpenAI API Key",
     "openaiAPIEndPoint": "OpenAI API Endpoint",
     "save": "Save",
@@ -25,7 +27,8 @@
     "theme": "Theme",
     "dark": "Dark",
     "light": "Light",
-    "system": "System"
+    "system": "System",
+    "modelSettingTitle": "Stream AI responses word by word (typing animation)"
   },
   "response": {
     "ApiKeyIsRequired": "Please enter your OpenAI API key."

@@ -27,7 +27,7 @@ function getMessages({ conversation }: { conversation: ChatMessages }) {
 }
 
 export default async function handler(req: NextRequest) {
-  const { apiKey, apiBaseUrl, conversation }: FetchAskQuestionProps =
+  const { apiKey, apiBaseUrl, conversation, stream }: FetchAskQuestionProps =
     await req.json();
 
   if (!apiKey) {
@@ -46,14 +46,25 @@ export default async function handler(req: NextRequest) {
         messages: getMessages({ conversation }),
         max_tokens: 1024,
         temperature: 0.7,
-        stream: false,
+        stream,
       });
 
-      return new Response(completion.body, {
-        headers: {
-          "content-type": "application/json",
-        },
-      });
+      if (stream) {
+        return new Response(completion.body, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "text/event-stream;charset=utf-8",
+            "Cache-Control": "no-cache, no-transform",
+            "X-Accel-Buffering": "no",
+          },
+        });
+      } else {
+        return new Response(completion.body, {
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+      }
     } catch (error: any) {
       console.error(error);
       if (error.response) {

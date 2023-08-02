@@ -6,7 +6,9 @@ import { useTranslations } from "next-intl";
 import { textAreaAutoHeight } from "~/tools";
 import {
   useAbortController,
+  useAnswerNodeRef,
   useInputPromptState,
+  useIsStreaming,
   useIsTypingState,
   useMoveDownRef,
   useRegenerateInputState,
@@ -17,6 +19,7 @@ import {
   SIDEBAR_CHAT_STORAGE_KEY,
   OPENAI_API_KEY_STORAGE_KEY,
   OPENAI_API_ENDPOINT_STORAGE_KEY,
+  ENABLED_STREAM,
 } from "~/const";
 import { nanoid } from "nanoid";
 import { usePathname, useRouter } from "next-intl/client";
@@ -25,6 +28,13 @@ import { useSettingModalState } from "~/store/sidebarStore";
 import { useScrollToView } from "~/hooks/useScrollToView";
 import FunctionButton from "./FunctionButton";
 import toast from "react-hot-toast";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
+
+class RetriableError extends Error {}
+class FatalError extends Error {}
+
+let tempStreamData: any = {};
+let tempAbortStreamData: any = {};
 
 function PromptInput() {
   const t = useTranslations("Chat");
@@ -60,9 +70,15 @@ function PromptInput() {
     ""
   );
 
+  const [enabledStream] = useLocalStorage<boolean>(ENABLED_STREAM, false);
+
+  const { setIsStreaming } = useIsStreaming();
+
   const { isTyping, setIsTyping } = useIsTypingState();
 
   const { moveDownRef } = useMoveDownRef();
+
+  const { answerNodeRef } = useAnswerNodeRef();
 
   const scrollIntoView = useScrollToView(moveDownRef);
 
@@ -70,11 +86,103 @@ function PromptInput() {
     setInputPrompt(e.target.value);
   };
 
-  const { setAbortController } = useAbortController();
+  const { abortController, setAbortController } = useAbortController();
+
+  useEffect(() => {
+    abortController?.signal.addEventListener("abort", () => {
+      onClose();
+    });
+    return () => {
+      abortController?.signal.removeEventListener("abort", () => {
+        console.log("remove abort event listener");
+      });
+    };
+  }, [abortController]);
 
   useEffect(() => {
     textAreaAutoHeight("promptInput");
   }, [inputPrompt]);
+
+  useEffect(() => {
+    scrollIntoView();
+  }, [answerNodeRef?.current?.innerText]);
+
+  function onData(data: string) {
+    if (!answerNodeRef?.current) {
+      return;
+    }
+    try {
+      if (data !== "[DONE]") {
+        const resData = JSON.parse(data);
+        tempStreamData = resData;
+        const text = resData.choices[0].delta.content;
+        if (text) {
+          answerNodeRef.current.innerText =
+            answerNodeRef.current.innerText + text;
+        }
+      }
+    } catch (err) {
+      console.log(`Failed to parse data: ${data}`);
+    }
+  }
+
+  function onClose() {
+    if (!enabledStream) {
+      return;
+    }
+    const { sidebarDataStorage, chatMessageStorage, chatId } =
+      tempAbortStreamData;
+    const answerNode = answerNodeRef?.current?.innerText as string;
+    const message = { content: answerNode };
+    const { id = nanoid(), model = "0613", created } = tempStreamData;
+    const messageItem: MessagesItem = {
+      id,
+      role: "assistant",
+      text: answerNode,
+      createAt: created,
+      model,
+    };
+    setIsStreaming(false);
+    saveSidebarData({ sidebarDataStorage, chatId, message });
+    saveChatMessageData({ chatMessageStorage, chatId, messageItem });
+    if (answerNodeRef?.current) {
+      answerNodeRef.current.innerText = "";
+    }
+  }
+
+  const saveSidebarData = ({ sidebarDataStorage, chatId, message }: any) => {
+    const sidebarData = sidebarDataStorage as SideBarChatProps[];
+    const newSidebarData = sidebarData?.map((item) => {
+      if (item.id === chatId) {
+        return {
+          ...item,
+          des: message.content.slice(0, 50),
+        };
+      } else {
+        return item;
+      }
+    });
+    setSidebarData(newSidebarData);
+  };
+
+  const saveChatMessageData = ({
+    chatMessageStorage,
+    chatId,
+    messageItem,
+  }: any) => {
+    const data = chatMessageStorage as ChatMessages[];
+    const newData = data?.map((item) => {
+      if (item.chatId === chatId) {
+        return {
+          ...item,
+          messages: [...item.messages, messageItem],
+        };
+      } else {
+        return item;
+      }
+    });
+    setChatMessage(newData);
+  };
 
   const fetchAskQuestion = async ({
     chatId,
@@ -83,73 +191,113 @@ function PromptInput() {
   }: FetchAskQuestionProps) => {
     const abortController = new AbortController();
     setAbortController(abortController);
+    tempAbortStreamData = { chatId, chatMessageStorage, sidebarDataStorage };
 
     const conversation = chatMessageStorage?.find(
       (item) => item.chatId === chatId
     );
 
-    await fetch("/api/askQuestion", {
-      signal: abortController?.signal,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        apiKey: apiKeyValue,
-        apiBaseUrl: apiEndPointValue,
-        conversation,
-      }),
-    })
-      .then(async (res) => {
-        if (res.status === 400) {
-          const { err } = await res.json();
-          toast(responseT(err), {
-            icon: "🔑",
-          });
-          if (setIsModalOpen) {
-            setIsModalOpen(true);
+    if (enabledStream && !!answerNodeRef?.current) {
+      setIsStreaming(true);
+      await fetchEventSource("/api/askQuestion", {
+        signal: abortController?.signal,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          apiKey: apiKeyValue,
+          apiBaseUrl: apiEndPointValue,
+          conversation,
+          stream: true,
+        }),
+        async onopen(response) {
+          if (answerNodeRef?.current) {
+            answerNodeRef.current.innerText = "";
           }
-          return;
-        }
-        const { id, choices, created, model, usage }: ChatMessageRes =
-          await res.json();
-        const data = chatMessageStorage as ChatMessages[];
-        const { message } = choices[0];
-        const messageItem: MessagesItem = {
-          id,
-          role: message.role,
-          text: message.content,
-          createAt: created,
-          usage,
-          model,
-        };
-        const newData = data?.map((item) => {
-          if (item.chatId === chatId) {
-            return {
-              ...item,
-              messages: [...item.messages, messageItem],
-            };
+          console.log("onopen");
+          if (
+            response.ok &&
+            response.headers.get("content-type")?.replace(/ /g, "") ===
+              "text/event-stream;charset=utf-8"
+          ) {
+            return;
+          } else if (
+            response.status >= 400 &&
+            response.status < 500 &&
+            response.status !== 429
+          ) {
+            throw new FatalError();
           } else {
-            return item;
+            throw new RetriableError();
           }
-        });
-        const sidebarData = sidebarDataStorage as SideBarChatProps[];
-        const newSidebarData = sidebarData?.map((item) => {
-          if (item.id === chatId) {
-            return {
-              ...item,
-              des: message.content.slice(0, 50),
-            };
+        },
+        onmessage(msg) {
+          if (msg.event === "FatalError") {
+            throw new FatalError(msg.data);
+          }
+          try {
+            onData(msg.data);
+          } catch (error) {
+            abortController.abort();
+            onClose();
+          }
+        },
+        onclose() {
+          onClose();
+        },
+        onerror(err) {
+          if (err instanceof FatalError) {
+            console.log("onerror fatal", err);
+            setIsStreaming(false);
           } else {
-            return item;
+            console.log("onerror other", err);
           }
-        });
-        setSidebarData(newSidebarData);
-        setChatMessage(newData);
-      })
-      .catch((error) => {
-        console.log("error", error);
+        },
       });
+    } else {
+      await fetch("/api/askQuestion", {
+        signal: abortController?.signal,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          apiKey: apiKeyValue,
+          apiBaseUrl: apiEndPointValue,
+          conversation,
+          stream: false,
+        }),
+      })
+        .then(async (res) => {
+          if (res.status === 400) {
+            const { err } = await res.json();
+            toast(responseT(err), {
+              icon: "🔑",
+            });
+            if (setIsModalOpen) {
+              setIsModalOpen(true);
+            }
+            return;
+          }
+          const { id, choices, created, model, usage }: ChatMessageRes =
+            await res.json();
+          const { message } = choices[0];
+          const messageItem: MessagesItem = {
+            id,
+            role: message.role,
+            text: message.content,
+            createAt: created,
+            usage,
+            model,
+          };
+          saveSidebarData({ sidebarDataStorage, chatId, message });
+          saveChatMessageData({ chatMessageStorage, chatId, messageItem });
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
   };
 
   const sendPrompt = () => {

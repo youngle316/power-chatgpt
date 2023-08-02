@@ -10,7 +10,7 @@ type SideBarChatProps = {
 };
 
 type MessagesItem = {
-  id: string;
+  id?: string;
   role: string;
   text: string;
   usage?: {
@@ -38,6 +38,7 @@ type FetchAskQuestionProps = {
   apiKey?: string;
   apiBaseUrl?: string;
   conversation?: any;
+  stream?: boolean;
 };
 
 type Prompt = {

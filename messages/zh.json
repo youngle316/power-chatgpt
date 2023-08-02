@@ -17,7 +17,9 @@
     "notFound": "很抱歉，您选择的会话不存在，请重新选择。"
   },
   "Setting": {
-    "appSetting": "App 设置",
+    "setting": "设置",
+    "appSetting": "App",
+    "modelSetting": "Model",
     "openaiAPIKey": "OpenAI API 密钥",
     "openaiAPIEndPoint": "OpenAI API Endpoint",
     "save": "保存",
@@ -25,7 +27,8 @@
     "theme": "主题",
     "dark": "深色主题",
     "light": "浅色主题",
-    "system": "跟随系统"
+    "system": "跟随系统",
+    "modelSettingTitle": "逐字逐句地流式传输AI的回答（打字动画）"
   },
   "response": {
     "ApiKeyIsRequired": "请输入 OpenAI API 密钥"
