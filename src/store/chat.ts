@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import React from "react";
 
 type InputPrompt = {
   inputPrompt: string;
@@ -33,7 +34,24 @@ type AbortControllerType = {
 type RegenerateInputType = {
   regenerateInput: string;
   setRegenerateInput: (prompt: string) => void;
-}
+};
+
+type IsStreaming = {
+  isStreaming: boolean;
+  setIsStreaming: (val: boolean) => void;
+};
+
+type AnswerNode = {
+  answerNodeRef: React.RefObject<HTMLDivElement> | null;
+  setAnswerNodeRef: (ref: React.RefObject<HTMLDivElement>) => void;
+};
+
+type StreamItem = {
+  created?: number;
+  id?: string;
+  model?: string;
+  object?: string;
+};
 
 const useInputPromptState = create<InputPrompt>()((set) => ({
   inputPrompt: "",
@@ -70,6 +88,16 @@ const useRegenerateInputState = create<RegenerateInputType>()((set) => ({
   setRegenerateInput: (prompt) => set(() => ({ regenerateInput: prompt })),
 }));
 
+const useIsStreaming = create<IsStreaming>()((set) => ({
+  isStreaming: false,
+  setIsStreaming: (val) => set(() => ({ isStreaming: val })),
+}));
+
+const useAnswerNodeRef = create<AnswerNode>()((set) => ({
+  answerNodeRef: null,
+  setAnswerNodeRef: (val) => set(() => ({ answerNodeRef: val })),
+}));
+
 export {
   useInputPromptState,
   useIsTypingState,
@@ -77,5 +105,7 @@ export {
   useIsCopied,
   useMoveDownRef,
   useAbortController,
-  useRegenerateInputState
+  useRegenerateInputState,
+  useIsStreaming,
+  useAnswerNodeRef,
 };

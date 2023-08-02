@@ -46,17 +46,6 @@ function TopBar() {
     return values;
   };
 
-  const getTotalPrice = () => {
-    let totalPrice = 0;
-    chatMessagesData?.forEach((item) => {
-      // $0.002 / 1K tokens
-      if (item.model && item.model.indexOf("gpt-3.5-turbo") > -1) {
-        totalPrice += 0.002 * (item.usage?.total_tokens / 1000);
-      }
-    });
-    return `$${totalPrice.toFixed(6)}`;
-  };
-
   return (
     <div className="sticky top-0 z-30 h-16 border-b-2 border-neutral-200 bg-neutral-50 drop-shadow-md dark:border-neutral-800 dark:bg-neutral-950">
       <div className="absolute bottom-0 left-1 top-0 flex items-center justify-center">
@@ -79,8 +68,6 @@ function TopBar() {
               <div>{sidebarVal?.chatModel}</div>
               <>·</>
               <div>{chatMessagesData?.length} messages</div>
-              <>·</>
-              <div>{getTotalPrice()}</div>
             </div>
           ) : (
             t("newChatContent")
@@ -95,7 +82,7 @@ function TopBar() {
           <Dialog
             isOpen={isModalOpen}
             setIsOpen={setIsModalOpen}
-            title={settingT("appSetting")}
+            title={settingT("setting")}
           >
             <SettingContent />
           </Dialog>
