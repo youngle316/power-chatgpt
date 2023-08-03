@@ -42,10 +42,7 @@ function SettingContent() {
 }
 
 const ModelSetting = () => {
-  const [enableStream, setEnableStream] = useLocalStorage(
-    ENABLED_STREAM,
-    false
-  );
+  const [enableStream, setEnableStream] = useLocalStorage(ENABLED_STREAM, true);
 
   const t = useTranslations("Setting");
 
