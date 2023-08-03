@@ -24,7 +24,7 @@ import {
 import { nanoid } from "nanoid";
 import { usePathname, useRouter } from "next-intl/client";
 import { createNewChat } from "~/tools";
-import { useSettingModalState } from "~/store/sidebarStore";
+import { useSettingModalState, useSideBarState } from "~/store/sidebarStore";
 import { useScrollToView } from "~/hooks/useScrollToView";
 import FunctionButton from "./FunctionButton";
 import toast from "react-hot-toast";
@@ -81,6 +81,8 @@ function PromptInput() {
   const { answerNodeRef } = useAnswerNodeRef();
 
   const scrollIntoView = useScrollToView(moveDownRef);
+
+  const { isOpen } = useSideBarState();
 
   const chatTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputPrompt(e.target.value);
@@ -393,7 +395,11 @@ function PromptInput() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-30 px-4 transition-all duration-300 lg:pl-80 ">
+    <div
+      className={`fixed bottom-0 left-0 right-0 z-30 px-4 transition-all duration-300 ${
+        isOpen ? "lg:pl-80" : ""
+      }`}
+    >
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 transition-all md:px-8 lg:px-12">
         <div className="opacity-100">
           <FunctionButton isTyping={isTyping} />

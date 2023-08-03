@@ -45,7 +45,7 @@ function SideBar() {
           animate={isOpen ? "open" : "closed"}
           variants={variants}
           transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-          className="left-0 top-0 hidden h-full w-full shadow-lg lg:fixed lg:flex lg:w-80 lg:flex-col"
+          className="left-0 top-0 z-50 hidden h-full w-full shadow-lg lg:fixed lg:flex lg:w-80 lg:flex-col"
         >
           <SideBarContent />
         </motion.div>
