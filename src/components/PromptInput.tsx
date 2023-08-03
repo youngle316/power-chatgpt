@@ -70,7 +70,7 @@ function PromptInput() {
     ""
   );
 
-  const [enabledStream] = useLocalStorage<boolean>(ENABLED_STREAM, false);
+  const [enabledStream] = useLocalStorage<boolean>(ENABLED_STREAM, true);
 
   const { setIsStreaming } = useIsStreaming();
 
