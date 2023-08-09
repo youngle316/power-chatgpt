@@ -8,7 +8,12 @@ type RadixDialogProps = {
   title: string;
 };
 
-function RadixDialog({ isOpen, setIsOpen, children, title }: RadixDialogProps) {
+function HeadLessDialog({
+  isOpen,
+  setIsOpen,
+  children,
+  title,
+}: RadixDialogProps) {
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -40,7 +45,7 @@ function RadixDialog({ isOpen, setIsOpen, children, title }: RadixDialogProps) {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white 
+                className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white
 							p-6 text-left align-middle shadow-xl transition-all dark:bg-black dark:text-white"
               >
                 <Dialog.Title
@@ -59,4 +64,4 @@ function RadixDialog({ isOpen, setIsOpen, children, title }: RadixDialogProps) {
   );
 }
 
-export default RadixDialog;
+export default HeadLessDialog;
