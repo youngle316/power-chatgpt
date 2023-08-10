@@ -5,7 +5,7 @@ import { enPrompts } from "~/const/prompts/enPrompts";
 import PromptContent from "./PromptContent";
 import { useTranslations } from "next-intl";
 import { useIsShowModal } from "~/store/promptLib";
-import HeadLessTab from "~/components/HeadLessTab";
+import HeadLessTab from "~/components/HeadLess/HeadLessTab";
 
 const tabs = [
   { label: "中文", value: "cn" },

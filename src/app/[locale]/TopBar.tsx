@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next-intl/client";
 import { useLocalStorage } from "usehooks-ts";
 import { SIDEBAR_CHAT_STORAGE_KEY, CHAT_MESSAGES_STORAGE_KEY } from "~/const";
-import Dialog from "~/components/Dialog";
+import HeadLessDialog from "~/components/HeadLess/HeadLessDialog";
 import SettingContent from "./SettingContent";
 
 function TopBar() {
@@ -79,13 +79,13 @@ function TopBar() {
           <SlidersHorizontal className="h-5 w-5" />
         </button>
         {isModalOpen && (
-          <Dialog
+          <HeadLessDialog
             isOpen={isModalOpen}
             setIsOpen={setIsModalOpen}
             title={settingT("setting")}
           >
             <SettingContent />
-          </Dialog>
+          </HeadLessDialog>
         )}
       </div>
     </div>

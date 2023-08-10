@@ -56,5 +56,11 @@
     "addPrompt": "Add Prompt",
     "cancelAddPrompt": "Cancel",
     "noCustomPrompt": "You don't have custom prompts, add one first"
+  },
+  "ModelSetting": {
+    "title": "Model Setting",
+    "model": "Model",
+    "initialSystemInstructions": "Initial System Instructions",
+    "save": "Save"
   }
 }

@@ -56,5 +56,11 @@
     "addPrompt": "添加 Prompt",
     "cancelAddPrompt": "取消",
     "noCustomPrompt": "你没有自定义的 Prompts，先添加一个吧~"
+  },
+  "ModelSetting": {
+    "title": "模型设置",
+    "model": "模型",
+    "initialSystemInstructions": "初始系统说明",
+    "save": "保存"
   }
 }
