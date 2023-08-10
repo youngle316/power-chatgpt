@@ -34,7 +34,7 @@ function ThemeSwitcher() {
       <Listbox value={selected} onChange={switcherChange}>
         <div className="relative mt-1">
           <Listbox.Button
-            className="relative w-full cursor-default rounded-lg border border-neutral-600 
+            className="relative w-full cursor-default rounded-lg border border-neutral-600
 					bg-neutral-50 py-2 pl-3 pr-10 text-left dark:bg-neutral-950"
           >
             <span className="block truncate">{t(selected?.value)}</span>
@@ -51,15 +51,15 @@ function ThemeSwitcher() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-neutral-950 py-1 text-base shadow-lg dark:bg-neutral-50">
+            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-neutral-50 py-1 text-base shadow-lg dark:bg-neutral-700">
               {Theme.map((theme) => (
                 <Listbox.Option
                   key={theme.value}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
                       active
-                        ? "bg-neutral-50 text-neutral-950 dark:bg-neutral-900 dark:text-neutral-50"
-                        : "text-neutral-50 dark:text-neutral-950"
+                        ? "bg-blue-400 text-neutral-950 dark:bg-blue-400 dark:text-neutral-50"
+                        : "text-neutral-950 dark:text-neutral-50"
                     }`
                   }
                   value={theme}

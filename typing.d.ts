@@ -39,6 +39,7 @@ type FetchAskQuestionProps = {
   apiBaseUrl?: string;
   conversation?: any;
   stream?: boolean;
+  model?: string;
 };
 
 type Prompt = {

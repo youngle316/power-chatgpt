@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next-intl/client";
 import { useLocalStorage } from "usehooks-ts";
 import { SIDEBAR_CHAT_STORAGE_KEY, CHAT_MESSAGES_STORAGE_KEY } from "~/const";
-import HeadLessDialog from "~/components/HeadLessDialog";
+import HeadLessDialog from "~/components/HeadLess/HeadLessDialog";
 import SettingContent from "./SettingContent";
 
 function TopBar() {

@@ -1,34 +1,18 @@
 import type { NextRequest } from "next/server";
 import CreateAPI from "~/lib/createApi";
-import { ChatCompletionRequestMessage } from "openai-edge";
 
 export const config = {
   runtime: "edge",
 };
 
-function getMessages({ conversation }: { conversation: ChatMessages }) {
-  const data = conversation?.messages;
-  const messages: ChatCompletionRequestMessage[] = [];
-  messages.push({ role: "system", content: data[0].text });
-  const number = 5;
-  let formatData = [];
-  if (data.length <= number) {
-    formatData = data;
-  } else {
-    formatData = data.slice(-number);
-  }
-  formatData.forEach((item) => {
-    messages.push({
-      role: item.role === "user" ? "user" : "assistant",
-      content: item.text,
-    });
-  });
-  return messages;
-}
-
 export default async function handler(req: NextRequest) {
-  const { apiKey, apiBaseUrl, conversation, stream }: FetchAskQuestionProps =
-    await req.json();
+  const {
+    apiKey,
+    apiBaseUrl,
+    conversation,
+    stream,
+    model,
+  }: FetchAskQuestionProps = await req.json();
 
   if (!apiKey) {
     return new Response(JSON.stringify({ err: "ApiKeyIsRequired" }), {
@@ -42,9 +26,8 @@ export default async function handler(req: NextRequest) {
 
     try {
       const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: getMessages({ conversation }),
-        max_tokens: 1024,
+        model: model || "gpt-3.5-turbo",
+        messages: conversation,
         temperature: 0.7,
         stream,
       });

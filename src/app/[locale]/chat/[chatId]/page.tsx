@@ -16,6 +16,10 @@ import { useEffect, useRef } from "react";
 import { useSelectedChatId } from "~/store/sidebarStore";
 import RenderNoChat from "./RenderNoChat";
 import RenderChatMessages from "./RenderChatMessages";
+import HeadLessDialog from "~/components/HeadLess/HeadLessDialog";
+import PageModelSet from "./PageModelSet";
+import { useOpenModalState } from "~/store/page";
+import { useTranslations } from "next-intl";
 
 function ChatPage() {
   const [chatMessage] = useLocalStorage<ChatMessages[]>(
@@ -44,6 +48,10 @@ function ChatPage() {
   const { answerNodeRef, setAnswerNodeRef } = useAnswerNodeRef();
 
   const { isStreaming } = useIsStreaming();
+
+  const { isModalOpen, setIsModalOpen } = useOpenModalState();
+
+  const t = useTranslations("ModelSetting");
 
   return (
     <MainContainer>
@@ -95,6 +103,16 @@ function ChatPage() {
             <span className="animate-pulse">Assistant is typing...</span>
           </div>
         </div>
+      )}
+
+      {isModalOpen && (
+        <HeadLessDialog
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          title={t("title")}
+        >
+          <PageModelSet />
+        </HeadLessDialog>
       )}
     </MainContainer>
   );

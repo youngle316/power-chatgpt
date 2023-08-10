@@ -11,8 +11,8 @@ import {
 import { useSettingModalState } from "~/store/sidebarStore";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
-import HeadLessTab from "~/components/HeadLessTab";
-import HeadLessSwitch from "~/components/HeadLessSwitch";
+import HeadLessTab from "~/components/HeadLess/HeadLessTab";
+import HeadLessSwitch from "~/components/HeadLess/HeadLessSwitch";
 
 function SettingContent() {
   const t = useTranslations("Setting");

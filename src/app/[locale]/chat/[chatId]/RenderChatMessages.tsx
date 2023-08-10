@@ -6,6 +6,7 @@ import { Clipboard, ClipboardCheck, Settings, User } from "lucide-react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import ConvertToMarkdown from "~/components/ConvertToMarkdown";
+import { useOpenModalState } from "~/store/page";
 
 const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
   const [sidebarData] = useLocalStorage<SideBarChatProps[]>(
@@ -22,6 +23,8 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
   const { isCopied, setIsCopied } = useIsCopied();
 
   const [, copy] = useCopyToClipboard();
+
+  const { setIsModalOpen } = useOpenModalState();
 
   const enterChatMessage = (messages: MessagesItem) => {
     setEnterMessage({
@@ -58,7 +61,12 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
 					bg-neutral-200 text-neutral-500 transition-all hover:bg-neutral-300 active:bg-neutral-200"
           >
             {messages.role === "user" && <User className="h-5 w-5" />}
-            {messages.role === "system" && <Settings className="h-5 w-5" />}
+            {messages.role === "system" && (
+              <Settings
+                onClick={() => setIsModalOpen(true)}
+                className="h-5 w-5 cursor-pointer"
+              />
+            )}
             {messages.role === "assistant" && (
               <Image
                 className="h-5 w-5"

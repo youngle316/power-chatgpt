@@ -29,6 +29,7 @@ import { useScrollToView } from "~/hooks/useScrollToView";
 import FunctionButton from "./FunctionButton";
 import toast from "react-hot-toast";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
+import { ChatCompletionRequestMessage } from "openai-edge";
 
 class RetriableError extends Error {}
 class FatalError extends Error {}
@@ -186,6 +187,26 @@ function PromptInput() {
     setChatMessage(newData);
   };
 
+  function getMessages(conversation: ChatMessages) {
+    const data = conversation?.messages;
+    const messages: ChatCompletionRequestMessage[] = [];
+    messages.push({ role: "system", content: data[0].text });
+    const number = 5;
+    let formatData = [];
+    if (data.length <= number) {
+      formatData = data;
+    } else {
+      formatData = data.slice(-number);
+    }
+    formatData.forEach((item) => {
+      messages.push({
+        role: item.role === "user" ? "user" : "assistant",
+        content: item.text,
+      });
+    });
+    return messages;
+  }
+
   const fetchAskQuestion = async ({
     chatId,
     chatMessageStorage,
@@ -197,7 +218,11 @@ function PromptInput() {
 
     const conversation = chatMessageStorage?.find(
       (item) => item.chatId === chatId
-    );
+    ) as ChatMessages;
+
+    const currentSidebarData = sidebarDataStorage?.find(
+      (item) => item.id === chatId
+    ) as SideBarChatProps;
 
     if (enabledStream && !!answerNodeRef?.current) {
       setIsStreaming(true);
@@ -210,8 +235,9 @@ function PromptInput() {
         body: JSON.stringify({
           apiKey: apiKeyValue,
           apiBaseUrl: apiEndPointValue,
-          conversation,
+          conversation: getMessages(conversation),
           stream: true,
+          model: currentSidebarData.chatModel,
         }),
         async onopen(response) {
           if (answerNodeRef?.current) {
@@ -267,8 +293,9 @@ function PromptInput() {
         body: JSON.stringify({
           apiKey: apiKeyValue,
           apiBaseUrl: apiEndPointValue,
-          conversation,
+          conversation: getMessages(conversation),
           stream: false,
+          model: currentSidebarData.chatModel,
         }),
       })
         .then(async (res) => {
