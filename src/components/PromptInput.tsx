@@ -187,11 +187,10 @@ function PromptInput() {
     setChatMessage(newData);
   };
 
-  function getMessages(conversation: ChatMessages) {
+  function getMessages(conversation: ChatMessages, number: number) {
     const data = conversation?.messages;
     const messages: ChatCompletionRequestMessage[] = [];
     messages.push({ role: "system", content: data[0].text });
-    const number = 5;
     let formatData = [];
     if (data.length <= number) {
       formatData = data;
@@ -235,7 +234,10 @@ function PromptInput() {
         body: JSON.stringify({
           apiKey: apiKeyValue,
           apiBaseUrl: apiEndPointValue,
-          conversation: getMessages(conversation),
+          conversation: getMessages(
+            conversation,
+            currentSidebarData.contextLimit
+          ),
           stream: true,
           model: currentSidebarData.chatModel,
         }),
@@ -293,7 +295,10 @@ function PromptInput() {
         body: JSON.stringify({
           apiKey: apiKeyValue,
           apiBaseUrl: apiEndPointValue,
-          conversation: getMessages(conversation),
+          conversation: getMessages(
+            conversation,
+            currentSidebarData.contextLimit
+          ),
           stream: false,
           model: currentSidebarData.chatModel,
         }),

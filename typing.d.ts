@@ -2,11 +2,11 @@ type SideBarChatProps = {
   id: string;
   title: string;
   des: string;
-  // Timestamp
   createAt: int;
   updateAt?: int;
   systemMessage: string;
   chatModel: string;
+  contextLimit: int;
 };
 
 type MessagesItem = {
@@ -47,8 +47,6 @@ type Prompt = {
   des: string;
   content: string;
   source: string;
-  // type?: "custom" | "default";
-  // createAt?: admin.firestore.Timestamp;
 };
 
 type Prompts = {
