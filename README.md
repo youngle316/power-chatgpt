@@ -4,8 +4,7 @@
 
 A Power Tool For ChatGPT
 
-![home](https://obsidian-picgo-le.oss-cn-hangzhou.aliyuncs.com/img/20230629155623.png)
-
+![home](https://raw.githubusercontent.com/youngle316/picg/main/20230810143834.png)
 </div>
 
 ## Features ✨
