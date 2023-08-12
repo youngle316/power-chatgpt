@@ -62,6 +62,10 @@ function PageModelSet() {
     setIsModalOpen(false);
   };
 
+  const cancelSetting = () => {
+    setIsModalOpen(false);
+  };
+
   const contextLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setContextLimit(Number(e.target.value));
   };
@@ -123,13 +127,18 @@ function PageModelSet() {
         </Disclosure>
       </div>
 
-      <button
-        type="button"
-        className="primary-button"
-        onClick={saveModelSetting}
-      >
-        {t("save")}
-      </button>
+      <div className="flex justify-center gap-2">
+        <button
+          type="button"
+          className="basic_button bg-blue-600 hover:bg-blue-500"
+          onClick={saveModelSetting}
+        >
+          {t("save")}
+        </button>
+        <button type="button" className="basic_button" onClick={cancelSetting}>
+          {t("cancel")}
+        </button>
+      </div>
     </div>
   );
 }
