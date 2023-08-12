@@ -28,7 +28,8 @@
     "dark": "Dark",
     "light": "Light",
     "system": "System",
-    "modelSettingTitle": "Stream AI responses word by word (typing animation)"
+    "modelSettingTitle": "Stream AI responses word by word (typing animation)",
+    "cancel": "Cancel"
   },
   "response": {
     "ApiKeyIsRequired": "Please enter your OpenAI API key."
@@ -61,6 +62,11 @@
     "title": "Model Setting",
     "model": "Model",
     "initialSystemInstructions": "Initial System Instructions",
-    "save": "Save"
+    "save": "Save",
+    "advancedOptions": "View Advanced Options (Context Limit etc.)",
+    "contextLimit": "Context Limit",
+    "contextLimitDes": "The number of messages to include in the context for the AI assistant. When set to 1, the AI assistant will only see and remember the most recent message.",
+    "all": "All",
+    "cancel": "Cancel"
   }
 }

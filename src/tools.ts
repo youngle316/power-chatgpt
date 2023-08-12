@@ -1,5 +1,9 @@
 import { nanoid } from "nanoid";
-import { CHAT_MODEL_DEFAULT, SYSTEM_MESSAGE_DEFAULT } from "./const";
+import {
+  CHAT_MODEL_DEFAULT,
+  CONTEXT_LIMIT_DEFAULT,
+  SYSTEM_MESSAGE_DEFAULT,
+} from "./const";
 
 const textAreaAutoHeight = (id: string) => {
   const textArea = document.getElementById(id) as HTMLTextAreaElement;
@@ -31,6 +35,7 @@ const createNewChat = ({
     createAt: Date.now(),
     systemMessage: SYSTEM_MESSAGE_DEFAULT,
     chatModel: CHAT_MODEL_DEFAULT,
+    contextLimit: CONTEXT_LIMIT_DEFAULT,
   };
   const newChatData = [...sidebarData, newChat];
   setSidebarData(newChatData);

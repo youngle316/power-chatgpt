@@ -80,6 +80,10 @@ const AppSetting = () => {
     setIsModalOpen(false);
   };
 
+  const cancelSetting = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <div className="mb-4">
@@ -117,10 +121,19 @@ const AppSetting = () => {
             placeholder="https://api.openai.com/v1"
           />
         </div>
-        <button type="button" className="primary-button" onClick={saveSetting}>
+      </form>
+      <div className="flex justify-center gap-2">
+        <button
+          type="button"
+          className="basic_button bg-blue-600 hover:bg-blue-500"
+          onClick={saveSetting}
+        >
           {t("save")}
         </button>
-      </form>
+        <button type="button" className="basic_button" onClick={cancelSetting}>
+          {t("cancel")}
+        </button>
+      </div>
     </div>
   );
 };
