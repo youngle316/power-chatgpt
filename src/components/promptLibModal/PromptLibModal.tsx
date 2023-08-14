@@ -70,7 +70,7 @@ function PromptLibModal() {
                 <div className="flex justify-center">
                   <button
                     onClick={() => setIsShowModal(false)}
-                    className="basic_button bg-blue-600 hover:bg-blue-500 focus-visible:outline-blue-600"
+                    className="basic_button bg-blue-600 text-neutral-50 hover:bg-blue-500"
                   >
                     {t("closePromptLib")}
                   </button>

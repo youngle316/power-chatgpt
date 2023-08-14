@@ -125,7 +125,7 @@ const AppSetting = () => {
       <div className="flex justify-center gap-2">
         <button
           type="button"
-          className="basic_button bg-blue-600 hover:bg-blue-500"
+          className="basic_button bg-blue-600 text-neutral-50 hover:bg-blue-500"
           onClick={saveSetting}
         >
           {t("save")}
