@@ -29,7 +29,9 @@
     "light": "Light",
     "system": "System",
     "modelSettingTitle": "Stream AI responses word by word (typing animation)",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "exportAndImport": "Export",
+    "export": "Export Data"
   },
   "response": {
     "ApiKeyIsRequired": "Please enter your OpenAI API key."
