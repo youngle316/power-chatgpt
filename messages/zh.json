@@ -29,7 +29,9 @@
     "light": "浅色主题",
     "system": "跟随系统",
     "modelSettingTitle": "逐字逐句地流式传输AI的回答（打字动画）",
-    "cancel": "取消"
+    "cancel": "取消",
+    "exportAndImport": "导出",
+    "export": "导出数据"
   },
   "response": {
     "ApiKeyIsRequired": "请输入 OpenAI API 密钥"

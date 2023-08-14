@@ -4,15 +4,18 @@ import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import {
+  CHAT_MESSAGES_STORAGE_KEY,
   ENABLED_STREAM,
   OPENAI_API_ENDPOINT_STORAGE_KEY,
   OPENAI_API_KEY_STORAGE_KEY,
+  SIDEBAR_CHAT_STORAGE_KEY,
 } from "~/const";
 import { useSettingModalState } from "~/store/sidebarStore";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
 import HeadLessTab from "~/components/HeadLess/HeadLessTab";
 import HeadLessSwitch from "~/components/HeadLess/HeadLessSwitch";
+import fileDownload from "js-file-download";
 
 function SettingContent() {
   const t = useTranslations("Setting");
@@ -74,6 +77,16 @@ const AppSetting = () => {
 
   const t = useTranslations("Setting");
 
+  const [chatData] = useLocalStorage<SideBarChatProps[]>(
+    SIDEBAR_CHAT_STORAGE_KEY,
+    []
+  );
+
+  const [chatMessage] = useLocalStorage<ChatMessages[]>(
+    CHAT_MESSAGES_STORAGE_KEY,
+    []
+  );
+
   const saveSetting = () => {
     setOpenaiApiKey(apiKeyValue);
     setApiEndPointKey(apiEndPointValue);
@@ -82,6 +95,23 @@ const AppSetting = () => {
 
   const cancelSetting = () => {
     setIsModalOpen(false);
+  };
+
+  const exportAllData = () => {
+    const exportData = JSON.parse(JSON.stringify(chatData)).map(
+      (item: SideBarChatProps) => {
+        const message = chatMessage.find((message) => {
+          return message.chatId === item.id;
+        }) as ChatMessages;
+        return Object.assign(item, {
+          messages: message.messages,
+        });
+      }
+    );
+
+    const fileName = `PowerChat-export-${new Date().getTime()}`;
+
+    fileDownload(JSON.stringify({ data: exportData }), `${fileName}.json`);
   };
 
   return (
@@ -122,6 +152,12 @@ const AppSetting = () => {
           />
         </div>
       </form>
+      <div className="mb-4">
+        <span className="form-label">{t("exportAndImport")}</span>
+        <button type="button" className="small-button" onClick={exportAllData}>
+          {t("export")}
+        </button>
+      </div>
       <div className="flex justify-center gap-2">
         <button
           type="button"

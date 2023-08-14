@@ -54,6 +54,6 @@ html {
   }
 
   .small-button {
-    @apply text-sm border rounded-full px-2 bg-neutral-800 hover:bg-neutral-700
+    @apply text-sm border rounded-full px-2 bg-neutral-500 hover:bg-neutral-600
   }
 }
