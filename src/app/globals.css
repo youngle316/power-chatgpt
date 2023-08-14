@@ -45,12 +45,15 @@ html {
   }
 
   .basic_button {
-    @apply inline-flex items-center rounded-md px-3 py-[6px] text-sm font-semibold
-    text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+    @apply inline-flex items-center rounded-md px-3 py-[6px] text-sm font-semibold;
   }
 
   .basic-input {
     @apply block w-full rounded-lg border border-neutral-300 bg-neutral-50 p-2.5 text-sm text-neutral-900 focus:border-blue-500 focus:ring-blue-500
     dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:placeholder-neutral-400 dark:focus:border-blue-500 dark:focus:ring-blue-500;
+  }
+
+  .small-button {
+    @apply text-sm border rounded-full px-2 bg-neutral-800 hover:bg-neutral-700
   }
 }

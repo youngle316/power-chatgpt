@@ -31,7 +31,7 @@ function PromptItem({ prompt }: PromptItemProps) {
       <div className="w-30">
         <button
           onClick={usePromptLib}
-          className="basic_button bg-blue-500 hover:bg-blue-400"
+          className="basic_button bg-blue-500 text-neutral-50 hover:bg-blue-400"
         >
           {t("usePrompt")}
           <ArrowRight className="-mr-1 ml-2 h-4 w-4" />
