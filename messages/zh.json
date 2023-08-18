@@ -1,7 +1,9 @@
 {
   "NavPage": {
     "newChat": "新建会话",
-    "newChatContent": "开始新建一个会话"
+    "newChatContent": "开始新建一个会话",
+    "updateLog": "更新日志",
+    "feedback": "反馈"
   },
   "APP": {
     "noLogin": "无需登录",

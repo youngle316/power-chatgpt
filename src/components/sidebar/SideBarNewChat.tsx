@@ -4,6 +4,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { SIDEBAR_CHAT_STORAGE_KEY, CHAT_MESSAGES_STORAGE_KEY } from "~/const";
 import { useTranslations } from "next-intl";
 import { createNewChat } from "~/tools";
+import SideBarFooter from "~/components/sidebar/SideBarFooter";
 
 function SideBarNewChat() {
   const [sidebarData, setSidebarData] = useLocalStorage<SideBarChatProps[]>(
@@ -30,11 +31,12 @@ function SideBarNewChat() {
   };
 
   return (
-    <div className="flex h-16 items-center px-2">
+    <div className="flex h-16 items-center gap-2 px-2">
       <button type="button" className="sidebar_btn" onClick={newChat}>
         <MessageCircle size={20} />
         {t("newChat")}
       </button>
+      <SideBarFooter />
     </div>
   );
 }

@@ -1,7 +1,9 @@
 {
   "NavPage": {
     "newChat": "New Chat",
-    "newChatContent": "Start a new chat"
+    "newChatContent": "Start a new chat",
+    "updateLog": "Update Log",
+    "feedback": "Feedback"
   },
   "APP": {
     "noLogin": "No login",
