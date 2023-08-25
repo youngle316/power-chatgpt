@@ -28,7 +28,7 @@ import { useSettingModalState, useSideBarState } from "~/store/sidebarStore";
 import { useScrollToView } from "~/hooks/useScrollToView";
 import FunctionButton from "./FunctionButton";
 import toast from "react-hot-toast";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
+// import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { ChatCompletionRequestMessage } from "openai-edge";
 
 class RetriableError extends Error {}
@@ -225,9 +225,10 @@ function PromptInput() {
 
     if (enabledStream && !!answerNodeRef?.current) {
       setIsStreaming(true);
-      await fetchEventSource("/api/askQuestion", {
-        signal: abortController?.signal,
+
+      await fetch("/api/askQuestion", {
         method: "POST",
+        signal: abortController?.signal,
         headers: {
           "Content-Type": "application/json",
         },
@@ -241,50 +242,34 @@ function PromptInput() {
           stream: true,
           model: currentSidebarData.chatModel,
         }),
-        async onopen(response) {
-          if (answerNodeRef?.current) {
-            answerNodeRef.current.innerText = "";
+      })
+        .then(async (res) => {
+          if (!res.ok) throw new Error("Failed to fetch the chat response.");
+          if (!res.body) throw new Error("The response body is empty.");
+
+          const reader = res.body.getReader();
+          
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) return;
+            const data = new TextDecoder("utf-8").decode(value);
+            const dataArr = data.split("data: ").filter(String);
+            dataArr.forEach((item) => onData(item));
           }
-          console.log("onopen");
-          if (
-            response.ok &&
-            response.headers.get("content-type")?.replace(/ /g, "") ===
-              "text/event-stream;charset=utf-8"
-          ) {
-            return;
-          } else if (
-            response.status >= 400 &&
-            response.status < 500 &&
-            response.status !== 429
-          ) {
-            throw new FatalError();
-          } else {
-            throw new RetriableError();
-          }
-        },
-        onmessage(msg) {
-          if (msg.event === "FatalError") {
-            throw new FatalError(msg.data);
-          }
-          try {
-            onData(msg.data);
-          } catch (error) {
-            abortController.abort();
-            onClose();
-          }
-        },
-        onclose() {
-          onClose();
-        },
-        onerror(err) {
+        })
+        .catch((err) => {
           if (err instanceof FatalError) {
             console.log("onerror fatal", err);
             setIsStreaming(false);
           } else {
             console.log("onerror other", err);
           }
-        },
-      });
+          throw err;
+        })
+        .finally(() => {
+          if (onClose) onClose();
+          setIsStreaming(false);
+        });
     } else {
       await fetch("/api/askQuestion", {
         signal: abortController?.signal,
