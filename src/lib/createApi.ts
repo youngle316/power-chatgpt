@@ -7,7 +7,7 @@ class CreateAPI {
     if (!CreateAPI.instance) {
       const configuration = new Configuration({
         apiKey: apiKey || "",
-        basePath: apiBaseUrl || "https://openaiproxy-4bc.pages.dev/v1",
+        basePath: apiBaseUrl || "",
       });
       CreateAPI.instance = new OpenAIApi(configuration);
     }
