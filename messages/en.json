@@ -23,7 +23,7 @@
     "appSetting": "App",
     "modelSetting": "Model",
     "openaiAPIKey": "OpenAI API Key",
-    "openaiAPIEndPoint": "OpenAI API Endpoint",
+    "openaiAPIEndPoint": "OpenAI API Proxy",
     "save": "Save",
     "language": "Language",
     "theme": "Theme",

@@ -148,7 +148,7 @@ const AppSetting = () => {
             type="text"
             id="apiEndPoint"
             className="form-content"
-            placeholder="https://api.openai.com/v1"
+            placeholder="https://example.dev/v1"
           />
         </div>
       </form>
