@@ -226,6 +226,7 @@ function PromptInput() {
     if (enabledStream && !!answerNodeRef?.current) {
       setIsStreaming(true);
       await fetchEventSource("/api/askQuestion", {
+        openWhenHidden: true,
         signal: abortController?.signal,
         method: "POST",
         headers: {
