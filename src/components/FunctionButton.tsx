@@ -53,8 +53,6 @@ function FunctionButton({ isTyping }: FunctionButtonType) {
 
   const { inView } = useSystemMessageRef();
 
-  console.log("inView", inView);
-
   const regenerate = () => {
     const messages = chatMessages.find((item) =>
       pathname.includes(item.chatId)
