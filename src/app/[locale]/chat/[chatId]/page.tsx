@@ -10,6 +10,7 @@ import {
   useAnswerNodeRef,
   useIsStreaming,
   useIsTypingState,
+  useSystemMessageRef,
 } from "~/store/chat";
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
@@ -20,6 +21,7 @@ import HeadLessDialog from "~/components/HeadLess/HeadLessDialog";
 import PageModelSet from "./PageModelSet";
 import { useOpenModalState } from "~/store/page";
 import { useTranslations } from "next-intl";
+import { useInView } from "react-intersection-observer";
 
 function ChatPage() {
   const [chatMessage] = useLocalStorage<ChatMessages[]>(
@@ -53,12 +55,23 @@ function ChatPage() {
 
   const t = useTranslations("ModelSetting");
 
+  const { setInView } = useSystemMessageRef();
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    setInView(inView);
+  }, [inView]);
+
   return (
     <MainContainer>
       {messages ? (
-        messages?.messages.map((item) => {
-          return <RenderChatMessages key={item.id} messages={item} />;
-        })
+        <>
+          <div ref={ref} />
+          {messages?.messages.map((item) => {
+            return <RenderChatMessages key={item.id} messages={item} />;
+          })}
+        </>
       ) : (
         <RenderNoChat />
       )}

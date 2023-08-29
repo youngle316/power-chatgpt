@@ -41,7 +41,8 @@
   "button": {
     "stop": "停止",
     "regenerate": "重新生成",
-    "prompt": "Prompt 库"
+    "prompt": "Prompt 库",
+    "modelSetting": "模型设置"
   },
   "promptModal": {
     "promptLib": "Prompt 库",
