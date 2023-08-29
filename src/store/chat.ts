@@ -46,11 +46,9 @@ type AnswerNode = {
   setAnswerNodeRef: (ref: React.RefObject<HTMLDivElement>) => void;
 };
 
-type StreamItem = {
-  created?: number;
-  id?: string;
-  model?: string;
-  object?: string;
+type SystemMessageRef = {
+  inView: boolean;
+  setInView: (val: boolean) => void;
 };
 
 const useInputPromptState = create<InputPrompt>()((set) => ({
@@ -98,6 +96,11 @@ const useAnswerNodeRef = create<AnswerNode>()((set) => ({
   setAnswerNodeRef: (val) => set(() => ({ answerNodeRef: val })),
 }));
 
+const useSystemMessageRef = create<SystemMessageRef>()((set) => ({
+  inView: false,
+  setInView: (val) => set(() => ({ inView: val })),
+}));
+
 export {
   useInputPromptState,
   useIsTypingState,
@@ -108,4 +111,5 @@ export {
   useRegenerateInputState,
   useIsStreaming,
   useAnswerNodeRef,
+  useSystemMessageRef,
 };

@@ -66,7 +66,7 @@ function MainContainer({ children }: { children: React.ReactNode }) {
           <button
             onClick={scrollTobBottom}
             className={`fixed bottom-36 right-2 z-10 cursor-pointer text-neutral-900 dark:text-neutral-100 lg:right-24 ${
-              inView && "hidden"
+              inView ? "hidden" : ""
             }`}
           >
             <MoveDown className="h-6 w-6 hover:text-blue-500" />

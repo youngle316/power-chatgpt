@@ -41,7 +41,8 @@
   "button": {
     "stop": "stop",
     "regenerate": "regenerate",
-    "prompt": "Prompt Library"
+    "prompt": "Prompt Library",
+    "modelSetting": "Model Setting"
   },
   "promptModal": {
     "promptLib": "Prompt Library",

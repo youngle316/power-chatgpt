@@ -1,14 +1,19 @@
 "use client";
 
-import { Square, RefreshCcw, Book } from "lucide-react";
+import { Square, RefreshCcw, Book, Settings } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next-intl/client";
 import { useLocalStorage } from "usehooks-ts";
 import { CHAT_MESSAGES_STORAGE_KEY } from "~/const";
-import { useAbortController, useRegenerateInputState } from "~/store/chat";
+import {
+  useAbortController,
+  useRegenerateInputState,
+  useSystemMessageRef,
+} from "~/store/chat";
 import { useSelectedChatId } from "~/store/sidebarStore";
 import { useIsShowModal } from "~/store/promptLib";
 import PromptLibModal from "~/components/promptLibModal/PromptLibModal";
+import { useOpenModalState } from "~/store/page";
 
 type FunctionButtonType = {
   isTyping: boolean;
@@ -44,6 +49,12 @@ function FunctionButton({ isTyping }: FunctionButtonType) {
 
   const { isShowModal, setIsShowModal } = useIsShowModal();
 
+  const { setIsModalOpen } = useOpenModalState();
+
+  const { inView } = useSystemMessageRef();
+
+  console.log("inView", inView);
+
   const regenerate = () => {
     const messages = chatMessages.find((item) =>
       pathname.includes(item.chatId)
@@ -58,6 +69,7 @@ function FunctionButton({ isTyping }: FunctionButtonType) {
     }
 
     const tempMessages = messages?.messages;
+
     if (
       tempMessages &&
       tempMessages[tempMessages.length - 1].role === "assistant"
@@ -70,6 +82,16 @@ function FunctionButton({ isTyping }: FunctionButtonType) {
   return (
     <>
       <div className="my-4 flex w-full flex-wrap items-center justify-center gap-2 px-4 text-center">
+        {!inView && selectedChatId && (
+          <Button
+            color="bg-gray-500"
+            hoverColor="hover:bg-gray-400"
+            icon={<Settings className="h-4 w-4" />}
+            onClick={() => setIsModalOpen(true)}
+          >
+            {t("modelSetting")}
+          </Button>
+        )}
         {isTyping && (
           <Button
             color="bg-red-500"
