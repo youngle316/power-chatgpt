@@ -24,6 +24,7 @@
     "modelSetting": "Model",
     "openaiAPIKey": "OpenAI API Key",
     "openaiAPIEndPoint": "OpenAI API Proxy",
+    "howToUse": "How to use",
     "save": "Save",
     "language": "Language",
     "theme": "Theme",

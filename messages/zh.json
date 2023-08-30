@@ -24,6 +24,7 @@
     "modelSetting": "Model",
     "openaiAPIKey": "OpenAI API 密钥",
     "openaiAPIEndPoint": "OpenAI API Proxy",
+    "howToUse": "如何使用",
     "save": "保存",
     "language": "语言",
     "theme": "主题",

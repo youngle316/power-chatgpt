@@ -140,7 +140,17 @@ const AppSetting = () => {
         </div>
         <div className="mb-4">
           <label htmlFor="apiEndPoint" className="form-label">
-            {t("openaiAPIEndPoint")}
+            <div className="flex items-center gap-1">
+              {t("openaiAPIEndPoint")}(
+              <a
+                className="cursor-pointer text-xs text-blue-500 hover:text-blue-400 hover:underline"
+                href="http://xiaole.site/use-cloudflare-transfer-openai-api"
+                target="_blank"
+              >
+                {t("howToUse")}
+              </a>
+              )
+            </div>
           </label>
           <input
             value={apiEndPointValue}
