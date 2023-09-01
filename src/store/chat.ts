@@ -51,6 +51,11 @@ type SystemMessageRef = {
   setInView: (val: boolean) => void;
 };
 
+type ResponseError = {
+  isError: boolean;
+  setIsError: (val: boolean) => void;
+};
+
 const useInputPromptState = create<InputPrompt>()((set) => ({
   inputPrompt: "",
   setInputPrompt: (prompt) => set(() => ({ inputPrompt: prompt })),
@@ -101,6 +106,11 @@ const useSystemMessageRef = create<SystemMessageRef>()((set) => ({
   setInView: (val) => set(() => ({ inView: val })),
 }));
 
+const useResponseError = create<ResponseError>()((set) => ({
+  isError: false,
+  setIsError: (val) => set(() => ({ isError: val })),
+}));
+
 export {
   useInputPromptState,
   useIsTypingState,
@@ -112,4 +122,5 @@ export {
   useIsStreaming,
   useAnswerNodeRef,
   useSystemMessageRef,
+  useResponseError,
 };

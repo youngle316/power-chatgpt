@@ -37,7 +37,10 @@
     "export": "导出数据"
   },
   "response": {
-    "ApiKeyIsRequired": "请输入 OpenAI API 密钥"
+    "ApiKeyIsRequired": "请输入 OpenAI API 密钥",
+    "UND_ERR_CONNECT_TIMEOUT": "连接超时，请检查网络或代理设置",
+    "ECONNRESET": "连接被重置，请检查网络或代理设置",
+    "CommonError": "请求失败，请稍后重试"
   },
   "button": {
     "stop": "停止",

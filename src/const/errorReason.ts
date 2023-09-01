@@ -1,0 +1,3 @@
+const ERROR_REASON = ["UND_ERR_CONNECT_TIMEOUT", "ECONNRESET"];
+
+export default ERROR_REASON;
