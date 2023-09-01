@@ -37,7 +37,10 @@
     "export": "Export Data"
   },
   "response": {
-    "ApiKeyIsRequired": "Please enter your OpenAI API key."
+    "ApiKeyIsRequired": "Please enter your OpenAI API key.",
+    "UND_ERR_CONNECT_TIMEOUT": "Connect timeout, please check your network or proxy settings.",
+    "ECONNRESET": "Connection reset, please check your network or proxy settings.",
+    "CommonError": "Something went wrong, please try again later."
   },
   "button": {
     "stop": "stop",

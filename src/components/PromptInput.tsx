@@ -12,6 +12,7 @@ import {
   useIsTypingState,
   useMoveDownRef,
   useRegenerateInputState,
+  useResponseError,
 } from "~/store/chat";
 import { useLocalStorage } from "usehooks-ts";
 import {
@@ -30,6 +31,7 @@ import FunctionButton from "./FunctionButton";
 import toast from "react-hot-toast";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { ChatCompletionRequestMessage } from "openai-edge";
+import ERROR_REASON from "~/const/errorReason";
 
 class RetriableError extends Error {}
 class FatalError extends Error {}
@@ -85,6 +87,8 @@ function PromptInput() {
 
   const { isOpen } = useSideBarState();
 
+  const { isError, setIsError } = useResponseError();
+
   const chatTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputPrompt(e.target.value);
   };
@@ -130,6 +134,10 @@ function PromptInput() {
   }
 
   function onClose() {
+    if (isError) {
+      setIsError(false);
+      return;
+    }
     if (!enabledStream) {
       return;
     }
@@ -258,7 +266,8 @@ function PromptInput() {
             response.status < 500 &&
             response.status !== 429
           ) {
-            throw new FatalError();
+            const data = await response.json();
+            throw new FatalError(data?.cause?.code || "");
           } else {
             throw new RetriableError();
           }
@@ -279,8 +288,14 @@ function PromptInput() {
         },
         onerror(err) {
           if (err instanceof FatalError) {
-            console.log("onerror fatal", err);
+            if (ERROR_REASON.includes(err.message)) {
+              toast.error(responseT(err.message));
+            } else {
+              toast.error(responseT(""));
+            }
+            setIsError(true);
             setIsStreaming(false);
+            throw err;
           } else {
             console.log("onerror other", err);
           }
@@ -405,13 +420,16 @@ function PromptInput() {
       chatId,
       chatMessageStorage,
       sidebarDataStorage,
-    }).then(() => {
-      setIsTyping(false);
-      scrollIntoView();
-      if (regenerateInput) {
-        setRegenerateInput("");
-      }
-    });
+    })
+      .then()
+      .catch()
+      .finally(() => {
+        setIsTyping(false);
+        scrollIntoView();
+        if (regenerateInput) {
+          setRegenerateInput("");
+        }
+      });
   };
 
   useEffect(() => {
