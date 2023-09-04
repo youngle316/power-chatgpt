@@ -20,8 +20,10 @@ A Power Tool For ChatGPT
 
 ## 开发计划
 
-- [ ] 自动压缩上下文聊天记录，节省 Token 的同时支持超长对话
-- [ ] 允许用户自定义 Prompt
+- [x] 自动压缩上下文聊天记录，节省 Token 的同时支持超长对话
+  - 压缩会导致上下文丢失，推荐在模型设置中通过设置 **上下文限制** 来节省 Token
+  - ![](https://raw.githubusercontent.com/youngle316/picg/main/202309041411448.png)
+- [x] 允许用户自定义 Prompt
 - [ ] 内置 Character，并在新建会话内置
 - [ ] 分享为图片，分享到 ShareGPT 链接
 - [ ] 使用 tauri 打包桌面应用
