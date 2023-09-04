@@ -50,8 +50,8 @@ type Prompt = {
 };
 
 type Prompts = {
-  type: "en" | "cn";
-  address: string;
+  type: "en" | "cn" | "custom";
+  address?: string;
   prompts: Prompt[];
 };
 

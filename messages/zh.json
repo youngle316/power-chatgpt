@@ -65,7 +65,8 @@
     "promptContent": "输入你的 Prompt",
     "addPrompt": "添加 Prompt",
     "cancelAddPrompt": "取消",
-    "noCustomPrompt": "你没有自定义的 Prompts，先添加一个吧~"
+    "noCustomPrompt": "你没有自定义的 Prompts，先添加一个吧~",
+    "promptTitleExist": "Prompt 标题已存在"
   },
   "ModelSetting": {
     "title": "模型设置",

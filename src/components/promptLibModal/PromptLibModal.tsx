@@ -6,16 +6,18 @@ import PromptContent from "./PromptContent";
 import { useTranslations } from "next-intl";
 import { useIsShowModal } from "~/store/promptLib";
 import HeadLessTab from "~/components/HeadLess/HeadLessTab";
-
-const tabs = [
-  { label: "中文", value: "cn" },
-  { label: "English", value: "en" },
-];
+import CustomPrompt from "~/components/promptLibModal/CustomPrompt";
 
 function PromptLibModal() {
   const { isShowModal, setIsShowModal } = useIsShowModal();
 
   const t = useTranslations("promptModal");
+
+  const tabs = [
+    { label: t("yourPrompt"), value: "custom" },
+    { label: "中文", value: "cn" },
+    { label: "English", value: "en" },
+  ];
 
   return (
     <Transition appear show={isShowModal} as={Fragment}>
@@ -57,6 +59,10 @@ function PromptLibModal() {
                 <HeadLessTab
                   tabs={tabs}
                   content={[
+                    {
+                      value: <CustomPrompt />,
+                      key: "custom",
+                    },
                     {
                       value: <PromptContent content={cnPrompts} />,
                       key: "cn",
