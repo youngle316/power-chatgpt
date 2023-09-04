@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
 import PromptItem from "./PromptItem";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import SearchInput from "~/components/SearchInput";
 
 type promptContentProps = {
   content: Prompts;
@@ -48,21 +48,3 @@ function PromptContent({ content }: promptContentProps) {
 }
 
 export default PromptContent;
-
-type SearchInputProps = {
-  setData: Dispatch<SetStateAction<string>>;
-  placeholder: string;
-};
-
-function SearchInput({ setData, placeholder }: SearchInputProps) {
-  return (
-    <>
-      <input
-        type="text"
-        className="basic-input"
-        placeholder={placeholder}
-        onChange={(e) => setData(e.target.value)}
-      />
-    </>
-  );
-}

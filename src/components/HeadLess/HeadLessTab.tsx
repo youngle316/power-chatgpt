@@ -22,13 +22,15 @@ const HeadLessTab = ({
   return (
     <div>
       <Tab.Group>
-        <Tab.List className="my-4 flex gap-2">
+        <Tab.List className="my-4 flex gap-2 text-lg font-medium">
           {tabs.map((item) => {
             return (
               <Tab key={item.label}>
                 {({ selected }) => (
                   <button
-                    className={`relative ${selected ? "text-blue-500" : ""}`}
+                    className={`relative hover:text-blue-500/80 ${
+                      selected ? "text-blue-500" : "text-neutral-500/80"
+                    }`}
                   >
                     {item.label}
                     {selected ? (
