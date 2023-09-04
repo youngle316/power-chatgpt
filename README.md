@@ -22,8 +22,10 @@ A Power Tool For ChatGPT
 
 ## Development plan
 
-- [ ] Automatically compress context chat logs to save tokens while supporting long conversations.
-- [ ] Allow users to customize prompts.
+- [x] Automatically compress context chat logs to save tokens while supporting long conversations.
+  - Compression can lead to loss of context. It is recommended to save tokens by setting **context limit** in the model setting.
+  - ![](https://raw.githubusercontent.com/youngle316/picg/main/202309041413821.png)
+- [x] Allow users to customize prompts.
 - [ ] Include built-in characters and make them available in new sessions.
 - [ ] Share as an image or share via a ShareGPT link.
 - [ ] Package the desktop application using Tauri.
