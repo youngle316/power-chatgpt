@@ -19,7 +19,7 @@ import RenderNoChat from "./RenderNoChat";
 import RenderChatMessages from "./RenderChatMessages";
 import HeadLessDialog from "~/components/HeadLess/HeadLessDialog";
 import PageModelSet from "./PageModelSet";
-import { useOpenModalState } from "~/store/page";
+import { useChatContentRef, useOpenModalState } from "~/store/page";
 import { useTranslations } from "next-intl";
 import { useInView } from "react-intersection-observer";
 
@@ -63,14 +63,23 @@ function ChatPage() {
     setInView(inView);
   }, [inView]);
 
+  const { setChatContentRef } = useChatContentRef();
+  const chatContentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setChatContentRef(chatContentRef);
+  }, [chatContentRef]);
+
   return (
     <MainContainer>
       {messages ? (
         <>
           <div ref={ref} />
-          {messages?.messages.map((item) => {
-            return <RenderChatMessages key={item.id} messages={item} />;
-          })}
+          <div ref={chatContentRef}>
+            {messages?.messages.map((item) => {
+              return <RenderChatMessages key={item.id} messages={item} />;
+            })}
+          </div>
         </>
       ) : (
         <RenderNoChat />

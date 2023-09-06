@@ -27,7 +27,7 @@ import { usePathname, useRouter } from "next-intl/client";
 import { createNewChat } from "~/tools";
 import { useSettingModalState, useSideBarState } from "~/store/sidebarStore";
 import { useScrollToView } from "~/hooks/useScrollToView";
-import FunctionButton from "./FunctionButton";
+import FunctionButton from "./FunctionButton/FunctionButton";
 import toast from "react-hot-toast";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { ChatCompletionRequestMessage } from "openai-edge";
@@ -453,7 +453,7 @@ function PromptInput() {
     >
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 transition-all md:px-8 lg:px-12">
         <div className="opacity-100">
-          <FunctionButton isTyping={isTyping} />
+          <FunctionButton />
         </div>
         <div className="bg-neutral-100 pb-4 pt-0 dark:bg-neutral-900">
           <div className="chat-textarea-container">
