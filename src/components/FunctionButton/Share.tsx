@@ -165,7 +165,7 @@ function Share() {
                     <Fragment key={buttonTitle}>
                       <div className="flex items-center justify-end">
                         <button
-                          className={`basic_button gap-1 bg-blue-700 px-4 py-2 hover:bg-blue-500 ${
+                          className={`basic_button gap-1 bg-blue-700 px-4 py-2 text-white hover:bg-blue-500 ${
                             disabled
                               ? "cursor-not-allowed disabled:bg-neutral-500"
                               : ""
