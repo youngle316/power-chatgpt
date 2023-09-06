@@ -1,7 +1,6 @@
 "use client";
 
 import { useLocalStorage } from "usehooks-ts";
-import MainContainer from "../../MainContainer";
 import { CHAT_MESSAGES_STORAGE_KEY } from "~/const";
 import { usePathname } from "next-intl/client";
 import { Loader2 } from "lucide-react";
@@ -22,6 +21,11 @@ import PageModelSet from "./PageModelSet";
 import { useChatContentRef, useOpenModalState } from "~/store/page";
 import { useTranslations } from "next-intl";
 import { useInView } from "react-intersection-observer";
+import dynamic from "next/dynamic";
+
+const MainContainer = dynamic(() => import("../../MainContainer"), {
+  ssr: false,
+});
 
 function ChatPage() {
   const [chatMessage] = useLocalStorage<ChatMessages[]>(

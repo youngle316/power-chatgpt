@@ -1,7 +1,6 @@
 "use client";
 
 import { useSettingModalState, useSideBarState } from "~/store/sidebarStore";
-import TopBar from "./TopBar";
 import AppIntroduce from "~/components/AppIntroduce";
 import PromptInput from "~/components/PromptInput";
 import { MoveDown } from "lucide-react";
@@ -12,6 +11,9 @@ import { useScrollToView } from "~/hooks/useScrollToView";
 import { useLocalStorage } from "usehooks-ts";
 import { OPENAI_API_KEY_STORAGE_KEY } from "~/const";
 import { useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
+
+const TopBar = dynamic(() => import("./TopBar"), { ssr: false });
 
 function MainContainer({ children }: { children: React.ReactNode }) {
   const { isOpen } = useSideBarState();
