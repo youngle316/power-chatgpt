@@ -46,7 +46,16 @@
     "stop": "stop",
     "regenerate": "regenerate",
     "prompt": "Prompt Library",
-    "modelSetting": "Model Setting"
+    "modelSetting": "Model Setting",
+    "share": "Share"
+  },
+  "shareModal": {
+    "shareMethod": "How do you want to share this chat?",
+    "saveAsPng": "Save as PNG",
+    "image": "Image",
+    "saveAsJSON": "Download as JSON file",
+    "saveAsShareGPT": "ShareGPT.com is a free service that allows you to share your Chat with others",
+    "shareUrl": "Please make a copy of the links below, they will not be shown again."
   },
   "promptModal": {
     "promptLib": "Prompt Library",

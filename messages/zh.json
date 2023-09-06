@@ -46,7 +46,16 @@
     "stop": "停止",
     "regenerate": "重新生成",
     "prompt": "Prompt 库",
-    "modelSetting": "模型设置"
+    "modelSetting": "模型设置",
+    "share": "分享"
+  },
+  "shareModal": {
+    "shareMethod": "你想如何分享这次对话？",
+    "saveAsPng": "保存为图片",
+    "image": "图片",
+    "saveAsJSON": "下载为 JSON 文件",
+    "saveAsShareGPT": "ShareGPT.com 是一个免费的在线服务，可以分享你的对话",
+    "shareUrl": "请复制下面的链接，它们将不再显示。"
   },
   "promptModal": {
     "promptLib": "Prompt 库",
