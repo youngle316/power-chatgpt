@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import { useLocalStorage } from "usehooks-ts";
 import { CHAT_MESSAGES_STORAGE_KEY } from "~/const";
 import fileDownload from "js-file-download";
+import { useIsTypingState } from "~/store/chat";
 
 type ConversationDataType = {
   avatarUrl: string;
@@ -33,6 +34,7 @@ function Share() {
   const { chatContentRef } = useChatContentRef();
   const { isGptUrlModalOpen, setIsGptUrlModalOpen } = useGptUrlModal();
   const { gptUrl, setGptUrl } = useGptUrl();
+  const { isTyping } = useIsTypingState();
 
   const [chatMessage] = useLocalStorage<ChatMessages[]>(
     CHAT_MESSAGES_STORAGE_KEY,
@@ -133,7 +135,7 @@ function Share() {
 
   return (
     <>
-      {selectedChatId && (
+      {selectedChatId && !isTyping && (
         <Button
           color="bg-violet-500"
           hoverColor="hover:bg-violet-400"
