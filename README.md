@@ -4,10 +4,10 @@
 
 A Power Tool For ChatGPT
 
+[中文 README](./README-CN.md)
+
 ![home](https://raw.githubusercontent.com/youngle316/picg/main/20230810143834.png)
 </div>
-
-[中文 README](./README-CN.md)
 
 ## Features ✨
 
@@ -27,7 +27,7 @@ A Power Tool For ChatGPT
   - ![](https://raw.githubusercontent.com/youngle316/picg/main/202309041413821.png)
 - [x] Allow users to customize prompts.
 - [ ] Include built-in characters and make them available in new sessions.
-- [ ] Share as an image or share via a ShareGPT link.
+- [x] Share as an image or share via a ShareGPT link.
 - [ ] Package the desktop application using Tauri.
 - [ ] Support text-to-speech functionality.
 - [ ] Support a plugin system.
