@@ -25,8 +25,8 @@ A Power Tool For ChatGPT
   - ![](https://raw.githubusercontent.com/youngle316/picg/main/202309041411448.png)
 - [x] 允许用户自定义 Prompt
 - [ ] 内置 Character，并在新建会话内置
-- [ ] 分享为图片，分享到 ShareGPT 链接
-- [ ] 使用 tauri 打包桌面应用
+- [x] 分享为图片，分享到 ShareGPT 链接
+- [ ] 使用 Tauri 打包桌面应用
 - [ ] 支持文本转语音
 - [ ] 支持插件系统
 - [ ] 支持更多其他模型
