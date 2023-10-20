@@ -144,7 +144,7 @@ const AppSetting = () => {
               {t("openaiAPIEndPoint")}(
               <a
                 className="cursor-pointer text-xs text-blue-500 hover:text-blue-400 hover:underline"
-                href="http://xiaole.site/use-cloudflare-transfer-openai-api"
+                href="https://xiaole.site/use-cloudflare-transfer-openai-api"
                 target="_blank"
               >
                 {t("howToUse")}

@@ -44,7 +44,7 @@
   },
   "button": {
     "stop": "stop",
-    "regenerate": "regenerate",
+    "regenerate": "Regenerate",
     "prompt": "Prompt Library",
     "modelSetting": "Model Setting",
     "share": "Share"

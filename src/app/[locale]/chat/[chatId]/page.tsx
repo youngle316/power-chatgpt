@@ -17,7 +17,7 @@ import { useSelectedChatId } from "~/store/sidebarStore";
 import RenderNoChat from "./RenderNoChat";
 import RenderChatMessages from "./RenderChatMessages";
 import HeadLessDialog from "~/components/HeadLess/HeadLessDialog";
-import PageModelSet from "./PageModelSet";
+import PageModelSet from "../../../../components/FunctionButton/ModelSetting/PageModelSet";
 import { useChatContentRef, useOpenModalState } from "~/store/page";
 import { useTranslations } from "next-intl";
 import { useInView } from "react-intersection-observer";
@@ -114,7 +114,7 @@ function ChatPage() {
             </div>
             <p
               ref={answerNodeRef}
-              className="prose prose-sm max-w-full break-words dark:prose-invert"
+              className="prose prose-sm dark:prose-invert max-w-full break-words"
             />
             {isStreaming && <p className="animate-pulse">...</p>}
           </div>

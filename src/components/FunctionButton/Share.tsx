@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Share2 } from "lucide-react";
-import Button from "~/components/FunctionButton/Button";
+import { Button } from "~/components/ui/button";
 import { useTranslations } from "next-intl";
 import {
   useOpenShareModal,
@@ -137,11 +137,10 @@ function Share() {
     <>
       {selectedChatId && !isTyping && (
         <Button
-          color="bg-violet-500"
-          hoverColor="hover:bg-violet-400"
-          icon={<Share2 className="h-4 w-4" />}
+          className="flex gap-1.5 bg-violet-500 hover:bg-violet-400"
           onClick={() => setIsShareModalOpen(true)}
         >
+          <Share2 className="h-4 w-4" />
           {t("share")}
         </Button>
       )}

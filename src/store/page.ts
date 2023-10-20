@@ -26,6 +26,11 @@ type GptUrlType = {
   setGptUrl: (val: string) => void;
 };
 
+type SelectedLimitIdType = {
+  contextLimit: number;
+  setContextLimit: (val: number) => void;
+};
+
 const useOpenModalState = create<OpenModalType>()((set) => ({
   isModalOpen: false,
   setIsModalOpen: (val: boolean) => set(() => ({ isModalOpen: val })),
@@ -52,10 +57,16 @@ const useGptUrl = create<GptUrlType>()((set) => ({
   setGptUrl: (val: string) => set(() => ({ gptUrl: val })),
 }));
 
+const useSelectedLimit = create<SelectedLimitIdType>()((set) => ({
+  contextLimit: 1,
+  setContextLimit: (val: number) => set(() => ({ contextLimit: val })),
+}));
+
 export {
   useOpenModalState,
   useOpenShareModal,
   useChatContentRef,
   useGptUrlModal,
   useGptUrl,
+  useSelectedLimit,
 };
