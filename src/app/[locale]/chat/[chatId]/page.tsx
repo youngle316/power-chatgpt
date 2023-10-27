@@ -53,8 +53,6 @@ function ChatPage() {
 
   const { isStreaming } = useIsStreaming();
 
-  const t = useTranslations("ModelSetting");
-
   const { setInView } = useSystemMessageRef();
 
   const { ref, inView } = useInView();
