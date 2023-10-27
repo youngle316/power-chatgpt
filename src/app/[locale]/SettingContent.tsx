@@ -13,34 +13,33 @@ import {
 import { useSettingModalState } from "~/store/sidebarStore";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
-import HeadLessTab from "~/components/HeadLess/HeadLessTab";
-import HeadLessSwitch from "~/components/HeadLess/HeadLessSwitch";
 import fileDownload from "js-file-download";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import { Switch } from "~/components/ui/switch";
+import { Label } from "~/components/ui/label";
+import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
+import { ArrowDownToLine } from "lucide-react";
+import { DialogFooter } from "~/components/ui/dialog";
 
 function SettingContent() {
   const t = useTranslations("Setting");
 
-  const tabs = [
-    {
-      label: t("appSetting"),
-      value: "app 设置",
-    },
-    {
-      label: t("modelSetting"),
-      value: "model 设置",
-    },
-  ];
-
   return (
-    <div>
-      <HeadLessTab
-        tabs={tabs}
-        content={[
-          { value: <AppSetting />, key: "app" },
-          { value: <ModelSetting />, key: "model" },
-        ]}
-      />
-    </div>
+    <>
+      <Tabs defaultValue="app">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="app">{t("appSetting")}</TabsTrigger>
+          <TabsTrigger value="model">{t("modelSetting")}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="app">
+          <AppSetting />
+        </TabsContent>
+        <TabsContent value="model">
+          <ModelSetting />
+        </TabsContent>
+      </Tabs>
+    </>
   );
 }
 
@@ -50,12 +49,13 @@ const ModelSetting = () => {
   const t = useTranslations("Setting");
 
   return (
-    <div>
-      <HeadLessSwitch
-        enabled={enableStream}
-        setEnabled={setEnableStream}
-        title={t("modelSettingTitle")}
+    <div className="flex items-center space-x-2">
+      <Switch
+        id="model_setting"
+        checked={enableStream}
+        onCheckedChange={setEnableStream}
       />
+      <Label htmlFor="model_setting">{t("modelSettingTitle")}</Label>
     </div>
   );
 };
@@ -93,10 +93,6 @@ const AppSetting = () => {
     setIsModalOpen(false);
   };
 
-  const cancelSetting = () => {
-    setIsModalOpen(false);
-  };
-
   const exportAllData = () => {
     const exportData = JSON.parse(JSON.stringify(chatData)).map(
       (item: SideBarChatProps) => {
@@ -115,71 +111,57 @@ const AppSetting = () => {
   };
 
   return (
-    <div>
-      <div className="mb-4">
-        <span className="form-label">{t("language")}</span>
+    <div className="space-y-4">
+      <div className="grid w-full items-center gap-2">
+        <Label>{t("language")}</Label>
         <LanguageSwitcher />
       </div>
-      <div className="mb-4">
-        <span className="form-label">{t("theme")}</span>
+
+      <div className="grid w-full items-center gap-2">
+        <Label>{t("theme")}</Label>
         <ThemeSwitcher />
       </div>
-      <form id="settingForm">
-        <div className="mb-4">
-          <label htmlFor="apiKey" className="form-label">
-            {t("openaiAPIKey")}
-          </label>
-          <input
-            value={apiKeyValue}
-            onChange={(e) => setApiKeyValue(e.target.value)}
-            type="password"
-            id="apiKey"
-            className="form-content"
-            placeholder="sk-xxxxxx"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="apiEndPoint" className="form-label">
-            <div className="flex items-center gap-1">
-              {t("openaiAPIEndPoint")}(
-              <a
-                className="cursor-pointer text-xs text-blue-500 hover:text-blue-400 hover:underline"
-                href="https://xlog.xiaole.site/use-cloudflare-transfer-openai-api"
-                target="_blank"
-              >
-                {t("howToUse")}
-              </a>
-              )
-            </div>
-          </label>
-          <input
-            value={apiEndPointValue}
-            onChange={(e) => setApiEndPointValue(e.target.value)}
-            type="text"
-            id="apiEndPoint"
-            className="form-content"
-            placeholder="https://example.dev/v1"
-          />
-        </div>
-      </form>
-      <div className="mb-4">
-        <span className="form-label">{t("exportAndImport")}</span>
-        <button type="button" className="small-button" onClick={exportAllData}>
-          {t("export")}
-        </button>
+
+      <div className="grid w-full items-center gap-2">
+        <Label>{t("openaiAPIKey")}</Label>
+        <Input
+          type="password"
+          placeholder="sk-xxxxxx"
+          value={apiKeyValue}
+          onChange={(e) => setApiKeyValue(e.target.value)}
+        />
       </div>
-      <div className="flex justify-center gap-2">
-        <button
-          type="button"
-          className="basic_button bg-blue-600 text-neutral-50 hover:bg-blue-500"
-          onClick={saveSetting}
-        >
-          {t("save")}
-        </button>
-        <button type="button" className="basic_button" onClick={cancelSetting}>
-          {t("cancel")}
-        </button>
+
+      <div className="grid w-full items-center gap-2">
+        <Label>
+          {t("openaiAPIEndPoint")}(
+          <a
+            className="cursor-pointer text-xs text-blue-500 hover:text-blue-400 hover:underline"
+            href="https://xlog.xiaole.site/use-cloudflare-transfer-openai-api"
+            target="_blank"
+          >
+            {t("howToUse")}
+          </a>
+          )
+        </Label>
+        <Input
+          type="text"
+          placeholder="https://example.dev/v1"
+          value={apiEndPointValue}
+          onChange={(e) => setApiEndPointValue(e.target.value)}
+        />
       </div>
+
+      <div className="grid w-full items-center gap-2">
+        <Label>{t("exportAndImport")}</Label>
+        <Button onClick={exportAllData}>
+          <ArrowDownToLine className="mr-2 h-4 w-4" /> {t("export")}
+        </Button>
+      </div>
+
+      <DialogFooter>
+        <Button onClick={saveSetting}>{t("save")}</Button>
+      </DialogFooter>
     </div>
   );
 };

@@ -12,6 +12,7 @@ import { Label } from "~/components/ui/label";
 import { Textarea } from "~/components/ui/textarea";
 import AdvanceSetting from "./AdvanceSetting";
 import { Button } from "~/components/ui/button";
+import { DialogFooter } from "~/components/ui/dialog";
 
 function PageModelSet() {
   const t = useTranslations("ModelSetting");
@@ -56,11 +57,11 @@ function PageModelSet() {
 
   return (
     <div className="space-y-4">
-      <div className="grid w-full items-center gap-1.5">
+      <div className="grid w-full items-center gap-2">
         <Label>{t("model")}</Label>
         <ModelSwitcher selected={selected} setSelected={setSelected} />
       </div>
-      <div className="grid w-full gap-1.5">
+      <div className="grid w-full gap-2">
         <Label>{t("initialSystemInstructions")}</Label>
         <Textarea
           disabled
@@ -72,9 +73,9 @@ function PageModelSet() {
         <AdvanceSetting />
       </div>
 
-      <div className="flex justify-center gap-2">
+      <DialogFooter>
         <Button onClick={saveModelSetting}>{t("save")}</Button>
-      </div>
+      </DialogFooter>
     </div>
   );
 }
