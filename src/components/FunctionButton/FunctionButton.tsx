@@ -1,4 +1,4 @@
-import ModelSetting from "~/components/FunctionButton/ModelSetting";
+import ModelSetting from "~/components/FunctionButton/ModelSetting/ModelSetting";
 import StopGenerate from "~/components/FunctionButton/StopGenerate";
 import Prompts from "~/components/FunctionButton/Prompts";
 import ReGenerate from "~/components/FunctionButton/ReGenerate";

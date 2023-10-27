@@ -6,8 +6,13 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next-intl/client";
 import { useLocalStorage } from "usehooks-ts";
 import { SIDEBAR_CHAT_STORAGE_KEY, CHAT_MESSAGES_STORAGE_KEY } from "~/const";
-import HeadLessDialog from "~/components/HeadLess/HeadLessDialog";
 import SettingContent from "./SettingContent";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "~/components/ui/dialog";
 
 function TopBar() {
   const { setIsOpen } = useSideBarState();
@@ -79,13 +84,18 @@ function TopBar() {
           <SlidersHorizontal className="h-5 w-5" />
         </button>
         {isModalOpen && (
-          <HeadLessDialog
-            isOpen={isModalOpen}
-            setIsOpen={setIsModalOpen}
-            title={settingT("setting")}
+          <Dialog
+            open={isModalOpen}
+            defaultOpen={false}
+            onOpenChange={setIsModalOpen}
           >
-            <SettingContent />
-          </HeadLessDialog>
+            <DialogContent className="max-h-[700px] max-w-xs sm:max-w-lg">
+              <DialogHeader>
+                <DialogTitle>{settingT("setting")}</DialogTitle>
+              </DialogHeader>
+              <SettingContent />
+            </DialogContent>
+          </Dialog>
         )}
       </div>
     </div>

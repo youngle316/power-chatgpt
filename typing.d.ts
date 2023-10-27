@@ -2,11 +2,11 @@ type SideBarChatProps = {
   id: string;
   title: string;
   des: string;
-  createAt: int;
-  updateAt?: int;
+  createAt: number;
+  updateAt?: number;
   systemMessage: string;
   chatModel: string;
-  contextLimit: int;
+  contextLimit: number;
 };
 
 type MessagesItem = {
@@ -14,14 +14,14 @@ type MessagesItem = {
   role: string;
   text: string;
   usage?: {
-    prompt_tokens: int;
-    completion_tokens: int;
-    total_tokens: int;
+    prompt_tokens: number;
+    completion_tokens: number;
+    total_tokens: number;
   };
   model?: string;
   finish_reason?: string;
-  createAt?: int;
-  updateAt?: int;
+  createAt?: number;
+  updateAt?: number;
 };
 
 type ChatMessages = {
@@ -58,16 +58,16 @@ type Prompts = {
 type ChatMessageRes = {
   choices: {
     finish_reason: string;
-    index: int;
+    index: number;
     message: { role: string; content: string };
   }[];
-  created: int;
+  created: number;
   id: string;
   model: string;
   object: string;
   usage: {
-    completion_tokens: int;
-    prompt_tokens: int;
-    total_tokens: int;
+    completion_tokens: number;
+    prompt_tokens: number;
+    total_tokens: number;
   };
 };

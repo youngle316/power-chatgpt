@@ -1,15 +1,16 @@
 import React from "react";
 import { Settings } from "lucide-react";
-import Button from "~/components/FunctionButton/Button";
-import { useOpenModalState } from "~/store/page";
+import { Button } from "~/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useSystemMessageRef } from "~/store/chat";
 import { useSelectedChatId } from "~/store/sidebarStore";
+import { useOpenModalState } from "~/store/page";
+import ModelSettingDialog from "./ModelSettingDialog";
 
 function ModelSetting() {
-  const { setIsModalOpen } = useOpenModalState();
   const { inView } = useSystemMessageRef();
   const { selectedChatId } = useSelectedChatId();
+  const { isModalOpen, setIsModalOpen } = useOpenModalState();
 
   const t = useTranslations("button");
 
@@ -17,14 +18,14 @@ function ModelSetting() {
     <>
       {!inView && selectedChatId && (
         <Button
-          color="bg-gray-500"
-          hoverColor="hover:bg-gray-400"
-          icon={<Settings className="h-4 w-4" />}
           onClick={() => setIsModalOpen(true)}
+          className="flex gap-1.5 bg-gray-500 hover:bg-gray-400"
         >
+          <Settings className="h-4 w-4" />
           {t("modelSetting")}
         </Button>
       )}
+      {isModalOpen && <ModelSettingDialog />}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import {
   MoreHorizontal,
   Github,
@@ -6,8 +6,13 @@ import {
   Rocket,
   HelpCircle,
 } from "lucide-react";
-import { Menu, Transition } from "@headlessui/react";
 import { useTranslations } from "next-intl";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 
 function SideBarFooter() {
   const t = useTranslations("NavPage");
@@ -39,55 +44,29 @@ function SideBarFooter() {
     },
   ];
 
-  const menuButtonCls = (active: boolean): string => {
-    return `${
-      active ? "bg-blue-500" : ""
-    } group flex w-full items-center rounded-md px-2 py-2 text-sm`;
-  };
-
   return (
     <div>
-      <Menu as="div" className="relative inline-block text-left">
-        <div>
-          <Menu.Button className="flex h-7 w-7 items-center justify-center hover:text-neutral-500">
-            <MoreHorizontal className="h-5 w-5" />
-          </Menu.Button>
-        </div>
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <Menu.Items
-            className="absolute left-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md
-          bg-neutral-50 text-neutral-950 shadow-lg dark:bg-neutral-950 dark:text-neutral-50"
-          >
-            <div className="cursor-pointer px-1 py-1">
-              {menuButtons.map(({ value, label, icon, href }) => {
-                return (
-                  <Menu.Item key={value}>
-                    {({ active }) => (
-                      <a
-                        target="_blank"
-                        href={href}
-                        type="button"
-                        className={`${menuButtonCls(active)}`}
-                      >
-                        {icon}
-                        {label}
-                      </a>
-                    )}
-                  </Menu.Item>
-                );
-              })}
-            </div>
-          </Menu.Items>
-        </Transition>
-      </Menu>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <MoreHorizontal className="h-5 w-5 hover:cursor-pointer" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          {menuButtons.map(({ value, label, icon, href }) => {
+            return (
+              <DropdownMenuItem key={value}>
+                <a
+                  className="flex items-center gap-1 hover:cursor-default"
+                  target="_blank"
+                  href={href}
+                >
+                  {icon}
+                  {label}
+                </a>
+              </DropdownMenuItem>
+            );
+          })}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

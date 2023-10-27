@@ -1,6 +1,6 @@
 import React from "react";
 import { Book } from "lucide-react";
-import Button from "~/components/FunctionButton/Button";
+import { Button } from "~/components/ui/button";
 import { useIsTypingState } from "~/store/chat";
 import { useTranslations } from "next-intl";
 import { useIsShowModal } from "~/store/promptLib";
@@ -16,11 +16,10 @@ function Prompts() {
     <>
       {!isTyping && (
         <Button
-          color="bg-amber-500"
-          hoverColor="hover:bg-amber-400"
-          icon={<Book className="h-4 w-4" />}
+          className="flex gap-1.5 bg-amber-500 hover:bg-amber-400"
           onClick={() => setIsShowModal(true)}
         >
+          <Book className="h-4 w-4" />
           {t("prompt")}
         </Button>
       )}

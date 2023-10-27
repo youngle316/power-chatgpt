@@ -113,9 +113,11 @@ const RenderChatMessages = ({ messages }: { messages: MessagesItem }) => {
             {messages.role === "assistant" && (
               <>
                 <div className="text-xs text-neutral-600/50 dark:text-neutral-400/50">
-                  {dayjs.unix(messages.createAt).format("YYYY-MM-DD HH:mm:ss")}
+                  {dayjs
+                    .unix(messages.createAt as number)
+                    .format("YYYY-MM-DD HH:mm:ss")}
                 </div>
-                <div className="prose prose-sm max-w-full break-words dark:prose-invert">
+                <div className="prose prose-sm dark:prose-invert max-w-full break-words">
                   <ConvertToMarkdown value={messages.text} />
                 </div>
               </>

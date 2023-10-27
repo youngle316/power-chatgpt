@@ -16,9 +16,7 @@ import { useEffect, useRef } from "react";
 import { useSelectedChatId } from "~/store/sidebarStore";
 import RenderNoChat from "./RenderNoChat";
 import RenderChatMessages from "./RenderChatMessages";
-import HeadLessDialog from "~/components/HeadLess/HeadLessDialog";
-import PageModelSet from "./PageModelSet";
-import { useChatContentRef, useOpenModalState } from "~/store/page";
+import { useChatContentRef } from "~/store/page";
 import { useTranslations } from "next-intl";
 import { useInView } from "react-intersection-observer";
 import dynamic from "next/dynamic";
@@ -54,10 +52,6 @@ function ChatPage() {
   const { answerNodeRef, setAnswerNodeRef } = useAnswerNodeRef();
 
   const { isStreaming } = useIsStreaming();
-
-  const { isModalOpen, setIsModalOpen } = useOpenModalState();
-
-  const t = useTranslations("ModelSetting");
 
   const { setInView } = useSystemMessageRef();
 
@@ -114,7 +108,7 @@ function ChatPage() {
             </div>
             <p
               ref={answerNodeRef}
-              className="prose prose-sm max-w-full break-words dark:prose-invert"
+              className="prose prose-sm dark:prose-invert max-w-full break-words"
             />
             {isStreaming && <p className="animate-pulse">...</p>}
           </div>
@@ -129,16 +123,6 @@ function ChatPage() {
             <span className="animate-pulse">Assistant is typing...</span>
           </div>
         </div>
-      )}
-
-      {isModalOpen && (
-        <HeadLessDialog
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          title={t("title")}
-        >
-          <PageModelSet />
-        </HeadLessDialog>
       )}
     </MainContainer>
   );

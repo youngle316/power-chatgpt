@@ -1,6 +1,6 @@
 import React from "react";
 import { RefreshCcw } from "lucide-react";
-import Button from "~/components/FunctionButton/Button";
+import { Button } from "~/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useSelectedChatId } from "~/store/sidebarStore";
 import { useLocalStorage } from "usehooks-ts";
@@ -50,11 +50,10 @@ function ReGenerate() {
     <>
       {!isTyping && selectedChatId && (
         <Button
-          color="bg-indigo-500"
-          hoverColor="hover:bg-indigo-400"
-          icon={<RefreshCcw className="h-4 w-4" />}
+          className="flex gap-1.5 bg-indigo-500 hover:bg-indigo-400"
           onClick={regenerate}
         >
+          <RefreshCcw className="h-4 w-4" />
           {t("regenerate")}
         </Button>
       )}

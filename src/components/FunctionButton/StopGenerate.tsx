@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "~/components/FunctionButton/Button";
+import { Button } from "~/components/ui/button";
 import { Square } from "lucide-react";
 import { useAbortController, useIsTypingState } from "~/store/chat";
 import { useTranslations } from "next-intl";
@@ -18,11 +18,10 @@ function StopGenerate() {
     <>
       {isTyping && (
         <Button
-          color="bg-red-500"
-          hoverColor="hover:bg-red-400"
-          icon={<Square fill="white" className="h-4 w-4" />}
+          className="flex gap-1.5 bg-red-500 hover:bg-red-400"
           onClick={stopGenerate}
         >
+          <Square fill="white" className="h-4 w-4" />
           {t("stop")}
         </Button>
       )}
