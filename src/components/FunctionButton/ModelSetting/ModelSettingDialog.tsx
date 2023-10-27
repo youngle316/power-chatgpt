@@ -20,7 +20,7 @@ function ModelSettingDialog() {
       defaultOpen={false}
       onOpenChange={setIsModalOpen}
     >
-      <DialogContent className="sm:max-w-xl">
+      <DialogContent className="max-w-xs sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>{tModelSetting("title")}</DialogTitle>
         </DialogHeader>

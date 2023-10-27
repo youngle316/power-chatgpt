@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { Input } from "~/components/ui/input";
 
 type SearchInputProps = {
   setData: Dispatch<SetStateAction<string>>;
@@ -8,9 +9,7 @@ type SearchInputProps = {
 function SearchInput({ setData, placeholder }: SearchInputProps) {
   return (
     <>
-      <input
-        type="text"
-        className="basic-input"
+      <Input
         placeholder={placeholder}
         onChange={(e) => setData(e.target.value)}
       />

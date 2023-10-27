@@ -14,14 +14,14 @@ function PromptContent({ content }: promptContentProps) {
 
   return (
     <>
-      <div className="mb-4 flex gap-3">
+      <div className="my-4 flex gap-3">
         <div className="flex-1">
           <SearchInput
             setData={setSearchValue}
             placeholder={t("searchPrompt")}
           />
         </div>
-        <div className="flex w-10 items-center justify-center text-sm">
+        <div className="flex items-center justify-center text-sm">
           <a
             href={`${
               content.type === "en"
@@ -30,13 +30,13 @@ function PromptContent({ content }: promptContentProps) {
             }`}
             target="_blank"
             rel="noreferrer"
-            className="text-lg font-medium text-blue-500 hover:text-blue-600"
+            className="font-medium text-blue-500/80 hover:text-blue-500"
           >
             {t("promptsSource")}
           </a>
         </div>
       </div>
-      <div className="mb-4 flex flex-col gap-3 border-b pb-4">
+      <div className="mb-2 flex max-h-[520px] flex-col gap-3 overflow-y-scroll border-b pb-4">
         {content.prompts.map((prompt: Prompt) => {
           if (prompt.title.includes(searchValue)) {
             return <PromptItem key={prompt.source} prompt={prompt} />;
