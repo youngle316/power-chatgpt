@@ -8,7 +8,6 @@ import {
   useGptUrlModal,
   useGptUrl,
 } from "~/store/page";
-import HeadLessDialog from "~/components/HeadLess/HeadLessDialog";
 import { Image, FileJson, Link2 } from "lucide-react";
 import { useSelectedChatId } from "~/store/sidebarStore";
 import { toPng } from "html-to-image";
@@ -17,6 +16,12 @@ import { useLocalStorage } from "usehooks-ts";
 import { CHAT_MESSAGES_STORAGE_KEY } from "~/const";
 import fileDownload from "js-file-download";
 import { useIsTypingState } from "~/store/chat";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "~/components/ui/dialog";
 
 type ConversationDataType = {
   avatarUrl: string;
@@ -81,7 +86,7 @@ function Share() {
     const exportData = chatMessage
       .find((item) => item.chatId === selectedChatId)
       ?.messages.map((item) => {
-        let from = "system";
+        let from: string;
         if (item.role === "user") {
           from = "human";
         } else {
@@ -146,82 +151,80 @@ function Share() {
       )}
 
       {isShareModalOpen && (
-        <HeadLessDialog
-          isOpen={isShareModalOpen}
-          setIsOpen={setIsShareModalOpen}
-          title={t("share")}
+        <Dialog
+          open={isShareModalOpen}
+          defaultOpen={false}
+          onOpenChange={setIsShareModalOpen}
         >
-          <div>
-            <div className="text-center font-semibold">
-              {tModal("shareMethod")}
-            </div>
-            <div className="my-4">
-              <div className="grid grid-cols-2 gap-4">
-                {shareMethods.map((item) => {
-                  const { buttonTitle, onClick, description, icon, disabled } =
-                    item;
-                  return (
-                    <Fragment key={buttonTitle}>
-                      <div className="flex items-center justify-end">
-                        <button
-                          className={`basic_button gap-1 bg-blue-700 px-4 py-2 text-white hover:bg-blue-500 ${
-                            disabled
-                              ? "cursor-not-allowed disabled:bg-neutral-500"
-                              : ""
-                          }`}
-                          onClick={onClick}
-                          disabled={disabled}
-                        >
-                          {icon}
-                          {buttonTitle}
-                        </button>
-                      </div>
-                      <div className="flex items-center text-sm">
-                        {description}
-                      </div>
-                    </Fragment>
-                  );
-                })}
+          <DialogContent className="max-w-xs sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>{t("share")}</DialogTitle>
+            </DialogHeader>
+            <div>
+              <div className="text-center font-semibold">
+                {tModal("shareMethod")}
+              </div>
+              <div className="my-4">
+                <div className="grid grid-cols-2 gap-4">
+                  {shareMethods.map((item) => {
+                    const {
+                      buttonTitle,
+                      onClick,
+                      description,
+                      icon,
+                      disabled,
+                    } = item;
+                    return (
+                      <Fragment key={buttonTitle}>
+                        <div className="flex items-center justify-end">
+                          <button
+                            className={`basic_button gap-1 bg-blue-700 px-4 py-2 text-white hover:bg-blue-500 ${
+                              disabled
+                                ? "cursor-not-allowed disabled:bg-neutral-500"
+                                : ""
+                            }`}
+                            onClick={onClick}
+                            disabled={disabled}
+                          >
+                            {icon}
+                            {buttonTitle}
+                          </button>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          {description}
+                        </div>
+                      </Fragment>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-            <div className="text-center">
-              <button
-                onClick={() => setIsShareModalOpen(false)}
-                className="text-sm text-blue-500 hover:text-blue-400"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </HeadLessDialog>
+          </DialogContent>
+        </Dialog>
       )}
 
       {isGptUrlModalOpen && (
-        <HeadLessDialog
-          isOpen={isGptUrlModalOpen}
-          setIsOpen={setIsGptUrlModalOpen}
-          title="ShareGPT Url"
+        <Dialog
+          open={isGptUrlModalOpen}
+          defaultOpen={false}
+          onOpenChange={setIsGptUrlModalOpen}
         >
-          <div className="text-center text-sm">{tModal("shareUrl")}</div>
-          <div className="my-4 text-center">
-            <a
-              href={gptUrl}
-              target="_blank"
-              className="text-blue-500 hover:text-blue-400"
-            >
-              {gptUrl}
-            </a>
-          </div>
-
-          <div className="text-center">
-            <button
-              onClick={() => setIsGptUrlModalOpen(false)}
-              className="text-sm text-blue-500 hover:text-blue-400"
-            >
-              Close
-            </button>
-          </div>
-        </HeadLessDialog>
+          <DialogContent className="max-w-xs sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>ShareGPT Url</DialogTitle>
+            </DialogHeader>
+            <div className="text-center text-sm">{tModal("shareUrl")}</div>
+            <div className="my-4 text-center">
+              <a
+                href={gptUrl}
+                target="_blank"
+                className="text-blue-500 hover:text-blue-400"
+              >
+                {gptUrl}
+              </a>
+            </div>
+          </DialogContent>
+        </Dialog>
       )}
     </>
   );
